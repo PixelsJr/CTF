@@ -33,10 +33,17 @@ def main():
         offers = read_json_data()
         return flask.jsonify(offers), 200
 
+    @app.route('/<path:filename>')
+    def serve_file(filename):
+        # Serve files from the 'client/build' directory
+        return flask.send_from_directory(os.path.join(PARENT_DIR, 'client', 'build'), filename) #send_From_directory doesnt send from child folders
+    
     @app.route('/')
-    def serve_file(filename=None):
-        if filename is None: return flask.send_from_directory(os.path.join(PARENT_DIR, 'client', 'public'), 'index.html')
-        return flask.send_from_directory(os.path.join(PARENT_DIR, 'client', 'build', 'static'), filename)
+    def serve_index():
+        # Serve files from the 'client/build' directory
+        return flask.send_from_directory(os.path.join(PARENT_DIR, 'client', 'build'), 'index.html')
+    
+    
 
     # Run the app
     app.run(debug=True, port=80)
