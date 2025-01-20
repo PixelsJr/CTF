@@ -2,6 +2,7 @@ import '../App.css';
 import '../components/offer'
 import Offer from '../components/offer';
 import {useEffect, useState} from 'react'
+import Header from '../components/header';
 
 function Marketplace() {
 
@@ -22,6 +23,7 @@ function Marketplace() {
 
 	return (
 		<div className="Marketplace">
+			<Header />
 			<div className='offerList'>
 				{offers.map((offer) =>
 					<Offer offer={offer} />
