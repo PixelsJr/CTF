@@ -4,10 +4,10 @@ import os
 
 
 def main():
-    app = flask(__name__)
+    app = flask.Flask(__name__)
 
     # File path for JSON data
-    JSON_PATH = 'data.json'
+    JSON_PATH = './data.json'
 
     # Helper function to read the JSON file
     def read_json_data():
@@ -19,7 +19,7 @@ def main():
         
     # Route to get all offers
     @app.route('/api/getAllOffers', methods=['GET'])
-    def get_users():
+    def get_offers():
         offers = read_json_data()
         return flask.jsonify(offers), 200
 
