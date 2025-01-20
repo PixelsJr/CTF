@@ -12,17 +12,19 @@ function Marketplace() {
 			const response = await fetch('/api/getAllOffers', {
 				method: 'GET'
 			})
+			console.log(response)
 			const data = await response.json()
 			console.log(data)
 			setOffers(data)
 		}
+		fetchOffers()
 	})
 
 	return (
 		<div className="Marketplace">
 			<div className='offerList'>
 				{offers.map((offer) =>
-					<Offer data={offer} />
+					<Offer offer={offer} />
 				)}
 			</div>
 		</div>
