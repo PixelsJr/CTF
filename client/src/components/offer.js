@@ -1,14 +1,9 @@
-function Offer({offer}) {
-
-	async function openOffer(e){
-		e.preventDefault()
-		const id = offer.id
-		window.href = '/offer'
-	}
-
+function Offer({offer, func}) {
 	return (
 		<div className='offerContainer'>
-			<div className="offer" onCLick={openOffer}>
+			<div className="offer" onClick={() => {
+				func(offer)
+			}}>
 				<div className='imgContainer'>
 					<img src={offer.image} />
 				</div>

@@ -1,13 +1,15 @@
 .Marketplace {
-	justify-content: space-evenly;
+    justify-content: space-evenly;
     text-align: center;
-    min-height: 100%;
     width: 100%;
     left: 0;
     top: 0;
-    overflow-y: scroll;
     position: fixed;
-    background-color: #26282b;
+}
+
+.scrollable {
+    height: 100vh;
+    overflow-y: scroll;
 }
 
 .header {
@@ -17,6 +19,7 @@
     height: 50px;
     background-color: #1e2122;
     position: sticky;
+    z-index: 100;
     top: 0px;
 }
 
@@ -34,7 +37,7 @@
     transition: 200ms;
 }
 
-.header div a svg{
+.header div a svg {
     margin-top: 5px;
     display: block;
     width: 150px;
@@ -46,57 +49,54 @@
 }
 
 body {
-    overflow-x: hidden;
-    overflow-y: hidden;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
-    background-color: rgb(183, 178, 178);
+    background-color: #26282b;
 }
 
 .offerList {
-	display: flex;
-	justify-content: space-evenly;
-	flex-direction: row;
-	flex-wrap: wrap;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .offerContainer {
-	display: flex;
-	justify-content: space-evenly;
-	width: clamp(300px, 90vw, 350px);
-	height: clamp(200px, 90vw, 250px);
-	margin: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    width: clamp(300px, 90vw, 350px);
+    height: clamp(200px, 90vw, 250px);
+    margin: 5px;
 }
 
 .offer {
-	display: block;
+    display: block;
     border-radius: 16px;
-	height: 95%;
-	width: 95%;
+    height: 95%;
+    width: 95%;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transition: 200ms;
 }
 
 .offer:hover {
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 8px 12px;
-	height: 100%;
-	width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 8px 12px;
+    height: 100%;
+    width: 100%;
 }
 
 .offer .imgContainer {
-	width: 100%;
-	height: 40%;
-	background-color: rgb(0, 0, 0);
+    width: 100%;
+    height: 40%;
+    background-color: rgb(0, 0, 0);
 }
 
-.offer img {
-	max-width: 100%;
-	max-height: 100%;
+.offer .imgContainer img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .offer .dataContainer {
@@ -111,12 +111,75 @@ body {
     font-size: 22px;
 }
 
-.Header {
-    position: sticky;
-    top: 0px;
-    z-index: 100;
+.showcaseBackground {
+    position: fixed;
     display: flex;
-    background-color: white;
     width: 100%;
-    height: 50px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.339);
+}
+
+.showcase {
+    display: flex;
+    flex-direction: row;
+    margin: auto auto;
+    width: 100%;
+    height: 100%;
+    background-color: #26282b;
+}
+
+.showcase .body {
+    position: relative;
+    display: block;
+    background-color: #26282b;
+    z-index: 5;
+}
+
+.showcase .imgContainer {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Vertically center the image */
+    justify-content: center; /* Horizontally center the image */
+}
+
+.showcase .imgContainer .background {
+    position: absolute;
+    top: -5;
+    left: 0;
+    width: 110%;
+    height: 110%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(6px);
+    overflow: hidden;
+    z-index: 0;
+}
+
+.showcase .imgContainer img {
+    position: relative;
+    margin: auto auto;
+    z-index: 1;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.close {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.34);
+    height: 40px;
+    width: 40px;
+    z-index: 5;
+}
+
+.close svg {
+    display: block;
+    margin: auto;
+    width: 60%;
 }
