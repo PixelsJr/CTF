@@ -1,6 +1,10 @@
 from flask import *
 import json
 import os
+import jwt
+import dotenv
+from datetime import timedelta, datetime, timezone
+import sqlite3
 
 
 def main():
@@ -19,18 +23,15 @@ def main():
     # index.html location:
     INDEX = os.path.join(BUILD_DIR, 'index.html')
 
-    # Flask app variable
-    app = Flask(__name__,
-                static_folder=os.path.join(BUILD_DIR, 'static'))
+    # Load secret and algorithm from env variables for JWT tokens
+    dotenv.load_dotenv()
+    SECRET = os.getenv('secret')
+    ALGORITHM = os.getenv('algorithm')
 
-    # Helper function to read the JSON file
-    def read_json_data():
-        if os.path.exists(JSON_PATH):
-            with open(JSON_PATH, 'r') as file:
-                return json.load(file)
-        else:
-            return []
-        
+    # Flask app variable
+    app = Flask(__name__, static_folder=os.path.join(BUILD_DIR, 'static'))
+    
+    
     # Route to get all offers
     @app.route('/api/getAllOffers', methods=['GET'])
     def get_offers():
@@ -44,10 +45,8 @@ def main():
         #DEBUGGING
         app.logger.info(f"request filename: {filename}")
 
-
         # Construct the full path to the file
         file_path = os.path.join(BUILD_DIR, filename)
-
         # Check if the file exists
         if os.path.exists(file_path) and os.path.isfile(file_path):
             return send_file(file_path)
@@ -63,11 +62,74 @@ def main():
     
     @app.route('/api/logIn', methods=['POST'])
     def login():
+        app.logger.info(f"login function is ran")
         response = request.get_json()
+        username = response.get("username")
+        password = response.get("password")
+        if validate_login(username, password):
+            user_id = execute_db_command(f"SELECT id FROM users WHERE username='{username}';")[0]
+            jwt_token = create_jwt(user_id)
+            app.logger.info(jwt_token)
+            return jsonify({"token": jwt_token}), 200
+        else:
+            return jsonify({"error": "access denied"}), 401
 
-        return "kai ara"
+
+    # Helper function to read the JSON file
+    def read_json_data():
+        if os.path.exists(JSON_PATH):
+            with open(JSON_PATH, 'r') as file:
+                return json.load(file)
+        else:
+            return []
+
+    # Helper function to validate website logins
+    def validate_login(username, password):
+        database_output = execute_db_command(f"SELECT password FROM users WHERE username='{username}';")
+        if password == database_output[0]:
+            return True
+        return False
+
+    # Helper function to create a JWT token for logging in
+    def create_jwt(user_id=None):
+        if user_id is None:
+            raise ValueError("User ID must be provided.")
+        payload = {
+        'user_id': user_id,
+        'admin': False,
+        'exp': datetime.now(timezone.utc) + timedelta(seconds=1_728_000) # expirity time is 20 days
+        }
+        token = jwt.encode(payload, SECRET, ALGORITHM)
+        return token
+
+    # Helper function to decode JWT tokens for authentication
+    def decode_jwt(token=None):
+        if user_id is None:
+            raise ValueError("Token must be provided.")
+        try:
+            user_id = jwt.decode(token, SECRET, ALGORITHM)['user_id']
+            if user_id:
+                return user_id
+            raise ValueError("User ID not found in token.")
+        except:
+            raise ValueError("JWT token invalid")
     
-    
+    # Helper function to execute commands to the database
+    def execute_db_command(command: str):
+        # Try block to connect to database IN READ-ONLY MODE and execute a command
+        # The read-only mode is really important since this means that the sql injection vuln can ONLY read from the database and not instantly nuke it
+        try:
+            with sqlite3.connect('file:database.db?mode=ro', uri=True) as db_connection:
+                cursor = db_connection.cursor()
+                cursor.execute(command)
+                result = cursor.fetchone()
+                return result
+        except sqlite3.DatabaseError as e:
+            print(f"An error occurred: {e}")
+        finally:
+            # Connection is closed automatically when exiting the 'with' block
+            print("Connection closed properly.")
+
 
     # Run the app
     app.run(debug=True, port=80)
