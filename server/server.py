@@ -1,22 +1,19 @@
-import flask
+from flask import *
 import json
 import os
 
 
 def main():
-    app = flask.Flask(__name__)
+    app = Flask(__name__)
 
     # File path for JSON data
     JSON_PATH = './data.json'
-
-    # Path to the manifest file
-    MANIFEST_PATH = os.path.join(app.static_folder, 'manifest.json')
 
     # Server dir
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
     # Go one directory up
-    PARENT_DIR = os.path.dirname(BASE_DIR)
+    PROJECT_DIR = os.path.dirname(BASE_DIR)
 
 
     # Helper function to read the JSON file
@@ -31,17 +28,26 @@ def main():
     @app.route('/api/getAllOffers', methods=['GET'])
     def get_offers():
         offers = read_json_data()
-        return flask.jsonify(offers), 200
+        return jsonify(offers), 200
 
     @app.route('/<path:filename>')
     def serve_file(filename):
         # Serve files from the 'client/build' directory
-        return flask.send_from_directory(os.path.join(PARENT_DIR, 'client', 'build'), filename) #send_From_directory doesnt send from child folders
+        
+        #DEBUGGING
+        app.logger.info(f"request filename: {filename}")
+
+
+        # Construct the full path to the file
+        file_path = os.path.join(PROJECT_DIR, 'client', 'build', filename)
+
+        # Check if the file exists
+        if os.path.exists(file_path) and os.path.isfile(file_path):
+            return send_file(file_path)
     
     @app.route('/')
     def serve_index():
-        # Serve files from the 'client/build' directory
-        return flask.send_from_directory(os.path.join(PARENT_DIR, 'client', 'build'), 'index.html')
+        return send_from_directory(os.path.join(PROJECT_DIR, 'client', 'build'), 'index.html')
     
     
 
