@@ -20,7 +20,7 @@ function Marketplace() {
 			setOffers(data)
 		}
 		fetchOffers()
-	})
+	}, [])
 
 	function closeShowcase(){
 		setShowcase(null)
