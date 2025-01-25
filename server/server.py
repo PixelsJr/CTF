@@ -13,8 +13,15 @@ def main():
     # Go one directory up
     PROJECT_DIR = os.path.dirname(BASE_DIR)
 
+    # Build directory:
+    BUILD_DIR = os.path.join(PROJECT_DIR, 'client', 'build')
+
+    # index.html location:
+    INDEX = os.path.join(BUILD_DIR, 'index.html')
+
+    # Flask app variable
     app = Flask(__name__,
-                static_folder=os.path.join(PROJECT_DIR, 'client', 'build', 'static'))
+                static_folder=os.path.join(BUILD_DIR, 'static'))
 
     # Helper function to read the JSON file
     def read_json_data():
@@ -39,15 +46,26 @@ def main():
 
 
         # Construct the full path to the file
-        file_path = os.path.join(PROJECT_DIR, 'client', 'build', filename)
+        file_path = os.path.join(BUILD_DIR, filename)
 
         # Check if the file exists
         if os.path.exists(file_path) and os.path.isfile(file_path):
             return send_file(file_path)
+        return "404 NOT FOUND"
     
     @app.route('/')
     def serve_index():
-        return send_from_directory(os.path.join(PROJECT_DIR, 'client', 'build'), 'index.html')
+        return send_file(INDEX)
+    
+    @app.route('/Profile')
+    def Profile():
+        return serve_index()
+    
+    @app.route('/api/logIn', methods=['POST'])
+    def login():
+        response = request.get_json()
+
+        return "kai ara"
     
     
 
