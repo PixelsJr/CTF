@@ -74,6 +74,7 @@ body {
 }
 
 .offer {
+    cursor: pointer;
     display: block;
     border-radius: 16px;
     height: 95%;
@@ -166,6 +167,7 @@ body {
 }
 
 .close {
+    cursor: pointer;
     position: absolute;
     left: 5px;
     top: 5px;
