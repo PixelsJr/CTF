@@ -17,6 +17,9 @@ function LogIn({ }) {
 		console.log(message)
 
 		const response = await fetch('/api/logIn', {
+			headers: {
+				'Content-Type': 'application/json'
+			},
 			method: 'POST',
 			body: JSON.stringify(message)
 		})
