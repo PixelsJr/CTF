@@ -4,8 +4,6 @@ import os
 
 
 def main():
-    app = Flask(__name__)
-
     # File path for JSON data
     JSON_PATH = './data.json'
 
@@ -15,6 +13,8 @@ def main():
     # Go one directory up
     PROJECT_DIR = os.path.dirname(BASE_DIR)
 
+    app = Flask(__name__,
+                static_folder=os.path.join(PROJECT_DIR, 'client', 'build', 'static'))
 
     # Helper function to read the JSON file
     def read_json_data():
