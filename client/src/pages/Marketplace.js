@@ -4,6 +4,7 @@ import Offer from '../components/offer';
 import { useEffect, useState } from 'react'
 import Header from '../components/header';
 import Showcase from '../components/showcase';
+import LogIn from '../components/logIn';
 
 function Marketplace() {
 
@@ -29,6 +30,8 @@ function Marketplace() {
 	function showcaseOffer(offer) {
 		setShowcase(offer)
 	}
+
+	return (<LogIn />)
 
 	return (
 		<div className="Marketplace">

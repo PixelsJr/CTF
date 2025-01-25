@@ -1,7 +1,7 @@
 function Offer({offer, func}) {
 	return (
 		<div className='offerContainer'>
-			<div className="offer" onClick={() => {
+			<div className="offer borderdDiv" onClick={() => {
 				func(offer)
 			}}>
 				<div className='imgContainer'>
