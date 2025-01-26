@@ -1,18 +1,27 @@
-import { createRef } from "react";
+import { createRef, useState } from "react";
 
 function LogIn({ }) {
 
 	const usernameRef = createRef(null)
 	const passwordRef = createRef(null)
+	const [passwordInputType, setPasswordInputType] = useState('password')
 
-	async function tryLogIn(e){
+	function seePassword(e){
+		if(e.target.checked){
+			setPasswordInputType('text')
+		} else {
+			setPasswordInputType('password')
+		}
+	}
+
+	async function tryLogIn(e) {
 
 		e.preventDefault()
 
 		const username = usernameRef.current.value
 		const password = passwordRef.current.value
 
-		const message = {'username': username, 'password': password}
+		const message = { 'username': username, 'password': password }
 
 		console.log(message)
 
@@ -28,10 +37,20 @@ function LogIn({ }) {
 
 	return (
 		<form onSubmit={tryLogIn} className="logIn borderdDiv">
-			<h1>Palun logige sisse</h1>
-			<input ref={usernameRef} placeholder="username"></input>
-			<input ref={passwordRef} placeholder="password"></input>
-			<button type="submit">Submit</button>
+			<div className="cardHeader">
+				<h1>Login</h1>
+			</div>
+			<div className="inputBox">
+				<label>Username</label>
+				<input ref={usernameRef} placeholder="Enter Username"></input>
+			</div>
+			<div className="inputBox">
+				<label>Password</label>
+				<input type={passwordInputType} ref={passwordRef} placeholder="Password"></input>
+				<input type="checkbox" onChange={seePassword} style={{width: 'auto', height: 'auto', margin: 'none'}}></input>
+				<span style={{fontSize: '16px', fontWeight: '400', marginLeft: '5px'}}>See password</span>
+			</div>
+			<button type="submit">Log In</button>
 		</form>
 	);
 }

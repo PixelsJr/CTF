@@ -9,8 +9,11 @@ function Profile() {
 	}, [])
 
 	return (
-	<LogIn />
-)
+		<div className='Profile'>
+			<Header />
+			<LogIn />
+		</div>
+	)
 }
 
 export default Profile;
