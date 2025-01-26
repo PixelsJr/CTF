@@ -42,7 +42,7 @@ def main():
     def serve_file(filename):
         # Serve files from the 'client/build' directory
         
-        #DEBUGGING
+        #*DEBUGGING
         app.logger.info(f"request filename: {filename}")
 
         # Construct the full path to the file
@@ -62,7 +62,6 @@ def main():
     
     @app.route('/api/logIn', methods=['POST'])
     def login():
-        app.logger.info(f"login function is ran")
         response = request.get_json()
         username = response.get("username")
         password = response.get("password")
@@ -86,7 +85,7 @@ def main():
     # Helper function to validate website logins
     def validate_login(username, password):
         database_output = execute_db_command(f"SELECT password FROM users WHERE username='{username}';")
-        if password == database_output[0]:
+        if database_output is not None and password == database_output[0]:
             return True
         return False
 
