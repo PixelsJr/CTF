@@ -36,6 +36,10 @@ def main():
     @app.route('/api/getAllOffers', methods=['GET'])
     def get_offers():
         offers = read_json_data()
+        reviews = fetch_offer_reviews()
+
+        for offer in offers:
+            offer["reviews"] = reviews.get(offer["id"], [])
         return jsonify(offers), 200
 
     @app.route('/<path:filename>')
@@ -69,8 +73,8 @@ def main():
                 # If token is valid, serve the profile (return user data)
                 user_data = fetch_user_data(user_id)
                 return jsonify({
-                    'username': user_data.get('username'),  # Example user data
-                    'id': user_data.get('id'),        # Example user data
+                    'username': user_data.get('username'),
+                    'id': user_data.get('id')
                 })
             
         return "Bad token", 403
@@ -102,9 +106,20 @@ def main():
 
     # Helper functiom to gather a user's data
     def fetch_user_data(user_id):
+        #TODO: THIS IS NOT DONE
         #app.logger.info(f"sql output: {execute_db_command(f"SELECT * FROM users WHERE id='{user_id}';")}")
         return {"id": 1, "username": "test"}
 
+    # Function to fetch reviews from the database
+    def fetch_offer_reviews():
+        reviews = {}
+        rows = execute_db_command("SELECT offer_id, review_text FROM reviews;")
+        for row in rows:
+            offer_id, review = row
+            if offer_id not in reviews:
+                reviews[offer_id] = []
+            reviews[offer_id].append(review)
+        return reviews
 
     # Helper function to validate website logins
     def validate_login(username, password):
@@ -130,7 +145,8 @@ def main():
         if token is None:
             raise ValueError("Token must be provided.")
         try:
-            user_id = jwt.decode(token, SECRET, ALGORITHM)['user_id']
+            decoded_token = jwt.decode(token, SECRET, ALGORITHM)
+            user_id = decoded_token['user_id']
             if user_id:
                 return user_id
             raise ValueError("User ID not found in token.")
@@ -145,7 +161,7 @@ def main():
             with sqlite3.connect('file:database.db?mode=ro', uri=True) as db_connection:
                 cursor = db_connection.cursor()
                 cursor.execute(command)
-                result = cursor.fetchone()
+                result = cursor.fetchall() #* this used fetchone() before
                 return result
         except sqlite3.DatabaseError as e:
             print(f"An error occurred: {e}")
