@@ -31,7 +31,7 @@
 9. developer portalis võimalik mingeid api keyisi saada või api calle teha mida niisama ei saa?
 
 10. Võimalik saada php code execution (ja läbi selle reverse shell), kui olla sisse logitud ja teha uus marketplace offer, kus pildi asemel laed php faili ja executid selle
-11. (BONUS): pärast reverse shelli on võimalik privescide rootiks
+11. (BONUS): pärast reverse shelli on võimalik privescida rootiks
 
 
 
