@@ -58,8 +58,14 @@ def main():
     
     @app.route('/Profile')
     def Profile():
+        return serve_index()
+
+    @app.route('api/Profile')
+    def api_profile():
         token = request.headers.get('token')
-        if token:
+        if not token:
+            return jsonify({"error": "Token is missing"}), 401
+        try:
             token = token.split(" ")[1]
             
             # Decode the token and get the user data
@@ -69,13 +75,17 @@ def main():
                 # If token is valid, serve the profile (return user data)
                 user_data = fetch_user_data(user_id)
                 return jsonify({
-                    'username': user_data.get('username'),  # Example user data
-                    'id': user_data.get('id'),        # Example user data
+                    'username': user_data.get('username'),
+                    'id': user_data.get('id')
                 })
-        return serve_index()
+            else:
+                return jsonify({"error": "Invalid token"}), 401
+        except Exception as e:
+            app.logger.error(f"Error decoding token: {e}")
+            return jsonify({"error": "An error occurred"}), 
     
     @app.route('/api/logIn', methods=['POST'])
-    def login():
+    def api_login():
         response = request.get_json()
         username = response.get("username")
         password = response.get("password")
@@ -123,10 +133,11 @@ def main():
 
     # Helper function to decode JWT tokens for authentication
     def decode_jwt(token=None):
-        if user_id is None:
+        if token is None:
             raise ValueError("Token must be provided.")
         try:
-            user_id = jwt.decode(token, SECRET, ALGORITHM)['user_id']
+            decoded_token = jwt.decode(token, SECRET, ALGORITHM)
+            user_id = decoded_token['user_id']
             if user_id:
                 return user_id
             raise ValueError("User ID not found in token.")
