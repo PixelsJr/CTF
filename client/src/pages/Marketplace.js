@@ -3,7 +3,6 @@ import Offer from '../components/offer';
 import { useEffect, useState } from 'react'
 import Header from '../components/header';
 import Showcase from '../components/showcase';
-import LogIn from '../components/logIn';
 
 function Marketplace() {
 
@@ -37,7 +36,7 @@ function Marketplace() {
 			<Header />
 			<div className='scrollable'>
 				<Showcase offer={showcase} close={closeShowcase} />
-				<div className='offerList' style={{opacity: loading, transition: 'opacity 500ms'}}>
+				<div className='offerList' style={{opacity: loading, transition: 'opacity 500ms ease-in'}}>
 					{offers.map((offer) =>
 						<span key={offer.id}>
 							<Offer offer={offer} func={showcaseOffer} />
