@@ -3,7 +3,8 @@
         "id": 1,
         "name": "Sum dog",
         "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg",
-        "description": "idkdidkdid",
+        "seller": "The Cat",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum vitae massa sed elementum. Vestibulum commodo auctor elit, eget elementum magna placerat sed. Nulla bibendum leo eget sapien malesuada gravida. Duis quis diam scelerisque, suscipit orci sed, volutpat sapien. Pellentesque suscipit id odio eu rutrum. Cras justo mauris, condimentum vel sodales sit amet, vestibulum non dui. Proin tincidunt, justo vitae scelerisque pretium, mauris quam aliquet enim, quis tempor tellus felis non leo. Phasellus sodales sit amet nibh et tincidunt.Sed mauris urna, cursus dapibus dui vel, ornare tincidunt ligula. Sed at felis vitae neque dignissim euismod pellentesque et mauris. Vestibulum varius ac odio vitae tincidunt. Morbi elit nulla, varius tempus elit eu, fringilla bibendum orci. Etiam eget lectus ligula. Nam ut vulputate tortor. Morbi augue turpis, porttitor id leo eu, gravida hendrerit erat. Duis at iaculis felis, id suscipit nisi.Curabitur eget ex lorem. Integer in fermentum sem. Vivamus nulla augue, facilisis in sollicitudin at, semper et sapien. Nam sollicitudin nibh mi, at dictum leo ultrices sed. Quisque sodales tellus sed tortor efficitur tempor. Proin sit amet posuere eros. Integer ut purus vel augue vulputate mattis. Donec a congue nunc. Curabitur semper mi orci, vel pretium urna rhoncus ac. Nullam ex elit, vulputate sed massa quis, interdum fringilla libero. Proin venenatis, lacus in lobortis egestas, lectus ipsum sollicitudin tortor, a porta tortor lorem nec mi. Vestibulum vitae dignissim lacus. Suspendisse fringilla molestie porttitor. Fusce sed ex sed est fermentum maximus sit amet eget est. Etiam et nunc erat. Fusce eu tristique diam, id laoreet sapien.Proin ultricies velit eget sollicitudin porta. Sed quis porttitor lacus. Curabitur iaculis condimentum lobortis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras orci orci, consequat sed nibh rhoncus, suscipit dapibus magna. Suspendisse potenti. Nullam tempor suscipit porta. Vestibulum non vehicula ipsum. Ut laoreet viverra purus sed eleifendFusce ac placerat nulla. Maecenas ut vulputate odio. Quisque pulvinar consequat ex ac mollis. Donec imperdiet tortor ac felis scelerisque, et tincidunt felis consectetur. Ut et dolor mauris. Donec scelerisque, nisi sit amet consectetur sagittis, metus enim pellentesque felis, eget pellentesque mauris sem eu tortor. Vivamus commodo justo quis elit pretium gravida. Donec eu tortor sem.",
         "price": 98
     },
     {
@@ -13,57 +14,57 @@
         "description": "suhtsama",
         "price": 12
     },{
-        "id": 1,
+        "id": 3,
         "name": "Sum dog",
         "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
     },
     {
-        "id": 2,
+        "id": 4,
         "name": "Sum cat",
         "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
     },{
-        "id": 1,
+        "id": 5,
         "name": "Sum dog",
         "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
     },
     {
-        "id": 2,
+        "id": 6,
         "name": "Sum cat",
         "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
     },{
-        "id": 1,
+        "id": 7,
         "name": "Sum dog",
         "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
     },
     {
-        "id": 2,
+        "id": 8,
         "name": "Sum cat",
         "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
     },{
-        "id": 1,
+        "id": 9,
         "name": "Sum dog",
         "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
     },
     {
-        "id": 2,
+        "id": 10,
         "name": "Sum cat",
         "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
     },{
-        "id": 1,
+        "id": 11,
         "name": "Sum dog",
         "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
     },
     {
-        "id": 2,
+        "id": 12,
         "name": "Sum cat",
         "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
     },{
-        "id": 1,
+        "id": 13,
         "name": "Sum dog",
         "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
     },
     {
-        "id": 2,
+        "id": 14,
         "name": "Sum cat",
         "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
     }

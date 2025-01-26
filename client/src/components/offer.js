@@ -1,4 +1,4 @@
-function Offer({offer, func}) {
+function Offer({ offer, func }) {
 	return (
 		<div className='offerContainer'>
 			<div className="offer borderdDiv" onClick={() => {
@@ -9,8 +9,8 @@ function Offer({offer, func}) {
 				</div>
 				<div className="dataContainer">
 					<h1>{offer.name}</h1>
-					<p>{offer.description}</p>
-					<span>{offer.price}</span>
+					<p>Seller: {offer.seller}</p>
+					<p>Price: {offer.price}€</p>
 				</div>
 			</div>
 		</div>

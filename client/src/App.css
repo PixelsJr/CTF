@@ -75,14 +75,6 @@ body {
     flex-wrap: wrap;
 }
 
-.offerContainer {
-    display: flex;
-    justify-content: space-evenly;
-    width: clamp(300px, 90vw, 350px);
-    height: clamp(200px, 90vw, 250px);
-    margin: 5px;
-}
-
 .borderdDiv {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transition: 200ms;
@@ -92,12 +84,20 @@ body {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 8px 12px;
 }
 
+.offerContainer {
+    display: flex;
+    justify-content: space-evenly;
+    width: 300px;
+    height: 450px;
+    margin: 5px;
+}
+
 .offer {
     cursor: pointer;
-    display: block;
+    display: inline;
     border-radius: 16px;
-    height: 95%;
-    width: 95%;
+    height: 98%;
+    width: 98%;
     transition: 200ms;
 }
 
@@ -108,7 +108,7 @@ body {
 
 .offer .imgContainer {
     width: 100%;
-    height: 40%;
+    height: 300px;
     background-color: rgb(0, 0, 0);
 }
 
@@ -129,6 +129,10 @@ body {
     font-size: 22px;
 }
 
+.offer p {
+    font-size: 16px;
+}
+
 .showcaseBackground {
     position: fixed;
     display: flex;
@@ -144,18 +148,60 @@ body {
     width: 100%;
     height: 100%;
     background-color: #26282b;
-}
 
-.showcase .body {
-    position: relative;
-    display: block;
-    background-color: #26282b;
-    z-index: 5;
+    .body {
+        position: relative;
+        display: block;
+        width: 60%;
+        background-color: #26282b;
+        z-index: 5;
+    
+        h1 {
+            margin: 0px;
+            font-size: 42px;
+            font-weight: 600;
+        }
+        
+        h2 {
+            margin-top: 0px;
+            margin-bottom: 50px;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        
+        p {
+            text-align: justify;
+            margin-left: auto;
+            margin-right: auto;
+            width: 90%;
+            height: 600px;
+            overflow-y: auto;
+            font-size: 16px;
+            font-weight: 400;
+        }
+        
+        button {
+            cursor: pointer;
+            width: 300px;
+            height: 75px;
+            font-size: 24px;
+            color: white;
+            border-radius: 10px;
+            border-width: 0px;
+            background-color: rgb(49, 172, 49);
+            font-weight: 600;
+            transition: 200ms;
+        }
+        
+        button:hover {
+            background-color: rgb(36, 127, 36);
+        }
+    }
 }
 
 .showcase .imgContainer {
     position: relative;
-    width: 50%;
+    width: 40%;
     height: 100%;
     display: flex;
     /* Use flexbox for centering */
@@ -279,10 +325,15 @@ body {
     border-radius: 50%;
     display: flex;
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.34);
+    background-color: rgba(0, 0, 0, 0.30);
     height: 40px;
     width: 40px;
     z-index: 5;
+    transition: 200ms;
+}
+
+.close:hover {
+    background-color: rgba(0, 0, 0, 0.45);
 }
 
 .close svg {
