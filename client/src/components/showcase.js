@@ -16,8 +16,9 @@ function Showcase({ offer, close }) {
 				</div>
 				<div className="body">
 					<h1>{offer.name}</h1>
+					<h2>{offer.seller}</h2>
 					<p>{offer.description}</p>
-					<span>{offer.price}</span>
+					<button>BUY: {offer.price}€</button>
 				</div>
 			</div>
 		</div>

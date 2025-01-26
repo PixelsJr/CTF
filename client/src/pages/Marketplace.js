@@ -3,12 +3,12 @@ import Offer from '../components/offer';
 import { useEffect, useState } from 'react'
 import Header from '../components/header';
 import Showcase from '../components/showcase';
-import LogIn from '../components/logIn';
 
 function Marketplace() {
 
 	const [offers, setOffers] = useState([])
 	const [showcase, setShowcase] = useState(null)
+	const [loading, setLoading] = useState(0);
 
 
 	useEffect(() => {
@@ -18,11 +18,12 @@ function Marketplace() {
 			})
 			const data = await response.json()
 			setOffers(data)
+			setLoading(1);
 		}
 		fetchOffers()
 	}, [])
 
-	function closeShowcase(){
+	function closeShowcase() {
 		setShowcase(null)
 	}
 
@@ -35,9 +36,11 @@ function Marketplace() {
 			<Header />
 			<div className='scrollable'>
 				<Showcase offer={showcase} close={closeShowcase} />
-				<div className='offerList'>
+				<div className='offerList' style={{opacity: loading, transition: 'opacity 500ms ease-in'}}>
 					{offers.map((offer) =>
-						<Offer offer={offer} func={showcaseOffer} />
+						<span key={offer.id}>
+							<Offer offer={offer} func={showcaseOffer} />
+						</span>
 					)}
 				</div>
 			</div>
