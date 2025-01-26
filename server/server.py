@@ -58,6 +58,20 @@ def main():
     
     @app.route('/Profile')
     def Profile():
+        token = request.headers.get('token')
+        if token:
+            token = token.split(" ")[1]
+            
+            # Decode the token and get the user data
+            user_id = decode_jwt(token)
+            
+            if user_id:
+                # If token is valid, serve the profile (return user data)
+                user_data = fetch_user_data(user_id)
+                return jsonify({
+                    'username': user_data.get('username'),  # Example user data
+                    'id': user_data.get('id'),        # Example user data
+                })
         return serve_index()
     
     @app.route('/api/logIn', methods=['POST'])
@@ -81,6 +95,12 @@ def main():
                 return json.load(file)
         else:
             return []
+
+    # Helper functiom to gather a user's data
+    def fetch_user_data(user_id):
+        app.logger.info(f"sql output: {execute_db_command(f"SELECT * FROM users WHERE id='{user_id}';")}")
+        return {"id": 1, "username": "test"}
+
 
     # Helper function to validate website logins
     def validate_login(username, password):
