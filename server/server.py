@@ -94,6 +94,24 @@ def main():
             #return jsonify({"token": jwt_token}), 200
         else:
             return jsonify({"error": "access denied"}), 401
+    
+    @app.route('/api/addReview', methods=['POST'])
+    def add_review():
+        data = request.get_json()
+        offer_id = data.get("offer_id")
+        review_text = data.get("review")
+        if not offer_id or not review_text:
+            return jsonify({"error": "Invalid input"}), 400
+        try:
+            #TODO: Should implement new function for commiting changes to sql but for now this works
+            with sqlite3.connect('database.db') as db_connection:
+                cursor = db_connection.cursor()
+                cursor.execute("INSERT INTO reviews (offer_id, review_text) VALUES (?, ?)", (offer_id, review_text))
+                db_connection.commit()
+        except Exception as e:
+            app.logger.error(f"wtf error: {e}")
+            return jsonify({"error": "An error has occurred"}), 500
+        return jsonify({"message": "Review added successfully"}), 201
 
 
     # Helper function to read the JSON file
