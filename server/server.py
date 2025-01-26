@@ -42,7 +42,7 @@ def main():
     def serve_file(filename):
         # Serve files from the 'client/build' directory
         
-        #DEBUGGING
+        #*DEBUGGING
         app.logger.info(f"request filename: {filename}")
 
         # Construct the full path to the file
@@ -58,11 +58,24 @@ def main():
     
     @app.route('/Profile')
     def Profile():
+        token = request.headers.get('token')
+        if token:
+            token = token.split(" ")[1]
+            
+            # Decode the token and get the user data
+            user_id = decode_jwt(token)
+            
+            if user_id:
+                # If token is valid, serve the profile (return user data)
+                user_data = fetch_user_data(user_id)
+                return jsonify({
+                    'username': user_data.get('username'),  # Example user data
+                    'id': user_data.get('id'),        # Example user data
+                })
         return serve_index()
     
     @app.route('/api/logIn', methods=['POST'])
     def login():
-        app.logger.info(f"login function is ran")
         response = request.get_json()
         username = response.get("username")
         password = response.get("password")
@@ -83,10 +96,16 @@ def main():
         else:
             return []
 
+    # Helper functiom to gather a user's data
+    def fetch_user_data(user_id):
+        app.logger.info(f"sql output: {execute_db_command(f"SELECT * FROM users WHERE id='{user_id}';")}")
+        return {"id": 1, "username": "test"}
+
+
     # Helper function to validate website logins
     def validate_login(username, password):
         database_output = execute_db_command(f"SELECT password FROM users WHERE username='{username}';")
-        if password == database_output[0]:
+        if database_output is not None and password == database_output[0]:
             return True
         return False
 
