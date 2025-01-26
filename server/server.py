@@ -53,15 +53,15 @@ def main():
         return "404 NOT FOUND"
     
     @app.route('/')
+    @app.route('/Profile')
     def serve_index():
         return send_file(INDEX)
-    
-    @app.route('/Profile')
-    def Profile():
-        token = request.headers.get('token')
-        if token:
-            token = token.split(" ")[1]
-            
+
+    @app.route('/api/Profile')
+    def profile():
+        token = request.cookies.get('token')
+        print(token)
+        if token:            
             # Decode the token and get the user data
             user_id = decode_jwt(token)
             
@@ -72,18 +72,22 @@ def main():
                     'username': user_data.get('username'),  # Example user data
                     'id': user_data.get('id'),        # Example user data
                 })
-        return serve_index()
+            
+        return "Bad token", 403
     
     @app.route('/api/logIn', methods=['POST'])
     def login():
-        response = request.get_json()
-        username = response.get("username")
-        password = response.get("password")
+        data = request.get_json()
+        username = data.get("username")
+        password = data.get("password")
         if validate_login(username, password):
             user_id = execute_db_command(f"SELECT id FROM users WHERE username='{username}';")[0]
             jwt_token = create_jwt(user_id)
             app.logger.info(jwt_token)
-            return jsonify({"token": jwt_token}), 200
+            response = make_response("Cookie set!")
+            response.set_cookie('token', jwt_token, path='/')
+            return response
+            #return jsonify({"token": jwt_token}), 200
         else:
             return jsonify({"error": "access denied"}), 401
 
@@ -98,7 +102,7 @@ def main():
 
     # Helper functiom to gather a user's data
     def fetch_user_data(user_id):
-        app.logger.info(f"sql output: {execute_db_command(f"SELECT * FROM users WHERE id='{user_id}';")}")
+        #app.logger.info(f"sql output: {execute_db_command(f"SELECT * FROM users WHERE id='{user_id}';")}")
         return {"id": 1, "username": "test"}
 
 
@@ -123,7 +127,7 @@ def main():
 
     # Helper function to decode JWT tokens for authentication
     def decode_jwt(token=None):
-        if user_id is None:
+        if token is None:
             raise ValueError("Token must be provided.")
         try:
             user_id = jwt.decode(token, SECRET, ALGORITHM)['user_id']
