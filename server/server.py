@@ -56,28 +56,12 @@ def main():
     @app.route('/Profile')
     def serve_index():
         return send_file(INDEX)
-<<<<<<< HEAD
 
     @app.route('/api/Profile')
     def profile():
         token = request.cookies.get('token')
         print(token)
         if token:            
-=======
-    
-    @app.route('/Profile')
-    def Profile():
-        return serve_index()
-
-    @app.route('api/Profile')
-    def api_profile():
-        token = request.headers.get('token')
-        if not token:
-            return jsonify({"error": "Token is missing"}), 401
-        try:
-            token = token.split(" ")[1]
-            
->>>>>>> ec24554dc1b29ff2c5e5a818e643b0f50d424494
             # Decode the token and get the user data
             user_id = decode_jwt(token)
             
@@ -85,10 +69,9 @@ def main():
                 # If token is valid, serve the profile (return user data)
                 user_data = fetch_user_data(user_id)
                 return jsonify({
-                    'username': user_data.get('username'),
-                    'id': user_data.get('id')
+                    'username': user_data.get('username'),  # Example user data
+                    'id': user_data.get('id'),        # Example user data
                 })
-<<<<<<< HEAD
             
         return "Bad token", 403
     
@@ -97,19 +80,6 @@ def main():
         data = request.get_json()
         username = data.get("username")
         password = data.get("password")
-=======
-            else:
-                return jsonify({"error": "Invalid token"}), 401
-        except Exception as e:
-            app.logger.error(f"Error decoding token: {e}")
-            return jsonify({"error": "An error occurred"}), 
-    
-    @app.route('/api/logIn', methods=['POST'])
-    def api_login():
-        response = request.get_json()
-        username = response.get("username")
-        password = response.get("password")
->>>>>>> ec24554dc1b29ff2c5e5a818e643b0f50d424494
         if validate_login(username, password):
             user_id = execute_db_command(f"SELECT id FROM users WHERE username='{username}';")[0]
             jwt_token = create_jwt(user_id)
@@ -160,8 +130,7 @@ def main():
         if token is None:
             raise ValueError("Token must be provided.")
         try:
-            decoded_token = jwt.decode(token, SECRET, ALGORITHM)
-            user_id = decoded_token['user_id']
+            user_id = jwt.decode(token, SECRET, ALGORITHM)['user_id']
             if user_id:
                 return user_id
             raise ValueError("User ID not found in token.")
