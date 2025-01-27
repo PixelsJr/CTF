@@ -12,7 +12,16 @@ function Profile() {
 
 	useEffect(() => {
 		async function fetchUserData() {
-			const response = await fetch('/api/Profile', {
+
+            const userId = localStorage.getItem('user_id');
+
+            if (!userId) {
+                setUserData(false);
+                return;
+            }
+
+
+			const response = await fetch(`/api/Profile?user_id=${userId}`, {
 				headers: {
 					'Content-Type': 'application/json',
 				},

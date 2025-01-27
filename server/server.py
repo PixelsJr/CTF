@@ -63,22 +63,26 @@ def main():
 
     @app.route('/api/Profile')
     def profile():
+        #* This function contains the idor vuln
         token = request.cookies.get('token')
+        user_id = request.cookies.get('user_id')
         print(token)
         if token:            
-            # Decode the token and get the user data
-            user_id = decode_jwt(token)
-            
+            # Validate the token
+            if decode_jwt(token, "exp") == "JWT token invalid":
+                return jsonify({
+                    'error': "JWT token invalid"
+                })
             if user_id:
                 # If token is valid, serve the profile (return user data)
-                user_data = fetch_user_data(user_id)
+                user_data = fetch_user_data(user_id) #! THIS WILL BE THE REASON FOR IDOR
                 if not user_data: return {"error": "User not found"}
                 return jsonify({
                     'username': user_data.get('username'),
                     'id': user_data.get('id')
                 })
             
-        return "Bad token", 403
+        return "No token found", 403
     
     @app.route('/api/logIn', methods=['POST'])
     def login():
@@ -86,7 +90,7 @@ def main():
         username = data.get("username")
         password = data.get("password")
         if validate_login(username, password):
-            user_id = execute_fetch_db_command(f"SELECT id FROM users WHERE username='{username}';")[0]
+            user_id = execute_fetch_db_command(f"SELECT id FROM users WHERE username='{username}';")[0][0]
             jwt_token = create_jwt(user_id)
             app.logger.info(jwt_token)
             response = make_response("Cookie set!")
@@ -164,6 +168,11 @@ def main():
         if database_output is not None and password == database_output[0][0]:
             return True
         return False
+    
+    def validate_jwt(token):
+        #! This is required for idor
+        #TODO
+        pass
 
     # Helper function to create a JWT token for logging in
     def create_jwt(user_id=None):
@@ -178,15 +187,17 @@ def main():
         return token
 
     # Helper function to decode JWT tokens for authentication
-    def decode_jwt(token=None):
-        if token is None:
-            raise ValueError("Token must be provided.")
+    def decode_jwt(token=None, dict_key=None):
+        if token is None or dict_key == None or not isinstance(dict_key, str):
+            raise ValueError("Token and requested namefield must both be provided.")
         try:
             decoded_token = jwt.decode(token, SECRET, ALGORITHM)
-            user_id = decoded_token['user_id']
-            if user_id:
-                return user_id[0]
-            raise ValueError("User ID not found in token.")
+            extracted_value = decoded_token[dict_key]
+            if extracted_value:
+                return extracted_value
+            raise ValueError
+        except ValueError:
+            raise ValueError("Namefield not found in token.")
         except:
             raise ValueError("JWT token invalid")
     
