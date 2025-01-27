@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Header from '../components/header';
 import LogIn from '../components/logIn';
 import Register from '../components/reg';
+import UserData from '../components/userData';
 
 function Profile() {
 
@@ -48,7 +49,6 @@ function Profile() {
 			<Header />
 		</div>
 	}
-
     return (
         <div className="Profile">
             <Header />
@@ -83,12 +83,7 @@ function Profile() {
                     )}
                 </div>
             ) : (
-                <div className="profile-container">
-                    <h1>Welcome, {userData.username}!</h1>
-                    <p>
-                        <strong>User id:</strong> {userData.id}
-                    </p>
-                </div>
+				<UserData data={userData} />
             )}
         </div>
     );
