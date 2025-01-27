@@ -85,7 +85,7 @@ def main():
         username = data.get("username")
         password = data.get("password")
         if validate_login(username, password):
-            user_id = execute_db_command(f"SELECT id FROM users WHERE username='{username}';")[0]
+            user_id = execute_fetch_db_command(f"SELECT id FROM users WHERE username='{username}';")[0]
             jwt_token = create_jwt(user_id)
             app.logger.info(jwt_token)
             response = make_response("Cookie set!")
@@ -102,19 +102,23 @@ def main():
         review_text = data.get("review")
         if not offer_id or not review_text:
             return jsonify({"error": "Invalid input"}), 400
-        try:
-            #TODO: Should implement new function for commiting changes to sql but for now this works
-            with sqlite3.connect('database.db') as db_connection:
-                cursor = db_connection.cursor()
-                cursor.execute("INSERT INTO reviews (offer_id, review_text) VALUES (?, ?)", (offer_id, review_text))
-                db_connection.commit()
-        except Exception as e:
-            app.logger.error(f"wtf error: {e}")
+        sql_return_value = execute_commit_db_command(f"INSERT INTO reviews (offer_id, review_text) VALUES ({offer_id}, '{review_text}')")
+        if sql_return_value is not None and sql_return_value is False:
             return jsonify({"error": "An error has occurred"}), 500
         return jsonify({"message": "Review added successfully"}), 201
+            
     
     @app.route('/api/Register', methods=['POST'])
-    def 
+    def register_user():
+        data = request.get_json()
+        new_username = data.get("username")
+        new_password = data.get("password")
+        if not new_username or not new_password:
+            return jsonify({"error": "Invalid input"}), 400
+        sql_return_value = execute_commit_db_command(f"INSERT INTO users (username, password) VALUES ('{new_username}', '{new_password}')")
+        if sql_return_value is not None and sql_return_value is False:
+            return jsonify({"error": "An error has occurred"}), 500
+        return jsonify({"message": "User registered successfully"}), 200
 
 
     # Helper function to read the JSON file
@@ -134,7 +138,7 @@ def main():
     # Function to fetch reviews from the database
     def fetch_offer_reviews():
         reviews = {}
-        rows = execute_db_command("SELECT offer_id, review_text FROM reviews;")
+        rows = execute_fetch_db_command("SELECT offer_id, review_text FROM reviews;")
         for row in rows:
             offer_id, review = row
             if offer_id not in reviews:
@@ -144,7 +148,7 @@ def main():
 
     # Helper function to validate website logins
     def validate_login(username, password):
-        database_output = execute_db_command(f"SELECT password FROM users WHERE username='{username}';")
+        database_output = execute_fetch_db_command(f"SELECT password FROM users WHERE username='{username}';")
         #databse_output = [(password,)] Suht veider, peab topelt valja votma
         if database_output is not None and password == database_output[0][0]:
             return True
@@ -176,7 +180,7 @@ def main():
             raise ValueError("JWT token invalid")
     
     # Helper function to execute commands to the database
-    def execute_db_command(command: str):
+    def execute_fetch_db_command(command: str):
         # Try block to connect to database IN READ-ONLY MODE and execute a command
         # The read-only mode is really important since this means that the sql injection vuln can ONLY read from the database and not instantly nuke it
         try:
@@ -186,10 +190,21 @@ def main():
                 result = cursor.fetchall() #* this used fetchone() before
                 return result
         except sqlite3.DatabaseError as e:
-            print(f"An error occurred: {e}")
+            app.logger.error(f"wtf error: {e}")
         finally:
             # Connection is closed automatically when exiting the 'with' block
             print("Connection closed properly.")
+    
+    def execute_commit_db_command(command: str):
+        try:
+            with sqlite3.connect('database.db') as db_connection:
+                cursor = db_connection.cursor()
+                cursor.execute(command)
+                db_connection.commit()
+        except Exception as e:
+            app.logger.error(f"wtf error: {e}")
+            return False
+        print("Connection closed properly.")
 
 
     # Run the app

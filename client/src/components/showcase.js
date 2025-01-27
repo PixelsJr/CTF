@@ -53,7 +53,8 @@ function Showcase({ offer, close }) {
                         {offer.reviews && offer.reviews.length > 0 ? ( // TODO: Review ei update dünaamiliselt kui sa ise teed uue review. Et oma reviewd näha peab praegu refreshima.
                             offer.reviews.map((review, index) => (
                                 <div key={index} className="review">
-                                    <p dangerouslySetInnerHTML={{ __html: review }} /> //!!! SEE ON VÄGA IMPORTANT LINE PALUN ÄRA MUUDA SEDA
+                                    {/* //!!! SEE ON VÄGA IMPORTANT LINE PALUN ÄRA MUUDA SEDA */}
+                                    <p dangerouslySetInnerHTML={{ __html: review }} /> 
                                 </div>
                             ))
                         ) : (
