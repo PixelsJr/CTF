@@ -112,6 +112,9 @@ def main():
             app.logger.error(f"wtf error: {e}")
             return jsonify({"error": "An error has occurred"}), 500
         return jsonify({"message": "Review added successfully"}), 201
+    
+    @app.route('/api/Register', methods=['POST'])
+    def 
 
 
     # Helper function to read the JSON file

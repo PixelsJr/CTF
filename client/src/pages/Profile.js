@@ -2,10 +2,12 @@ import '../App.css';
 import { useEffect, useState } from 'react'
 import Header from '../components/header';
 import LogIn from '../components/logIn';
+import Register from '../components/reg';
 
 function Profile() {
 
 	const [userData, setUserData] = useState(null);
+	const [isRegistering, setIsRegistering] = useState(false);
 
 	useEffect(() => {
 		async function fetchUserData() {
@@ -47,18 +49,49 @@ function Profile() {
 		</div>
 	}
 
-	return (
-		<div className="Profile">
-			<Header />
-			{!userData
-				? <LogIn />
-				: <div className="profile-container">
-					<h1>Welcome, {userData.username}!</h1>
-					<p><strong>User id:</strong> {userData.id}</p>
-				</div>
-			}
-		</div>
-	)
+    return (
+        <div className="Profile">
+            <Header />
+            {!userData ? (
+                <div>
+                    {isRegistering ? (
+                        <div>
+                            <Register />
+                            <p>
+                                Already have an account?{' '}
+                                <button
+                                    className="toggle-button"
+                                    onClick={() => setIsRegistering(false)}
+                                >
+                                    Log in here
+                                </button>
+                            </p>
+                        </div>
+                    ) : (
+                        <div>
+                            <LogIn />
+                            <p>
+                                Don’t have an account?{' '}
+                                <button
+                                    className="toggle-button"
+                                    onClick={() => setIsRegistering(true)}
+                                >
+                                    Register here
+                                </button>
+                            </p>
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <div className="profile-container">
+                    <h1>Welcome, {userData.username}!</h1>
+                    <p>
+                        <strong>User id:</strong> {userData.id}
+                    </p>
+                </div>
+            )}
+        </div>
+    );
 }
 
 export default Profile;
