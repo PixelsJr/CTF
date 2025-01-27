@@ -72,6 +72,7 @@ def main():
             if user_id:
                 # If token is valid, serve the profile (return user data)
                 user_data = fetch_user_data(user_id)
+                if not user_data: return {"error": "User not found"}
                 return jsonify({
                     'username': user_data.get('username'),
                     'id': user_data.get('id')
@@ -115,6 +116,9 @@ def main():
         new_password = data.get("password")
         if not new_username or not new_password:
             return jsonify({"error": "Invalid input"}), 400
+        username_exists = lambda username: bool(execute_fetch_db_command(f"SELECT 1 FROM users WHERE username = '{username}' LIMIT 1;"))
+        if username_exists(new_username):
+            return jsonify({"error": "Username already exists"}), 400
         sql_return_value = execute_commit_db_command(f"INSERT INTO users (username, password) VALUES ('{new_username}', '{new_password}')")
         if sql_return_value is not None and sql_return_value is False:
             return jsonify({"error": "An error has occurred"}), 500
@@ -131,9 +135,16 @@ def main():
 
     # Helper functiom to gather a user's data
     def fetch_user_data(user_id):
-        #TODO: THIS IS NOT DONE
-        #app.logger.info(f"sql output: {execute_db_command(f"SELECT * FROM users WHERE id='{user_id}';")}")
-        return {"id": 1, "username": "test"}
+        user_data = execute_fetch_db_command(f"SELECT id, username FROM users WHERE id='{user_id}';")[0]
+        if not bool(user_data):
+            return False
+        return {
+            "id": user_data[0],
+            "username": user_data[1]
+            }
+        #*Debugging
+        #*app.logger.info("IMPORTANT  !!!!!!     " + str(user))
+        #*return {"id": 1, "username": "test"}
 
     # Function to fetch reviews from the database
     def fetch_offer_reviews():
@@ -174,7 +185,7 @@ def main():
             decoded_token = jwt.decode(token, SECRET, ALGORITHM)
             user_id = decoded_token['user_id']
             if user_id:
-                return user_id
+                return user_id[0]
             raise ValueError("User ID not found in token.")
         except:
             raise ValueError("JWT token invalid")
