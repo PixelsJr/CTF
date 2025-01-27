@@ -5,6 +5,21 @@ import LogIn from '../components/logIn';
 import Register from '../components/reg';
 import UserData from '../components/userData';
 
+//VÄGA IMPORTANT
+//VÄGA IMPORTANT
+//VÄGA IMPORTANT
+//VÄGA IMPORTANT
+//VÄGA IMPORTANT
+//VÄGA IMPORTANT
+//VÄGA IMPORTANT
+// ma kuidagi fuck uppisin selle faili ja server.py's oleva jwt-de tegemise/kasutamise/valideerimise loogika
+// selle rikkus algselt ära Commit 39a90f4
+// ehk töötav versioon on üks enne seda ehk Commit 39a90f4
+// praeguses commitis loginimine ikka ei tööta ja kui ma homme seda ara parandada ei suuda siis ma lih votan vanast commitist need failid
+
+//muidu see fail on suht vahe muudetud aga back-endis on loogika semi different ja ma enam ei geti mis seal toimub
+//ima go sleep
+
 function Profile() {
 
 	const [userData, setUserData] = useState(null);

@@ -93,8 +93,9 @@ def main():
             user_id = execute_fetch_db_command(f"SELECT id FROM users WHERE username='{username}';")[0][0]
             jwt_token = create_jwt(user_id)
             app.logger.info(jwt_token)
-            response = make_response("Cookie set!")
+            response = make_response("Cookies set!")
             response.set_cookie('token', jwt_token, path='/')
+            response.set_cookie('user_id', str(user_id), path='/')
             return response
             #return jsonify({"token": jwt_token}), 200
         else:
@@ -165,7 +166,7 @@ def main():
     def validate_login(username, password):
         database_output = execute_fetch_db_command(f"SELECT password FROM users WHERE username='{username}';")
         #databse_output = [(password,)] Suht veider, peab topelt valja votma
-        if database_output is not None and password == database_output[0][0]:
+        if database_output is not None and password == database_output[0]:
             return True
         return False
     
