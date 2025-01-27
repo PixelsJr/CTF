@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { LogoutButton } from '../components/logout';
 
 function Header() {
 	return (
@@ -16,7 +17,7 @@ function Header() {
 
 				</Link>
 			</div>
-
+			<LogoutButton />
 		</div>
 	);
 }

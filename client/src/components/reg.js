@@ -35,7 +35,7 @@ function Register() {
             setError(null);
         } else {
             const errorData = await response.json();
-            setError(errorData.message || 'Failed to register');
+            setError(errorData.error || 'Failed to register');
             setSuccess(false);
         }
     }

@@ -5,6 +5,7 @@ function LogIn({ }) {
 	const usernameRef = createRef(null)
 	const passwordRef = createRef(null)
 	const [passwordInputType, setPasswordInputType] = useState('password')
+	const [error, setErrorMessage] = useState('');
 
 	function seePassword(e) {
 		if (e.target.checked) {
@@ -36,6 +37,7 @@ function LogIn({ }) {
 		}
 		if (!response.ok) {
 			console.log('Log In failed')
+			setErrorMessage('Incorrect username or password.');
 		}
 	}
 
@@ -55,6 +57,7 @@ function LogIn({ }) {
 				<span style={{ fontSize: '16px', fontWeight: '400', marginLeft: '5px' }}>See password</span>
 			</div>
 			<button type="submit">Log In</button>
+			{error && <p className="error">{error}</p>}
 		</form>
 	);
 }
