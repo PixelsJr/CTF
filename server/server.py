@@ -142,7 +142,8 @@ def main():
     # Helper function to validate website logins
     def validate_login(username, password):
         database_output = execute_db_command(f"SELECT password FROM users WHERE username='{username}';")
-        if database_output is not None and password == database_output[0]:
+        #databse_output = [(password,)] Suht veider, peab topelt valja votma
+        if database_output is not None and password == database_output[0][0]:
             return True
         return False
 
