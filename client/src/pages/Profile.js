@@ -2,6 +2,7 @@ import '../App.css';
 import { useEffect, useState } from 'react'
 import Header from '../components/header';
 import LogIn from '../components/logIn';
+import UserData from '../components/userData';
 
 function Profile() {
 
@@ -52,10 +53,7 @@ function Profile() {
 			<Header />
 			{!userData
 				? <LogIn />
-				: <div className="profile-container">
-					<h1>Welcome, {userData.username}!</h1>
-					<p><strong>User id:</strong> {userData.id}</p>
-				</div>
+				: <UserData data={userData} />
 			}
 		</div>
 	)
