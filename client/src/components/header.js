@@ -21,7 +21,6 @@ function Header({cash}) {
 				</Link>
 			</div>
 			<div style={{width: '20%', justifyContent: 'space-between'}}>
-				<h3 style={{margin: 'auto', fontSize: '22px'}}>{cash}€</h3>
 				<LogoutButton />
 			</div>
 		</div>

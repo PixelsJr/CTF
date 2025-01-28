@@ -13,7 +13,6 @@ function Marketplace() {
 
 	const [loading, setLoading] = useState(0);
 
-
 	useEffect(() => {
 		async function fetchOffers() {
 			const response = await fetch('/api/getAllOffers', {
@@ -27,17 +26,45 @@ function Marketplace() {
 		}
 
 		async function fetchUserData() {
-            //const response = await fetch(`/api/Profile?user_id=${userId}`, {
-            const response = await fetch('/api/Profile', {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setFinance(data.money);
-            }
+			//const response = await fetch(`/api/Profile?user_id=${userId}`, {
+			const response = await fetch('/api/Profile', {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			if (response.ok) {
+				const data = await response.json();
+				setFinance(data.money);
+			}
+		}
+
+		const myFunction = `
+      async function buyOffer(id, balance, price) {
+        if(price > balance){
+			alert('Hello from the custom function!');
+			return
+		}
+		const response = await fetch('/api/buy', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({'id': id})
+        });
+
+        if(response.ok){
+            console.log('Bought: ', id)
         }
+        else{
+            console.log('Something went wrong: ', id)
+        }
+      }`
+
+
+		const script = document.createElement('script')
+		script.innerHTML = myFunction;
+		document.head.appendChild(script);
+
 		fetchOffers()
 		fetchUserData()
 	}, [])
@@ -54,8 +81,8 @@ function Marketplace() {
 		<div className="Marketplace">
 			<Header cash={finance} />
 			<div className='scrollable'>
-				<Showcase offer={showcase} close={closeShowcase} balance={finance}/>
-				<div className='offerList' style={{opacity: loading, transition: 'opacity 300ms ease-in'}}>
+				<Showcase offer={showcase} close={closeShowcase} balance={finance} />
+				<div className='offerList' style={{ opacity: loading, transition: 'opacity 300ms ease-in' }}>
 					{offers.map((offer) =>
 						<span key={offer.id}>
 							<Offer offer={offer} func={showcaseOffer} />

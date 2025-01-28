@@ -38,6 +38,9 @@ function Showcase({ offer, close, balance}) {
     async function buyRequest(e){
         e.preventDefault()
 
+        window.buyOffer(offer.id, balance, offer.price)
+
+        return
         if(balance < offer.price) return
 
         const response = await fetch('/api/buy', {

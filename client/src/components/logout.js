@@ -33,7 +33,7 @@ export function LogoutButton() {
                 onClick={handleLogout}
                 style={{
                     backgroundColor: 'red',
-                    margin: 'auto',
+                    margin: 'auto 20px auto auto',
                     color: 'white', 
                     border: 'none',
                     height: '80%',
