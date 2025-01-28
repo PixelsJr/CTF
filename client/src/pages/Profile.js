@@ -27,16 +27,8 @@ function Profile() {
 
 	useEffect(() => {
 		async function fetchUserData() {
-
-            const userId = localStorage.getItem('user_id');
-
-            if (!userId) {
-                setUserData(false);
-                return;
-            }
-
-
-			const response = await fetch(`/api/Profile?user_id=${userId}`, {
+			//const response = await fetch(`/api/Profile?user_id=${userId}`, {
+            const response = await fetch('/api/Profile', {
 				headers: {
 					'Content-Type': 'application/json',
 				},
@@ -60,7 +52,9 @@ function Profile() {
 
 		console.log(!token)
 
-		if (!token){
+        let userId = getCookie('user_id');
+
+		if (!token || !userId){
 			setUserData(false)
 			return
 		}

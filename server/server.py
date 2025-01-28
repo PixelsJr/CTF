@@ -166,7 +166,8 @@ def main():
     def validate_login(username, password):
         database_output = execute_fetch_db_command(f"SELECT password FROM users WHERE username='{username}';")
         #databse_output = [(password,)] Suht veider, peab topelt valja votma
-        if database_output is not None and password == database_output[0]:
+        app.logger.info(f"DATABASE_OUTPUT VALUE: {database_output[0][0]}")
+        if database_output is not None and password == database_output[0][0]:
             return True
         return False
     
