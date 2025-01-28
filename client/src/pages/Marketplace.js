@@ -85,7 +85,8 @@ function Marketplace() {
 				<div className='offerList' style={{ opacity: loading, transition: 'opacity 300ms ease-in' }}>
 					{offers.map((offer) =>
 						<span key={offer.id}>
-							<Offer offer={offer} func={showcaseOffer} />
+							<Offer offer={offer} func={showcaseOffer} /> 
+							{/* <Offer offer={{ ...offer, image: `/uploads/${offer.image}` }} func={showcaseOffer} /> */}
 						</span>
 					)}
 				</div>

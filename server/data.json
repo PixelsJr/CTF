@@ -96,5 +96,157 @@
         "image": "a",
         "id": 17,
         "seller": "Alice Example"
+    },
+    {
+        "name": "PYTHON VULN",
+        "description": "tries to simulate rce",
+        "price": "1",
+        "image": "http://192.168.1.159:8888/test.py",
+        "id": 18,
+        "seller": "Alice Example"
+    },
+    {
+        "name": "asad",
+        "description": "asdas",
+        "price": "2",
+        "image": "../client/public/favicon.ico",
+        "id": 19,
+        "seller": "Alice Example"
+    },
+    {
+        "name": "asad",
+        "description": "asdas",
+        "price": "2",
+        "image": "../client/public/favicon.ico",
+        "id": 20,
+        "seller": "Alice Example"
+    },
+    {
+        "name": "a",
+        "description": "a",
+        "price": "3",
+        "image": "../test.png",
+        "id": 21,
+        "seller": "Alice Example"
+    },
+    {
+        "name": "a",
+        "description": "a",
+        "price": "3",
+        "image": "../test.png",
+        "id": 22,
+        "seller": "Alice Example"
+    },
+    {
+        "name": "a",
+        "description": "a",
+        "price": "3",
+        "image": "../test.png",
+        "id": 23,
+        "seller": "Alice Example"
+    },
+    {
+        "name": "PROOV",
+        "description": "o",
+        "price": "5",
+        "image": "https://www.imdb.com/name/nm7808003/",
+        "id": 24,
+        "seller": "Alice Example"
+    },
+    {
+        "name": "proov2",
+        "description": "asda",
+        "price": "2",
+        "image": {},
+        "id": 25,
+        "seller": "Alice Example"
+    },
+    {
+        "id": 26,
+        "name": "bts_test1",
+        "description": "a",
+        "price": "2",
+        "image": "https://people.com/music/bts-members-everything-to-know/",
+        "seller": "Alice Example"
+    },
+    {
+        "id": 27,
+        "name": "bts 2",
+        "description": "a",
+        "price": "2",
+        "image": "https://people.com/thmb/eP1dcHO1ul8FPqc6_ZBh7ABW1rg=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(979x595:981x597)/bts-members-1-03a9c478f1794c448bcb5f74bf94812c.jpg",
+        "seller": "Alice Example"
+    },
+    {
+        "id": 28,
+        "name": "bts test 333",
+        "description": "a",
+        "price": "5",
+        "image": null,
+        "seller": "Alice Example"
+    },
+    {
+        "id": 29,
+        "name": "bts test 4",
+        "description": "a",
+        "price": "3",
+        "image": null,
+        "seller": "Alice Example"
+    },
+    {
+        "id": 30,
+        "name": "bts test 4",
+        "description": "a",
+        "price": "3",
+        "image": null,
+        "seller": "Alice Example"
+    },
+    {
+        "id": 31,
+        "name": "bts test 4",
+        "description": "a",
+        "price": "3",
+        "image": null,
+        "seller": "Alice Example"
+    },
+    {
+        "id": 32,
+        "name": "bts test 4",
+        "description": "a",
+        "price": "3",
+        "image": null,
+        "seller": "Alice Example"
+    },
+    {
+        "id": 33,
+        "name": "bts test 5",
+        "description": "a",
+        "price": 2,
+        "image": "https://people.com/thmb/-sy0I1AXm9jKOqDynZYDawMQVXU=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(999x0:1001x2)/bts-bb98ad807ef44aada577c4510c14bce4.jpg",
+        "seller": "Alice Example"
+    },
+    {
+        "id": 34,
+        "name": "bts test 6",
+        "description": "a",
+        "price": 2,
+        "image": "C:\\Users\\Mike\\Code\\CTF-VEEBIRAKENDUS\\server\\marketplace_images\\Screenshot_2025-01-28_224500.png",
+        "seller": "Alice Example"
+    },
+    {
+        "id": 35,
+        "name": "bts test 7",
+        "description": "a",
+        "price": 2,
+        "image": "Screenshot_2025-01-28_224500.png",
+        "seller": "Alice Example"
+    },
+    {
+        "id": 36,
+        "name": "bts test 8",
+        "description": "a",
+        "price": 8,
+        "image": "/uploads/Screenshot_2025-01-28_224500.png",
+        "seller": "Alice Example"
     }
 ]

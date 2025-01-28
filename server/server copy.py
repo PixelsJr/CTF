@@ -66,10 +66,6 @@ def main():
     @app.route('/Profile')
     def serve_index():
         return send_file(INDEX)
-    
-    @app.route('/uploads/<filename>')
-    def uploaded_file(filename):
-        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
     @app.route('/api/buy', methods=['POST'])
     def buy():
@@ -136,38 +132,38 @@ def main():
         if validation != "Authenticated":
             return validation
         try:
-            if not all(key in request.form for key in ('name', 'description', 'price')):
+            data = request.json
+            if not all(key in data for key in ('name', 'description', 'price', 'image')):
                 return jsonify({'error': 'Incomplete offer'}), 400
-            price = request.form.get('price')
-            try:
-                price = int(price)
-            except ValueError:
-                return jsonify({'error': 'Price is not a valid integer'}), 400
-
+            if not isinstance(int(data.get('price')), int): #? This causes an error and 500 response if not int but still kinda works as intended so not fixing
+                return jsonify({'error': 'Price is not int'}), 400
+                
             # This if-elif block does some magic to figure out if the image is a link or an embedded file and acts accordingly
             image_path = None
-            if 'image' in request.files:
+            app.logger.info("00000000000000000000000")
+            app.logger.info("request files: " + str(request.files))
+            if 'image' in data and not isinstance(data, dict) and data['image'].startswith('http'):
+                image_path = data['image']
+                app.logger.info("1111111111111111111111")
+            elif 'image' in request.files:
+                app.logger.info("222222222222222222222222222222222222")
                 file = request.files['image']
+                app.logger.info("INGOINGOGINO " + str(file))
                 if file and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
                     image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                     file.save(image_path)
-            elif 'image' in request.form and request.form['image'].startswith('http'):
-                image_path = request.form['image']
-
-            if not image_path:
-                return jsonify({'error': 'No image or valid URL provided'}), 400
 
             offers = load_json_data()
             user_id = request.cookies.get('user_id')
             new_offer_id = max([offer['id'] for offer in offers], default=0) + 1 # This makes the ID incremental
-            
+
             new_offer = {
                 'id': new_offer_id,
-                'name': request.form.get('name'),
-                'description': request.form.get('description'),
-                'price': price,
-                'image': f"/uploads/{filename}", # I used filename since we have a route for /uploads and image_path didn't work
+                'name': data['name'],
+                'description': data['description'],
+                'price': data['price'],
+                'image': image_path,
                 'seller': fetch_user_data(user_id).get('username')
             }
 

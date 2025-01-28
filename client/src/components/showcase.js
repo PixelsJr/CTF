@@ -66,6 +66,8 @@ function Showcase({ offer, close, balance}) {
                 <div className='imgContainer'>
                     <div className="background" style={{ backgroundImage: `url(${offer.image})` }} />
                     <img className="main" src={offer.image} />
+                    {/* <div className="background" style={{ backgroundImage: `url(/uploads/${offer.image})` }} />
+                    <img className="main" src={`/uploads/${offer.image}`} /> */}
                 </div>
                 <div className="cover">
                     <div className="body">

@@ -5,8 +5,8 @@ function UserData({ data }) {
 	return (
 		<div className='userData'>
 			<div></div>
-			<h1>{data.username}</h1>
-			<h2>{data.money}€</h2>
+			<h1>Welcome, {data.username}!</h1>
+			<h2>Money: {data.money}€</h2>
 			<div>
 
 				{data.purchases.map((purchase, key) =>
