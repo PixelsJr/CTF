@@ -5,6 +5,7 @@ import LogIn from '../components/logIn';
 import Register from '../components/reg';
 import UserData from '../components/userData';
 import CreateOffer from '../components/createOffer';
+import PurchaseHistory from '../components/purchaseHistory';
 
 //VÄGA IMPORTANT
 //VÄGA IMPORTANT
@@ -69,6 +70,8 @@ function Profile() {
         </div>
     }
 
+    userData.purchases = []
+
     //Suht horisontaalne kood. Nii lõbus
     //Mu auto formatter isegi ei toota enam
     return (
@@ -107,6 +110,7 @@ function Profile() {
                     </div>
                 ) : <div>
                     <UserData data={userData} />
+                    <PurchaseHistory offers={userData.purchases} />
                     <CreateOffer />
                 </div>
                 }
