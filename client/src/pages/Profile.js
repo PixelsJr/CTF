@@ -4,6 +4,7 @@ import Header from '../components/header';
 import LogIn from '../components/logIn';
 import Register from '../components/reg';
 import UserData from '../components/userData';
+import CreateOffer from '../components/createOffer';
 
 //VÄGA IMPORTANT
 //VÄGA IMPORTANT
@@ -22,87 +23,94 @@ import UserData from '../components/userData';
 
 function Profile() {
 
-	const [userData, setUserData] = useState(null);
-	const [isRegistering, setIsRegistering] = useState(false);
+    const [userData, setUserData] = useState(null);
+    const [isRegistering, setIsRegistering] = useState(false);
 
-	useEffect(() => {
-		async function fetchUserData() {
-			//const response = await fetch(`/api/Profile?user_id=${userId}`, {
+    useEffect(() => {
+        async function fetchUserData() {
+            //const response = await fetch(`/api/Profile?user_id=${userId}`, {
             const response = await fetch('/api/Profile', {
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
-			if (response.ok) {
-				const data = await response.json();
-				setUserData(data);
-			} else {
-				setUserData(false)
-			}
-		}
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setUserData(data);
+            } else {
+                setUserData(false)
+            }
+        }
 
-		function getCookie(name) {
-			const value = `; ${document.cookie}`;
-			const parts = value.split(`; ${name}=`);
-			if (parts.length === 2) return parts.pop().split(';').shift();
-			return null;
-		}
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
 
-		let token = getCookie('token');
+        let token = getCookie('token');
 
-		console.log(!token)
+        console.log(!token)
 
         let userId = getCookie('user_id');
 
-		if (!token || !userId){
-			setUserData(false)
-			return
-		}
+        if (!token || !userId) {
+            setUserData(false)
+            return
+        }
 
-		fetchUserData();
-	}, [document.cookie]);
+        fetchUserData();
+    }, [document.cookie]);
 
-	if (userData === null) {
-		return <div>
-			<Header />
-		</div>
-	}
+    if (userData === null) {
+        return <div>
+            <Header />
+        </div>
+    }
+
+    //Suht horisontaalne kood. Nii lõbus
+    //Mu auto formatter isegi ei toota enam
     return (
         <div className="Profile">
             <Header />
-            {!userData ? (
-                <div>
-                    {isRegistering ? (
-                        <div>
-                            <Register />
-                            <p>
-                                Already have an account?{' '}
-                                <button
-                                    className="toggle-button"
-                                    onClick={() => setIsRegistering(false)}
-                                >
-                                    Log in here
-                                </button>
-                            </p>
-                        </div>
-                    ) : (
-                        <div>
-                            <LogIn />
-                            <p>
-                                Don’t have an account?{' '}
-                                <button
-                                    className="toggle-button"
-                                    onClick={() => setIsRegistering(true)}
-                                >
-                                    Register here
-                                </button>
-                            </p>
-                        </div>
-                    )}
+            <div className='scrollable'>
+                {!userData ? (
+                    <div>
+                        {isRegistering ? (
+                            <div>
+                                <Register />
+                                <p>
+                                    Already have an account?{' '}
+                                    <button
+                                        className="toggle-button"
+                                        onClick={() => setIsRegistering(false)}
+                                    >
+                                        Log in here
+                                    </button>
+                                </p>
+                            </div>
+                        ) : (
+                            <div>
+                                <LogIn />
+                                <p>
+                                    Don’t have an account?{' '}
+                                    <button
+                                        className="toggle-button"
+                                        onClick={() => setIsRegistering(true)}
+                                    >
+                                        Register here
+                                    </button>
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                ) : <div>
+                    <UserData data={userData} />
+                    <CreateOffer />
                 </div>
-            ) : (
-				<UserData data={userData} />
-            )}
+                }
+            </div>
         </div>
     );
 }

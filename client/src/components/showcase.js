@@ -1,7 +1,7 @@
 import Close from "./close";
 import { useState, useEffect } from 'react'
 
-function Showcase({ offer, close }) {
+function Showcase({ offer, close, balance}) {
 
     const [newReview, setNewReview] = useState("");
     const [reviews, setReviews] = useState([]);
@@ -35,6 +35,27 @@ function Showcase({ offer, close }) {
         }
     };
 
+    async function buyRequest(e){
+        e.preventDefault()
+
+        if(balance < offer.price) return
+
+        const response = await fetch('/api/buy', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({offer_id: offer.id})
+        });
+
+        if(response.ok){
+            console.log('Bought: ', offer.id)
+        }
+        else{
+            console.log('Something went wrong: ', offer.id)
+        }
+    }
+
     return (
         <div className="showcaseBackground">
             <Close func={close} />
@@ -49,7 +70,7 @@ function Showcase({ offer, close }) {
                         <h2>{offer.seller}</h2>
                         <p>{offer.description}</p>
 
-                        <button>BUY: {offer.price}€</button>
+                        <button onClick={{buyRequest}}>BUY: {offer.price}€</button>
 
                         {/* Reviews Section */}
                         <h3>Reviews</h3>
