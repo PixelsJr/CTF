@@ -75,10 +75,14 @@ def main():
                 user_data = fetch_user_data(user_id) #! THIS WILL BE THE REASON FOR IDOR
                 if not user_data:
                     return jsonify({"error": "User not found"})
+                """
                 return jsonify({
                     'username': user_data.get('username'),
                     'id': user_data.get('id')
-                })            
+
+                }) 
+                """
+                return jsonify(user_data)           
         return "No token found", 403
     
     @app.route('/api/logIn', methods=['POST'])
@@ -110,6 +114,10 @@ def main():
         if sql_return_value is not None and sql_return_value is False:
             return jsonify({"error": "An error has occurred"}), 500
         return jsonify({"message": "Review added successfully"}), 201
+    
+    @app.route('/api/createOffer', methods=['POST'])
+    def create_offer():
+        pass
             
     
     @app.route('/api/Register', methods=['POST'])
@@ -138,12 +146,13 @@ def main():
 
     # Helper functiom to gather a user's data
     def fetch_user_data(user_id):
-        user_data = execute_fetch_db_command(f"SELECT id, username FROM users WHERE id='{user_id}';")[0]
+        user_data = execute_fetch_db_command(f"SELECT id, username, money FROM users WHERE id='{user_id}';")[0]
         if not bool(user_data):
             return False
         return {
             "id": user_data[0],
-            "username": user_data[1]
+            "username": user_data[1],
+            "money": user_data[2]
             }
         #*Debugging
         #*app.logger.info("IMPORTANT  !!!!!!     " + str(user))
