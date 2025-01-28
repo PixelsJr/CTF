@@ -32,12 +32,11 @@ export function LogoutButton() {
             <button 
                 onClick={handleLogout}
                 style={{
-                    position: 'absolute', 
-                    top: '10px', 
-                    right: '10px', 
-                    backgroundColor: 'red', 
+                    backgroundColor: 'red',
+                    margin: 'auto',
                     color: 'white', 
-                    border: 'none', 
+                    border: 'none',
+                    height: '80%',
                     padding: '8px 15px', 
                     cursor: 'pointer',
                     fontSize: '14px'

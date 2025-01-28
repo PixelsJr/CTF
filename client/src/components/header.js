@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 import { LogoutButton } from '../components/logout';
 
-function Header() {
+function Header({cash}) {
 	return (
 		<div className='header'>
+			<div style={{width: '20%'}}>
+
+			</div>
 			<div>
 				<Link to="/">
 					<svg viewBox="0 0 24 24" fill="#FFF">
@@ -17,7 +20,10 @@ function Header() {
 
 				</Link>
 			</div>
-			<LogoutButton />
+			<div style={{width: '20%', justifyContent: 'space-between'}}>
+				<h3 style={{margin: 'auto', fontSize: '22px'}}>{cash}€</h3>
+				<LogoutButton />
+			</div>
 		</div>
 	);
 }
