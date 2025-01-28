@@ -68,29 +68,16 @@ def main():
     @app.route('/api/Profile')
     def profile():
         #* This function contains the idor vuln
-        token = request.cookies.get('token')
+        validation = validate_auth(request)
+        if validation != "Authenticated":
+            return validation
         user_id = request.cookies.get('user_id')
-        print(token)
-        if token:            
-            # Validate the token
-            if decode_jwt(token, "exp") == "JWT token invalid":
-                return jsonify({
-                    'error': "JWT token invalid"
-                })
-            if user_id:
-                # If token is valid, serve the profile (return user data)
-                user_data = fetch_user_data(user_id) #! THIS WILL BE THE REASON FOR IDOR
-                if not user_data:
-                    return jsonify({"error": "User not found"})
-                """
-                return jsonify({
-                    'username': user_data.get('username'),
-                    'id': user_data.get('id')
-
-                }) 
-                """
-                return jsonify(user_data)           
-        return "No token found", 403
+        if user_id:
+            # If token is valid, serve the profile (return user data)
+            user_data = fetch_user_data(user_id) #! THIS WILL BE THE REASON FOR IDOR
+            if not user_data:
+                return jsonify({"error": "User not found"})
+            return jsonify(user_data)           
     
     @app.route('/api/logIn', methods=['POST'])
     def login():
@@ -117,23 +104,39 @@ def main():
         review_text = data.get("review")
         if not offer_id or not review_text:
             return jsonify({"error": "Invalid input"}), 400
-        sql_return_value = execute_commit_db_command(f"INSERT INTO reviews (offer_id, review_text) VALUES ({offer_id}, '{review_text}')")
-        if sql_return_value is not None and sql_return_value is False:
-            return jsonify({"error": "An error has occurred"}), 500
+        #sql_return_value = execute_commit_db_command(f"INSERT INTO reviews (offer_id, review_text) VALUES ({offer_id}, '{review_text}')")
+
+        """I don't use the vulnerable execute_commit_db_command() function here since trying to XSS actually causes an sql injection and causes this function to fail and not store any code with XSS in it."""
+        try:
+            with sqlite3.connect('database.db') as db_connection:
+                cursor = db_connection.cursor()
+                cursor.execute("INSERT INTO reviews (offer_id, review_text) VALUES (?, ?)", (offer_id, review_text))
+                db_connection.commit()
+        except Exception as e:
+            app.logger.error(f"wtf222 error: {e}")
+            return jsonify({"error": "SQL error"}), 400
         return jsonify({"message": "Review added successfully"}), 201
     
     @app.route('/api/createOffer', methods=['POST'])
     def create_offer():
+        validation = validate_auth(request)
+        if validation != "Authenticated":
+            return validation
         try:
             data = request.json
-
             if not all(key in data for key in ('name', 'description', 'price', 'image')):
                 return jsonify({'error': 'Incomplete offer'}), 400
-
+            if not isinstance(int(data.get('price')), int): #? This causes an error and 500 response if not int but still kinda works as intended so not fixing
+                return jsonify({'error': 'Price is not int'}), 400
+            
             offers = load_json_data()
+            user_id = request.cookies.get('user_id')
             new_offer_id = max([offer['id'] for offer in offers], default=0) + 1 # This makes the ID incremental
+
             new_offer = request.json
             new_offer['id'] = new_offer_id
+            new_offer['seller'] = fetch_user_data(user_id).get('username')
+
             offers.append(new_offer)
             save_offers(offers)
             return jsonify({'message': 'Offer added successfully', 'offer': new_offer}), 201
@@ -210,6 +213,20 @@ def main():
             return "Authenticated"
         return "Wrong password"
     
+    # Used as auth validation for apis
+    def validate_auth(request):
+        token = request.cookies.get('token')
+        if token:            
+            # Validate the token
+            if decode_jwt(token, "exp") == "JWT token invalid":
+                return jsonify({
+                    'error': "JWT token invalid"
+                })
+            return "Authenticated"
+        return jsonify({
+            'error': "JWT token not present"
+        })
+
     # Helper function to create a JWT token for logging in
     def create_jwt(user_id=None):
         if user_id is None:
