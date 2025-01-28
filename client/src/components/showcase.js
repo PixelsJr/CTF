@@ -45,7 +45,7 @@ function Showcase({ offer, close, balance}) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({offer_id: offer.id})
+            body: JSON.stringify({'id': offer.id})
         });
 
         if(response.ok){
@@ -70,7 +70,7 @@ function Showcase({ offer, close, balance}) {
                         <h2>{offer.seller}</h2>
                         <p>{offer.description}</p>
 
-                        <button onClick={{buyRequest}}>BUY: {offer.price}€</button>
+                        <button onClick={buyRequest}>BUY: {offer.price}€</button>
 
                         {/* Reviews Section */}
                         <h3>Reviews</h3>
