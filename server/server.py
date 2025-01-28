@@ -5,7 +5,7 @@ import jwt
 import dotenv
 from datetime import timedelta, datetime, timezone
 import sqlite3
-import uuid
+import subprocess
 from werkzeug.utils import secure_filename
 
 
@@ -70,6 +70,22 @@ def main():
     @app.route('/uploads/<filename>')
     def uploaded_file(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+    @app.route('/api/php-login', methods=['POST'])
+    def php_login():
+        #!!!! ABSOLUUTSELT POLE TEHTUD
+        data = request.json
+        username = data['username']
+        password = data['password']
+        
+        # Call PHP script via subprocess
+        command = f'php /path/to/login.php {username} {password}'
+        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+        # Process the output
+        response = result.stdout.strip()
+        
+        return jsonify({'message': response})
 
     @app.route('/api/buy', methods=['POST'])
     def buy():

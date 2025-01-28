@@ -248,5 +248,13 @@
         "price": 8,
         "image": "/uploads/Screenshot_2025-01-28_224500.png",
         "seller": "Alice Example"
+    },
+    {
+        "id": 37,
+        "name": "PY VULN 2",
+        "description": "A",
+        "price": 2,
+        "image": "/uploads/testpy.png",
+        "seller": "Alice Example"
     }
 ]
