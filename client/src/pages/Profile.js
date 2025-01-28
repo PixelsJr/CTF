@@ -76,7 +76,7 @@ function Profile() {
     //Mu auto formatter isegi ei toota enam
     return (
         <div className="Profile">
-            <Header />
+            <Header cash={userData.money} />
             <div className='scrollable'>
                 {!userData ? (
                     <div>

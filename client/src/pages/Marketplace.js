@@ -9,6 +9,8 @@ function Marketplace() {
 	const [offers, setOffers] = useState([])
 	const [showcase, setShowcase] = useState(null)
 
+	const [finance, setFinance] = useState(0)
+
 	const [loading, setLoading] = useState(0);
 
 
@@ -23,7 +25,21 @@ function Marketplace() {
 			console.log(offers)
 			setLoading(1);
 		}
+
+		async function fetchUserData() {
+            //const response = await fetch(`/api/Profile?user_id=${userId}`, {
+            const response = await fetch('/api/Profile', {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setFinance(data.money);
+            }
+        }
 		fetchOffers()
+		fetchUserData()
 	}, [])
 
 	function closeShowcase() {
@@ -36,9 +52,9 @@ function Marketplace() {
 
 	return (
 		<div className="Marketplace">
-			<Header />
+			<Header cash={finance} />
 			<div className='scrollable'>
-				<Showcase offer={showcase} close={closeShowcase} />
+				<Showcase offer={showcase} close={closeShowcase} balance={finance}/>
 				<div className='offerList' style={{opacity: loading, transition: 'opacity 300ms ease-in'}}>
 					{offers.map((offer) =>
 						<span key={offer.id}>
