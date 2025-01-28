@@ -73,12 +73,12 @@ def main():
             if user_id:
                 # If token is valid, serve the profile (return user data)
                 user_data = fetch_user_data(user_id) #! THIS WILL BE THE REASON FOR IDOR
-                if not user_data: return {"error": "User not found"}
+                if not user_data:
+                    return jsonify({"error": "User not found"})
                 return jsonify({
                     'username': user_data.get('username'),
                     'id': user_data.get('id')
-                })
-            
+                })            
         return "No token found", 403
     
     @app.route('/api/logIn', methods=['POST'])
