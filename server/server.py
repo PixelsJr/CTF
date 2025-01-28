@@ -58,6 +58,13 @@ def main():
     def serve_index():
         return send_file(INDEX)
 
+    @app.route('/api/buy', methods=['POST'])
+    def buy():
+        data = request.get_json()
+        app.logger.info(f"Buy offer: {data}")
+        offerID = data['id']
+        return 'well done', 200
+
     @app.route('/api/Profile')
     def profile():
         #* This function contains the idor vuln
