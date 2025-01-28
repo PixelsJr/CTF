@@ -35,7 +35,7 @@ def main():
     # Route to get all offers
     @app.route('/api/getAllOffers', methods=['GET'])
     def get_offers():
-        offers = read_json_data()
+        offers = load_json_data()
         reviews = fetch_offer_reviews()
         for offer in offers:
             offer["reviews"] = reviews.get(offer["id"], [])
@@ -117,7 +117,21 @@ def main():
     
     @app.route('/api/createOffer', methods=['POST'])
     def create_offer():
-        pass
+        try:
+            data = request.json
+
+            if not all(key in data for key in ('name', 'description', 'price', 'image')):
+                return jsonify({'error': 'Incomplete offer'}), 400
+
+            offers = load_json_data()
+            new_offer_id = max([offer['id'] for offer in offers], default=0) + 1 # This makes the ID incremental
+            new_offer = request.json
+            new_offer['id'] = new_offer_id
+            offers.append(new_offer)
+            save_offers(offers)
+            return jsonify({'message': 'Offer added successfully', 'offer': new_offer}), 201
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
             
     
     @app.route('/api/Register', methods=['POST'])
@@ -137,12 +151,17 @@ def main():
 
 
     # Helper function to read the JSON file
-    def read_json_data():
+    def load_json_data():
         if os.path.exists(JSON_PATH):
             with open(JSON_PATH, 'r') as file:
                 return json.load(file)
         else:
             return []
+    
+    def save_offers(offers):
+        with open(JSON_PATH, 'w') as file:
+            json.dump(offers, file, indent=4)
+
 
     # Helper functiom to gather a user's data
     def fetch_user_data(user_id):

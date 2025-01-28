@@ -13,7 +13,8 @@
         "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D",
         "description": "suhtsama",
         "price": 12
-    },{
+    },
+    {
         "id": 3,
         "name": "Sum dog",
         "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
@@ -22,7 +23,8 @@
         "id": 4,
         "name": "Sum cat",
         "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
-    },{
+    },
+    {
         "id": 5,
         "name": "Sum dog",
         "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
@@ -31,7 +33,8 @@
         "id": 6,
         "name": "Sum cat",
         "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
-    },{
+    },
+    {
         "id": 7,
         "name": "Sum dog",
         "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
@@ -40,7 +43,8 @@
         "id": 8,
         "name": "Sum cat",
         "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
-    },{
+    },
+    {
         "id": 9,
         "name": "Sum dog",
         "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
@@ -49,7 +53,8 @@
         "id": 10,
         "name": "Sum cat",
         "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
-    },{
+    },
+    {
         "id": 11,
         "name": "Sum dog",
         "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
@@ -58,7 +63,8 @@
         "id": 12,
         "name": "Sum cat",
         "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
-    },{
+    },
+    {
         "id": 13,
         "name": "Sum dog",
         "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
@@ -67,5 +73,12 @@
         "id": 14,
         "name": "Sum cat",
         "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
+    },
+    {
+        "name": "a",
+        "description": "sada",
+        "price": "3",
+        "image": "sadas",
+        "id": 15
     }
 ]
