@@ -37,21 +37,18 @@ def main():
     def get_offers():
         offers = read_json_data()
         reviews = fetch_offer_reviews()
-
         for offer in offers:
             offer["reviews"] = reviews.get(offer["id"], [])
         return jsonify(offers), 200
 
     @app.route('/<path:filename>')
     def serve_file(filename):
-        # Serve files from the 'client/build' directory
+        """Serves files from the 'client/build' directory"""
         
         #*DEBUGGING
         app.logger.info(f"request filename: {filename}")
 
-        # Construct the full path to the file
         file_path = os.path.join(BUILD_DIR, filename)
-        # Check if the file exists
         if os.path.exists(file_path) and os.path.isfile(file_path):
             return send_file(file_path)
         return "404 NOT FOUND"
@@ -89,17 +86,18 @@ def main():
         data = request.get_json()
         username = data.get("username")
         password = data.get("password")
-        if validate_login(username, password):
-            user_id = execute_fetch_db_command(f"SELECT id FROM users WHERE username='{username}';")[0][0]
-            jwt_token = create_jwt(user_id)
-            app.logger.info(jwt_token)
-            response = make_response("Cookies set!")
-            response.set_cookie('token', jwt_token, path='/')
-            response.set_cookie('user_id', str(user_id), path='/')
-            return response
-            #return jsonify({"token": jwt_token}), 200
-        else:
-            return jsonify({"error": "access denied"}), 401
+        login_result = validate_login(username, password)
+        match login_result:
+            case "Authenticated":
+                user_id = execute_fetch_db_command(f"SELECT id FROM users WHERE username='{username}';")[0][0]
+                jwt_token = create_jwt(user_id)
+                app.logger.info(jwt_token)
+                response = make_response("Cookies set!")
+                response.set_cookie('token', jwt_token, path='/')
+                response.set_cookie('user_id', str(user_id), path='/')
+                return response
+            case _:
+                return jsonify({"error": login_result}), 401
     
     @app.route('/api/addReview', methods=['POST'])
     def add_review():
@@ -164,18 +162,19 @@ def main():
 
     # Helper function to validate website logins
     def validate_login(username, password):
-        database_output = execute_fetch_db_command(f"SELECT password FROM users WHERE username='{username}';")
-        #databse_output = [(password,)] Suht veider, peab topelt valja votma
-        app.logger.info(f"DATABASE_OUTPUT VALUE: {database_output[0][0]}")
-        if database_output is not None and password == database_output[0][0]:
-            return True
-        return False
-    
-    def validate_jwt(token):
-        #! This is required for idor
-        #TODO
-        pass
+        """
+        First sql is needed to confirm if a user exists, second one is used for confirming the password.
 
+        Yes, authentication works without the first sql query, but it is needed for the enumeration vuln to work.
+        """
+        if not execute_fetch_db_command(f"SELECT * FROM users WHERE username = '{username}' LIMIT 1;"):
+            app.logger.info(f"USERNAME DATABASE_OUTPUT VALUE: {execute_fetch_db_command(f"SELECT * FROM users WHERE username = '{username}' LIMIT 1;")}") #* Debugging
+            return "Username does not exist"
+        database_output = execute_fetch_db_command(f"SELECT password FROM users WHERE username='{username}';")
+        if database_output is not None and password == database_output[0][0]:
+            return "Authenticated"
+        return "Wrong password"
+    
     # Helper function to create a JWT token for logging in
     def create_jwt(user_id=None):
         if user_id is None:
@@ -188,7 +187,7 @@ def main():
         token = jwt.encode(payload, SECRET, ALGORITHM)
         return token
 
-    # Helper function to decode JWT tokens for authentication
+    # Helper function to decode JWT tokens when authenticating
     def decode_jwt(token=None, dict_key=None):
         if token is None or dict_key == None or not isinstance(dict_key, str):
             raise ValueError("Token and requested namefield must both be provided.")
@@ -216,7 +215,6 @@ def main():
         except sqlite3.DatabaseError as e:
             app.logger.error(f"wtf error: {e}")
         finally:
-            # Connection is closed automatically when exiting the 'with' block
             print("Connection closed properly.")
     
     def execute_commit_db_command(command: str):

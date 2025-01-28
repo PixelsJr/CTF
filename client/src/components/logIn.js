@@ -37,7 +37,9 @@ function LogIn({ }) {
 		}
 		if (!response.ok) {
 			console.log('Log In failed')
-			setErrorMessage('Incorrect username or password.');
+			const errorData = await response.json();
+			console.log(errorData.error)
+			setErrorMessage(errorData.error || 'Incorrect username or password.');
 		}
 	}
 
