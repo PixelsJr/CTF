@@ -17,6 +17,7 @@ function Marketplace() {
 
 	useEffect(() => {
 		async function fetchOffers() {
+
 			const response = await fetch('/api/getAllOffers', {
 				method: 'GET'
 			})
@@ -28,7 +29,14 @@ function Marketplace() {
                 	return offer;
             	}
 
-            	const imageResponse = await fetch(`/api/get_image.php?file_id=${offer.id}`);
+				const filename_response = await fetch(`/api/get_offer_filename_from_id?offer_id=${offer.id}`, {
+					method: 'GET'
+				});
+				//const filename = await filename_response.json().filename
+				const filename_json = await filename_response.json()
+				const filename = filename_json.filename
+
+            	const imageResponse = await fetch(`/api/get_image.php?filename=${filename}`);
 				if (imageResponse.ok) {
 					// Convert the image to a blob and create an object URL
 					const { image, error } = await imageResponse.json();

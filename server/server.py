@@ -44,7 +44,6 @@ def main():
             private_key = f.read()
         with open("keys/public_key.pem", "r") as f:
             public_key = f.read()
-        app.logger.info(str((private_key, public_key)))
         return (private_key, public_key)
 
     PRIVATE_KEY, PUBLIC_KEY = get_keys()
@@ -52,13 +51,11 @@ def main():
 
     # Route to get all offers
     @app.route('/api/getAllOffers', methods=['GET'])
-    def get_offers():
+    def get_all_offers():
         offers = load_json_data()
         reviews = fetch_offer_reviews()
         for offer in offers:
             offer["reviews"] = reviews.get(offer["id"], [])
-            app.logger.error(offer)
-            app.logger.error(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{offer.get('image')}")
             try:
                 if not offer.get('image').startswith('http'):
                     del offer['image']
@@ -78,10 +75,6 @@ def main():
     @app.route('/<path:filename>')
     def serve_file(filename):
         """Serves files from the 'client/build' directory"""
-        
-        #*DEBUGGING
-        #app.logger.info(f"request filename: {filename}")
-
         file_path = os.path.join(BUILD_DIR, filename)
         if os.path.exists(file_path) and os.path.isfile(file_path):
             return send_file(file_path)
@@ -93,23 +86,41 @@ def main():
         return send_file(INDEX)
     
     """
+    Seda route'i lowk pole vaja sest saadame image data otse läbi php file'i
+
     @app.route('/uploads/<filename>')
     def uploaded_file(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
     """
 
-    @app.route('/api/get_image.php', methods=['GET'])
-    def php_get_image():        
-        offer_id = request.args.get('file_id')
+    @app.route('/api/get_offer_filename_from_id', methods=['GET'])
+    def get_offer_filename_from_id():
+        offer_id = request.args.get('offer_id')
+        try:
+            filename = get_offer(offer_id).get('image')
+            return jsonify({'filename': filename})
+        except Exception as e:
+            return jsonify({'error': e})
 
+
+
+    @app.route('/api/get_image.php', methods=['GET'])
+    def php_get_image():
+        """
+        offer_id = request.args.get('file_id')
         filename = get_offer(offer_id).get('image')
+        """
+
+        filename = request.args.get('filename')
+        app.logger.error(filename)
         if filename:
             file_path = f"marketplace_images/{filename}"
 
             # Call PHP script via subprocess
             command = f'php/php.exe get_image.php {file_path}'
             result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-            response = result.stdout.strip()        
+            response = result.stdout.strip()   
+
             return jsonify({'image': response})
 
             """
@@ -137,15 +148,11 @@ def main():
             return validation
 
         data = request.get_json()
-        app.logger.error(f"Buy offer: {data}")
         offerID = data['id']
 
         user_id = int(request.cookies.get('user_id'))
         purchase_offers = execute_fetch_db_command(f"SELECT PurchaseHistory FROM users WHERE id={user_id};")[0][0]
-
-        app.logger.error(f"SQL output purchase_offers: {purchase_offers}")
         purchase_offers += f',{offerID}'
-        app.logger.error(f"New purchase_offers: {purchase_offers}")
 
         execute_commit_db_command(f"UPDATE users SET \"PurchaseHistory\" = '{purchase_offers}' WHERE id = {user_id};")
         return 'well done', 200
@@ -175,7 +182,6 @@ def main():
             case "Authenticated":
                 user_id = execute_fetch_db_command(f"SELECT id FROM users WHERE username='{username}';")[0][0]
                 jwt_token = create_jwt(user_id)
-                app.logger.info(jwt_token)
                 response = make_response("Cookies set!")
                 response.set_cookie('token', jwt_token, path='/')
                 response.set_cookie('user_id', str(user_id), path='/')
@@ -199,7 +205,6 @@ def main():
                 cursor.execute("INSERT INTO reviews (offer_id, review_text) VALUES (?, ?)", (offer_id, review_text))
                 db_connection.commit()
         except Exception as e:
-            app.logger.error(f"wtf222 error: {e}")
             return jsonify({"error": "SQL error"}), 400
         return jsonify({"message": "Review added successfully"}), 201
     
@@ -287,8 +292,6 @@ def main():
         user_data = execute_fetch_db_command(f"SELECT id, username, money, PurchaseHistory FROM users WHERE id='{user_id}';")[0]
         if not bool(user_data):
             return False
-        
-        app.logger.error(user_data[3].split(','))
 
         purchases = user_data[3].split(',')
         purchasesOffers = []
@@ -301,9 +304,6 @@ def main():
             "money": user_data[2],
             "purchases": purchasesOffers,
             }
-        #*Debugging
-        #*app.logger.info("IMPORTANT  !!!!!!     " + str(user))
-        #*return {"id": 1, "username": "test"}
 
     # Function to fetch reviews from the database
     def fetch_offer_reviews():
@@ -324,7 +324,6 @@ def main():
         Yes, authentication works without the first sql query, but it is needed for the enumeration vuln to work.
         """
         if not execute_fetch_db_command(f"SELECT * FROM users WHERE username = '{username}' LIMIT 1;"):
-            #app.logger.info(f"USERNAME DATABASE_OUTPUT VALUE: {execute_fetch_db_command(f"SELECT * FROM users WHERE username = '{username}' LIMIT 1;")}") #* Debugging
             return "Username does not exist"
         database_output = execute_fetch_db_command(f"SELECT password FROM users WHERE username='{username}';")
         if database_output is not None and password == database_output[0][0]:
@@ -394,7 +393,6 @@ def main():
         except ValueError:
             raise ValueError("Namefield not found in token.")
         except Exception as e:
-            app.logger.error(e)
             raise ValueError("JWT token invalid")
     
     # Helper function to execute commands to the database
