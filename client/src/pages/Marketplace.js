@@ -8,9 +8,7 @@ function Marketplace() {
 
 	const [offers, setOffers] = useState([])
 	const [showcase, setShowcase] = useState(null)
-
 	const [finance, setFinance] = useState(0)
-
 	const [loading, setLoading] = useState(0);
 
 	useEffect(() => {
@@ -20,7 +18,28 @@ function Marketplace() {
 			})
 			const data = await response.json()
 			console.log(offers)
-			setOffers(data)
+
+        	const offersWithImages = await Promise.all(data.map(async (offer) => {
+				if (offer.image) {
+                	return offer;
+            	}
+
+            	const imageResponse = await fetch(`/api/get_image.php?file_id=${offer.id}`);
+				if (imageResponse.ok) {
+					// Convert the image to a blob and create an object URL
+					const { image, error } = await imageResponse.json();
+					if (image) {
+                            offer.image = `data:image/jpeg;base64,${image}`;
+                    } else {
+                            offer.image = ''; 
+                    }
+				} else {
+                	offer.image = '';
+            	}
+				return offer;
+			}));
+
+			setOffers(offersWithImages)
 			console.log(offers)
 			setLoading(1);
 		}

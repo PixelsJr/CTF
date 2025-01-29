@@ -1,7 +1,12 @@
 <?php
 
-// Get the 'file' parameter from the query string
-$file = $_GET['file'];
+$file_path = $argv[1];
 
-include($file);
+if (file_exists($file_path)) {
+  $image_data = file_get_contents($file_path);
+  echo base64_encode($image_data);
+} else {
+  echo "Error: Image not found.";
+}
+
 ?>

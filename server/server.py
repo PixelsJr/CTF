@@ -57,13 +57,19 @@ def main():
         reviews = fetch_offer_reviews()
         for offer in offers:
             offer["reviews"] = reviews.get(offer["id"], [])
+            app.logger.error(offer)
+            app.logger.error(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{offer.get('image')}")
+            try:
+                if not offer.get('image').startswith('http'):
+                    del offer['image']
+            except:
+                del offer['image']
         return jsonify(offers), 200
     
     def get_offer(id):
         offers = load_json_data()
         reviews = fetch_offer_reviews()
         for offer in offers:
-
             if offer['id'] is not int(id):
                 continue
             offer["reviews"] = reviews.get(offer["id"], [])
@@ -86,25 +92,43 @@ def main():
     def serve_index():
         return send_file(INDEX)
     
+    """
     @app.route('/uploads/<filename>')
     def uploaded_file(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    """
 
-    @app.route('/api/php-login', methods=['POST'])
-    def php_login():
-        #!!!! ABSOLUUTSELT POLE TEHTUD
-        data = request.json
-        username = data['username']
-        password = data['password']
-        
-        # Call PHP script via subprocess
-        command = f'php /path/to/login.php {username} {password}'
-        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    @app.route('/api/get_image.php', methods=['GET'])
+    def php_get_image():        
+        offer_id = request.args.get('file_id')
 
-        # Process the output
-        response = result.stdout.strip()
-        
-        return jsonify({'message': response})
+        filename = get_offer(offer_id).get('image')
+        if filename:
+            file_path = f"marketplace_images/{filename}"
+
+            # Call PHP script via subprocess
+            command = f'php/php.exe get_image.php {file_path}'
+            result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            response = result.stdout.strip()        
+            return jsonify({'image': response})
+
+            """
+            The php file "get_image.php" contains this:
+
+            <?php
+
+            $file_path = $argv[1];
+
+            if (file_exists($file_path)) {
+            $image_data = file_get_contents($file_path);
+            echo base64_encode($image_data);
+            } else {
+            echo "Error: Image not found.";
+            }
+
+            ?>
+            """
+        return abort(404)
 
     @app.route('/api/buy', methods=['POST'])
     def buy():

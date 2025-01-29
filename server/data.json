@@ -157,7 +157,7 @@
         "name": "proov2",
         "description": "asda",
         "price": "2",
-        "image": {},
+        "image": null,
         "id": 25,
         "seller": "Alice Example"
     },
