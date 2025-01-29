@@ -2,7 +2,6 @@ from flask import *
 import json
 import os
 import jwt
-from jwt.api_jws import decode_complete
 import dotenv
 from datetime import timedelta, datetime, timezone
 import sqlite3
@@ -316,15 +315,22 @@ def main():
         return token
 
 
+
+
+    """
+    The following lines of code make it possible to have the JWT vuln.
+
+    We have to use this since the devs have implemented safeguards agains algorithm confusion vulns, including one where you're not allowed to sign tokens with secrets that have the same format as an rsa public key .
+
+    This isn't realistic in a real-life webapp unless you're extremely bad or are just using a very outdated version of PyJWT.
+    """
+
     # prepare an override method
     def prepare_key(key):
         return jwt.utils.force_bytes(key)
 
     # override HS256's prepare key method to disable checking for asymmetric key words
     jwt.api_jws._jws_global_obj._algorithms['HS256'].prepare_key = prepare_key
-
-
-
 
 
 
