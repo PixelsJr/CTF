@@ -109,9 +109,22 @@ def main():
 
     @app.route('/api/buy', methods=['POST'])
     def buy():
+        validation = validate_auth(request)
+        if validation != "Authenticated":
+            return validation
+
         data = request.get_json()
-        app.logger.info(f"Buy offer: {data}")
+        app.logger.error(f"Buy offer: {data}")
         offerID = data['id']
+
+        user_id = int(request.cookies.get('user_id'))
+        purchase_offers = execute_fetch_db_command(f"SELECT PurchaseHistory FROM users WHERE id={user_id};")[0][0]
+
+        app.logger.error(f"SQL output purchase_offers: {purchase_offers}")
+        purchase_offers += f',{offerID}'
+        app.logger.error(f"New purchase_offers: {purchase_offers}")
+
+        execute_commit_db_command(f"UPDATE users SET \"PurchaseHistory\" = '{purchase_offers}' WHERE id = {user_id};")
         return 'well done', 200
 
     @app.route('/api/Profile')
@@ -247,13 +260,14 @@ def main():
 
     # Helper functiom to gather a user's data
     def fetch_user_data(user_id):
-        user_data = execute_fetch_db_command(f"SELECT id, username, money FROM users WHERE id='{user_id}';")[0]
+        user_data = execute_fetch_db_command(f"SELECT id, username, money, PurchaseHistory FROM users WHERE id='{user_id}';")[0]
         if not bool(user_data):
             return False
         return {
             "id": user_data[0],
             "username": user_data[1],
-            "money": user_data[2]
+            "money": user_data[2],
+            "purchases": ",".split(user_data[3]),
             }
         #*Debugging
         #*app.logger.info("IMPORTANT  !!!!!!     " + str(user))
@@ -355,7 +369,7 @@ def main():
                 result = cursor.fetchall() #* this used fetchone() before
                 return result
         except sqlite3.DatabaseError as e:
-            app.logger.error(f"wtf error: {e}")
+            app.logger.error(f"wtf error1: {e}")
         finally:
             print("Connection closed properly.")
     
@@ -363,10 +377,11 @@ def main():
         try:
             with sqlite3.connect('database.db') as db_connection:
                 cursor = db_connection.cursor()
+                app.logger.error(command)
                 cursor.execute(command)
                 db_connection.commit()
         except Exception as e:
-            app.logger.error(f"wtf error: {e}")
+            app.logger.error(f"wtf error2: {e}")
             return False
         print("Connection closed properly.")
 
