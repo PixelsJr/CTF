@@ -3,6 +3,7 @@ import Offer from '../components/offer';
 import { useEffect, useState } from 'react'
 import Header from '../components/header';
 import Showcase from '../components/showcase';
+import InfoBox from '../components/infoBox';
 
 function Marketplace() {
 
@@ -10,6 +11,9 @@ function Marketplace() {
 	const [showcase, setShowcase] = useState(null)
 	const [finance, setFinance] = useState(0)
 	const [loading, setLoading] = useState(0);
+
+	const [infoBoxMessage, setInfoBoxMessage] = useState('');
+    const [infoBoxSuccess, setInfoBoxSuccess] = useState(false);
 
 	useEffect(() => {
 		async function fetchOffers() {
@@ -88,6 +92,35 @@ function Marketplace() {
 		fetchUserData()
 	}, [])
 
+	async function informationBox(obj, message, success, delay=2000){
+
+		function timeout(delay) {
+			return new Promise( res => setTimeout(res, delay) );
+		}
+
+        const infoBoxObj = obj
+        infoBoxObj.style.display = 'flex'
+
+        setInfoBoxSuccess(success)
+        setInfoBoxMessage(message)
+
+        infoBoxObj.style.display = 'flex'
+
+        await timeout(delay);
+        infoBoxObj.style.opacity = 0
+        await timeout(500);
+        infoBoxObj.style.zIndex = -100
+        await timeout(500);
+        infoBoxObj.style.display = 'none'
+    }
+
+	async function successBox(){
+        const infoBoxObj = document.getElementById('infoBox')
+
+		let message = 'Kuulutus edukalt loodud!'
+		informationBox(infoBoxObj, message, true, 2000)
+    }
+
 	function closeShowcase() {
 		setShowcase(null)
 	}
@@ -99,6 +132,7 @@ function Marketplace() {
 	return (
 		<div className="Marketplace">
 			<Header cash={finance} />
+			<InfoBox message={infoBoxMessage} success={infoBoxSuccess}/>
 			<div className='scrollable'>
 				<Showcase offer={showcase} close={closeShowcase} balance={finance} />
 				<div className='offerList' style={{ opacity: loading, transition: 'opacity 300ms ease-in' }}>

@@ -468,6 +468,45 @@ body {
     transition: 200ms;
 }
 
+.infoBox {
+    display: none;
+    background-color: #0000005f;
+    position: absolute;
+    top: 0px;
+    z-index: 200;
+    width: 100%;
+    height: 300%;
+    transition: 1s;
+    color: black
+}
+
+.infoBox .borderdDiv{
+    display: flex;
+    margin: 220px auto;
+    flex-direction: column;
+    justify-content: space-around;
+    height: clamp(160px, 25vw, 280px);
+    width: clamp(200px, 25vw, 350px);
+    background-color: white;
+    font-size: clamp(14px, 25vw, 24px);;
+    font-weight: 700;
+}
+
+.infoBox .checkMark{
+    background-color: transparent;
+    width: clamp(50px, 15vw, 125px);
+    height: clamp(50px, 15vw, 125px);
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 4px 6px;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.infoBox .checkMark svg {
+    width: 100%;
+    height: 100%;
+}
+
 .purchaseHistory {
     width: 80%;
     margin: auto;
