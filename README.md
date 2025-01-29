@@ -10,7 +10,7 @@
 
 <h3>Vulnid<h3>
 
-<h1>Hetke seisuga olemas 4/7 vulni<h1>
+<h1>Hetke seisuga olemas 5/7 vulni<h1>
 
 
 <h1>Olemas vulnid:<h1>
@@ -27,14 +27,16 @@
 4. Offerite buyimiseks vajaliku raha valideerimist saab client-sides muuta sest back-end ei kontrolli kui paju raha sul on.
    <span style="color: red;">VULN OLEMAS?</span>
 
+5. Mingis php(?) failis labi get argide teha lfi et lugeda pmst koiki faile mis os-is on (akki teeks seda /private all?)
+   VULN ON CONFIRMITUD, ainult vaja teha viis kuidagi user saaks sellest actually teada (scripti prglt muuta ise ei saa)
+
 
 <h1>Hetkel tulemas vulnid:<h1>
 
-5. XSS vuln offerite rewiedes et saade teiste kasutajate credentiale/muud infot (nt sisselogimiseks mingisse "verified accounti" sest by default pole uutel kontodel voimalik palju teha)
+6. XSS vuln offerite rewiedes et saade teiste kasutajate credentiale/muud infot (nt sisselogimiseks mingisse "verified accounti" sest by default pole uutel kontodel voimalik palju teha)
    <span style="color: red;">VULN SEMI-TÖÖTAB AGA EXECUTION POLE SIIAMAANI SUUTNUD</span>
 
-6. Mingis php(?) failis labi get argide teha lfi et lugeda pmst koiki faile mis os-is on (akki teeks seda /private all?)
-   VULN TEOREETILISELT OLEMAS
+
 
 
 <h1>Mittetehtud vulnid:<h1>
