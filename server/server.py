@@ -59,6 +59,16 @@ def main():
         for offer in offers:
             offer["reviews"] = reviews.get(offer["id"], [])
         return jsonify(offers), 200
+    
+    @app.route('/api/getAllOffers/<path:id>', methods=['GET'])
+    def get_offer(id):
+        offers = load_json_data()
+        reviews = fetch_offer_reviews()
+        for offer in offers:
+            if offer.id is not int(id):
+                continue
+            offer["reviews"] = reviews.get(offer["id"], [])
+            return jsonify(offer), 200
 
     @app.route('/<path:filename>')
     def serve_file(filename):
