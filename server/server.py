@@ -60,15 +60,15 @@ def main():
             offer["reviews"] = reviews.get(offer["id"], [])
         return jsonify(offers), 200
     
-    @app.route('/api/getAllOffers/<path:id>', methods=['GET'])
     def get_offer(id):
         offers = load_json_data()
         reviews = fetch_offer_reviews()
         for offer in offers:
-            if offer.id is not int(id):
+
+            if offer['id'] is not int(id):
                 continue
             offer["reviews"] = reviews.get(offer["id"], [])
-            return jsonify(offer), 200
+            return offer
 
     @app.route('/<path:filename>')
     def serve_file(filename):
@@ -134,6 +134,7 @@ def main():
         if validation != "Authenticated":
             return validation
         user_id = request.cookies.get('user_id')
+
         if user_id:
             # If token is valid, serve the profile (return user data)
             user_data = fetch_user_data(user_id) #! THIS WILL BE THE REASON FOR IDOR
@@ -263,11 +264,19 @@ def main():
         user_data = execute_fetch_db_command(f"SELECT id, username, money, PurchaseHistory FROM users WHERE id='{user_id}';")[0]
         if not bool(user_data):
             return False
+        
+        app.logger.error(user_data[3].split(','))
+
+        purchases = user_data[3].split(',')
+        purchasesOffers = []
+        for pur in purchases:
+            purchasesOffers.append(get_offer(pur))
+
         return {
             "id": user_data[0],
             "username": user_data[1],
             "money": user_data[2],
-            "purchases": ",".split(user_data[3]),
+            "purchases": purchasesOffers,
             }
         #*Debugging
         #*app.logger.info("IMPORTANT  !!!!!!     " + str(user))
