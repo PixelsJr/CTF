@@ -5,7 +5,7 @@ import jwt
 import dotenv
 from datetime import timedelta, datetime, timezone
 import sqlite3
-import uuid
+import subprocess
 from werkzeug.utils import secure_filename
 
 
@@ -32,6 +32,8 @@ def main():
     dotenv.load_dotenv()
     SECRET = os.getenv('secret')
     ALGORITHM = os.getenv('algorithm')
+
+    PRIVATE_KEY, PUBLIC_KEY = get_keys()
 
 
 
@@ -66,6 +68,26 @@ def main():
     @app.route('/Profile')
     def serve_index():
         return send_file(INDEX)
+    
+    @app.route('/uploads/<filename>')
+    def uploaded_file(filename):
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+    @app.route('/api/php-login', methods=['POST'])
+    def php_login():
+        #!!!! ABSOLUUTSELT POLE TEHTUD
+        data = request.json
+        username = data['username']
+        password = data['password']
+        
+        # Call PHP script via subprocess
+        command = f'php /path/to/login.php {username} {password}'
+        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+        # Process the output
+        response = result.stdout.strip()
+        
+        return jsonify({'message': response})
 
     @app.route('/api/buy', methods=['POST'])
     def buy():
@@ -132,38 +154,38 @@ def main():
         if validation != "Authenticated":
             return validation
         try:
-            data = request.json
-            if not all(key in data for key in ('name', 'description', 'price', 'image')):
+            if not all(key in request.form for key in ('name', 'description', 'price')):
                 return jsonify({'error': 'Incomplete offer'}), 400
-            if not isinstance(int(data.get('price')), int): #? This causes an error and 500 response if not int but still kinda works as intended so not fixing
-                return jsonify({'error': 'Price is not int'}), 400
-                
+            price = request.form.get('price')
+            try:
+                price = int(price)
+            except ValueError:
+                return jsonify({'error': 'Price is not a valid integer'}), 400
+
             # This if-elif block does some magic to figure out if the image is a link or an embedded file and acts accordingly
             image_path = None
-            app.logger.info("00000000000000000000000")
-            app.logger.info("request files: " + str(request.files))
-            if 'image' in data and not isinstance(data, dict) and data['image'].startswith('http'):
-                image_path = data['image']
-                app.logger.info("1111111111111111111111")
-            elif 'image' in request.files:
-                app.logger.info("222222222222222222222222222222222222")
+            if 'image' in request.files:
                 file = request.files['image']
-                app.logger.info("INGOINGOGINO " + str(file))
                 if file and allowed_file(file.filename):
                     filename = secure_filename(file.filename)
                     image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                     file.save(image_path)
+            elif 'image' in request.form and request.form['image'].startswith('http'):
+                image_path = request.form['image']
+
+            if not image_path:
+                return jsonify({'error': 'No image or valid URL provided'}), 400
 
             offers = load_json_data()
             user_id = request.cookies.get('user_id')
             new_offer_id = max([offer['id'] for offer in offers], default=0) + 1 # This makes the ID incremental
-
+            
             new_offer = {
                 'id': new_offer_id,
-                'name': data['name'],
-                'description': data['description'],
-                'price': data['price'],
-                'image': image_path,
+                'name': request.form.get('name'),
+                'description': request.form.get('description'),
+                'price': price,
+                'image': f"/uploads/{filename}", # I used filename since we have a route for /uploads and image_path didn't work
                 'seller': fetch_user_data(user_id).get('username')
             }
 
@@ -238,7 +260,7 @@ def main():
         Yes, authentication works without the first sql query, but it is needed for the enumeration vuln to work.
         """
         if not execute_fetch_db_command(f"SELECT * FROM users WHERE username = '{username}' LIMIT 1;"):
-            app.logger.info(f"USERNAME DATABASE_OUTPUT VALUE: {execute_fetch_db_command(f"SELECT * FROM users WHERE username = '{username}' LIMIT 1;")}") #* Debugging
+            #app.logger.info(f"USERNAME DATABASE_OUTPUT VALUE: {execute_fetch_db_command(f"SELECT * FROM users WHERE username = '{username}' LIMIT 1;")}") #* Debugging
             return "Username does not exist"
         database_output = execute_fetch_db_command(f"SELECT password FROM users WHERE username='{username}';")
         if database_output is not None and password == database_output[0][0]:
@@ -285,6 +307,13 @@ def main():
             raise ValueError("Namefield not found in token.")
         except:
             raise ValueError("JWT token invalid")
+    
+    def get_keys():
+        with open("private_key.pem", "r") as f:
+            private_key = f.read()
+        with open("public_key.pem", "r") as f:
+            public_key = f.read()
+        return (private_key, public_key)
     
     # Helper function to execute commands to the database
     def execute_fetch_db_command(command: str):

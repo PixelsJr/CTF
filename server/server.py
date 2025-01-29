@@ -2,6 +2,7 @@ from flask import *
 import json
 import os
 import jwt
+from jwt.api_jws import decode_complete
 import dotenv
 from datetime import timedelta, datetime, timezone
 import sqlite3
@@ -33,14 +34,23 @@ def main():
     SECRET = os.getenv('secret')
     ALGORITHM = os.getenv('algorithm')
 
-
-
     # Flask app variable
     app = Flask(__name__, static_folder=os.path.join(BUILD_DIR, 'static'))
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file upload size
     
+    #*See on rumal miks peab function siin olema
+    def get_keys():
+        with open("keys/private_key.pem", "r") as f:
+            private_key = f.read()
+        with open("keys/public_key.pem", "r") as f:
+            public_key = f.read()
+        app.logger.info(str((private_key, public_key)))
+        return (private_key, public_key)
+
+    PRIVATE_KEY, PUBLIC_KEY = get_keys()
     
+
     # Route to get all offers
     @app.route('/api/getAllOffers', methods=['GET'])
     def get_offers():
@@ -258,7 +268,7 @@ def main():
         Yes, authentication works without the first sql query, but it is needed for the enumeration vuln to work.
         """
         if not execute_fetch_db_command(f"SELECT * FROM users WHERE username = '{username}' LIMIT 1;"):
-            app.logger.info(f"USERNAME DATABASE_OUTPUT VALUE: {execute_fetch_db_command(f"SELECT * FROM users WHERE username = '{username}' LIMIT 1;")}") #* Debugging
+            #app.logger.info(f"USERNAME DATABASE_OUTPUT VALUE: {execute_fetch_db_command(f"SELECT * FROM users WHERE username = '{username}' LIMIT 1;")}") #* Debugging
             return "Username does not exist"
         database_output = execute_fetch_db_command(f"SELECT password FROM users WHERE username='{username}';")
         if database_output is not None and password == database_output[0][0]:
@@ -288,22 +298,40 @@ def main():
         'admin': False,
         'exp': datetime.now(timezone.utc) + timedelta(seconds=1_728_000) # expirity time is 20 days
         }
-        token = jwt.encode(payload, SECRET, ALGORITHM)
+        token = jwt.encode(payload, PRIVATE_KEY, ALGORITHM)
         return token
+
+
+    # prepare an override method
+    def prepare_key(key):
+        return jwt.utils.force_bytes(key)
+
+    # override HS256's prepare key method to disable checking for asymmetric key words
+    jwt.api_jws._jws_global_obj._algorithms['HS256'].prepare_key = prepare_key
+
+
+
+
+
 
     # Helper function to decode JWT tokens when authenticating
     def decode_jwt(token=None, dict_key=None):
         if token is None or dict_key == None or not isinstance(dict_key, str):
             raise ValueError("Token and requested namefield must both be provided.")
         try:
-            decoded_token = jwt.decode(token, SECRET, ALGORITHM)
+            decoded_header = jwt.get_unverified_header(token)
+            decoded_algorithm = decoded_header.get('alg')
+
+            #decoded_token = jwt.decode(token, PUBLIC_KEY, ALGORITHM)
+            decoded_token = jwt.decode(token, PUBLIC_KEY, decoded_algorithm)
             extracted_value = decoded_token[dict_key]
             if extracted_value:
                 return extracted_value
             raise ValueError
         except ValueError:
             raise ValueError("Namefield not found in token.")
-        except:
+        except Exception as e:
+            app.logger.error(e)
             raise ValueError("JWT token invalid")
     
     # Helper function to execute commands to the database

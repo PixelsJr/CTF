@@ -10,7 +10,7 @@
 
 <h3>Vulnid<h3>
 
-Hetke seisuga olemas 3/7 vulni
+Hetke seisuga olemas 4/7 vulni
 
 1. User regristration vormis on võimalik enumerateda päris palju username ja siis nende logini brute-forceda (meil ainuke bruteforcetav on mingi "banned for weak password" account sest teistel on actually normid paroolid)
    <span style="color: red;">VULN OLEMAS - VAJA AINULT EXPLOITIDA</span>
@@ -24,13 +24,14 @@ Hetke seisuga olemas 3/7 vulni
    <span style="color: red;">VULN OLEMAS</span>
 
 5. JWT token bypass et enableda experimental features (kui oled juba sisse loginud)
+   <span style="color: red;">VULN OLEMAS, vaja ainult exploidi peale teha midagi</span>
 
 6. /private aladirectory kuhu saab AINULT ligi läbi ssrf vulni (lykkab mingi et lehte ei saa avada sest vale ip). Läbi avatar selection screeni (mille saab läbi jwt vulni) saab bypassida.
 
 7. Mingis php(?) failis labi get argide teha lfi et lugeda pmst koiki faile mis os-is on (akki teeks seda /private all?)
 
 8. Buyoffer function vuln
-   <span style="color: red;">VULN OLEMAS</span>
+   <span style="color: red;">VULN OLEMAS?</span>
 
 *(9 ja 10 personally natuke sus aga pohh)*
 9. secret developer panel koos loginiga (mille credentialid on lih indexi htmlis commentina) (paneli saab üles leida kui minna robots.txt)
