@@ -70,8 +70,6 @@ function Profile() {
         </div>
     }
 
-    if(userData != false) userData.purchases = []
-
     //Suht horisontaalne kood. Nii lõbus
     //Mu auto formatter isegi ei toota enam
     return (
