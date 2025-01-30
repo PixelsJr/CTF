@@ -10,7 +10,7 @@
 
 <h3>Vulnid<h3>
 
-<h1>Hetke seisuga olemas 6/7 vulni<h1>
+<h1>Hetke seisuga olemas 7/7 vulni<h1>
 
 
 <h1>Olemas vulnid:<h1>
