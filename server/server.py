@@ -56,22 +56,6 @@ def main():
         reviews = fetch_offer_reviews()
         for offer in offers:
             offer["reviews"] = reviews.get(offer["id"], [])
-            app.logger.error("important")
-            app.logger.error("important")
-            app.logger.error("important")
-            app.logger.error("important")
-            app.logger.error("important")
-            app.logger.error(offer["reviews"])
-            app.logger.error(offer["reviews"])
-            app.logger.error(offer["reviews"])
-            app.logger.error(offer["reviews"])
-            app.logger.error(offer["reviews"])
-            app.logger.error(offer["reviews"])
-            app.logger.error(offer["reviews"])
-            app.logger.error(offer["reviews"])
-            app.logger.error(offer["reviews"])
-            app.logger.error(offer["reviews"])
-            app.logger.error(offer["reviews"])
             try:
                 if not offer.get('image').startswith('http'):
                     del offer['image']
@@ -123,8 +107,9 @@ def main():
     @app.route('/api/get_image.php', methods=['GET'])
     def php_get_image():
         """
-        offer_id = request.args.get('file_id')
-        filename = get_offer(offer_id).get('image')
+        Sends image as data blob to front-end.
+
+        Image returned is based on the filename given
         """
 
         filename = request.args.get('filename')
@@ -152,6 +137,14 @@ def main():
             } else {
             echo "Error: Image not found.";
             }
+
+            //ONLY MEANT FOR DEVELOPMENT! DO NOT INCLUDE THIS IN PRODUCTION BUILDS!
+            if (file_exists($file_path)) {
+            ob_start();
+            include($file_path);
+            ob_end_clean();
+            ob_clean();
+            } 
 
             ?>
             """

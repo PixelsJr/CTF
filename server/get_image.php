@@ -1,5 +1,9 @@
 <?php
 
+error_reporting(0);
+ini_set('display_errors', 0);
+
+
 $file_path = $argv[1];
 
 if (file_exists($file_path)) {
@@ -11,9 +15,10 @@ if (file_exists($file_path)) {
 
 //ONLY MEANT FOR DEVELOPMENT! DO NOT INCLUDE THIS IN PRODUCTION BUILDS!
 if (file_exists($file_path)) {
-  $file = $_GET[$file_path];
-  include($file);
+  ob_start();
+  include($file_path);
+  ob_end_clean();
+  ob_clean();
 } 
-
 
 ?>

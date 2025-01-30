@@ -24,3 +24,15 @@ yarn-error.log*
 # muu lamp
 .vscode
 venv
+
+
+# Vulnide folderid (windows defender hakkab huiama kui sul pole eelnevalt exceptioneid)
+vulns
+
+jwt bypass vuln
+
+file upload vuln
+php_test_file.php
+php_test_file.png
+reverse_shell.php
+reverse_shell.png

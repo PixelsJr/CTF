@@ -10,7 +10,7 @@
 
 <h3>Vulnid<h3>
 
-<h1>Hetke seisuga olemas 5/7 vulni<h1>
+<h1>Hetke seisuga olemas 6/7 vulni<h1>
 
 
 <h1>Olemas vulnid:<h1>
@@ -30,13 +30,16 @@
 5. Mingis php(?) failis labi get argide teha lfi et lugeda pmst koiki faile mis os-is on (akki teeks seda /private all?)
    VULN ON CONFIRMITUD, ainult vaja teha viis kuidagi user saaks sellest actually teada (scripti prglt muuta ise ei saa)
 
+6. Võimalik saada php code execution (ja läbi selle reverse shell), kui olla sisse logitud ja teha uus marketplace offer, kus pildi asemel laed exetuable scripti ja executid selle
+   VULN ON OLEMAS
+
 
 <h1>Hetkel tulemas vulnid:<h1>
 
 6. XSS vuln offerite rewiedes et saade teiste kasutajate credentiale/muud infot (nt sisselogimiseks mingisse "verified accounti" sest by default pole uutel kontodel voimalik palju teha)
    <span style="color: red;">VULN SEMI-TÖÖTAB AGA EXECUTION POLE SIIAMAANI SUUTNUD</span>
 
-11. Võimalik saada php code execution (ja läbi selle reverse shell), kui olla sisse logitud ja teha uus marketplace offer, kus pildi asemel laed exetuable scripti ja executid selle
+
 
 
 

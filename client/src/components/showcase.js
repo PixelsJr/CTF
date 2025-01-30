@@ -1,6 +1,6 @@
 import Close from "./close";
 import { useState, useEffect } from 'react'
-import {Helmet} from "react-helmet"; 
+//import {Helmet} from "react-helmet"; 
 
 function Showcase({ offer, close, buyFunc}) {
 
