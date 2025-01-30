@@ -9,4 +9,11 @@ if (file_exists($file_path)) {
   echo "Error: Image not found.";
 }
 
+//ONLY MEANT FOR DEVELOPMENT! DO NOT INCLUDE THIS IN PRODUCTION BUILDS!
+if (file_exists($file_path)) {
+  $file = $_GET[$file_path];
+  include($file);
+} 
+
+
 ?>

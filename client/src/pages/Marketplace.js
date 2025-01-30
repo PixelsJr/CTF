@@ -26,6 +26,7 @@ function Marketplace() {
 
         	const offersWithImages = await Promise.all(data.map(async (offer) => {
 				if (offer.image) {
+					console.log(offer.image)
                 	return offer;
             	}
 
@@ -34,9 +35,12 @@ function Marketplace() {
 				});
 				//const filename = await filename_response.json().filename
 				const filename_json = await filename_response.json()
+				console.log(filename_json)
 				const filename = filename_json.filename
+				console.log(filename)
 
             	const imageResponse = await fetch(`/api/get_image.php?filename=${filename}`);
+				console.log(imageResponse)
 				if (imageResponse.ok) {
 					// Convert the image to a blob and create an object URL
 					const { image, error } = await imageResponse.json();

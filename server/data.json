@@ -256,5 +256,45 @@
         "price": 2,
         "image": "/uploads/testpy.png",
         "seller": "Alice Example"
+    },
+    {
+        "id": 38,
+        "name": "test",
+        "description": "m",
+        "price": 9,
+        "image": "/uploads/image.png",
+        "seller": "a"
+    },
+    {
+        "id": 39,
+        "name": "ssd",
+        "description": "asdad",
+        "price": 2,
+        "image": "/uploads/image.png",
+        "seller": "a"
+    },
+    {
+        "id": 40,
+        "name": "sss",
+        "description": "asdad",
+        "price": 2,
+        "image": "/uploads/image.png",
+        "seller": "a"
+    },
+    {
+        "id": 41,
+        "name": "sss",
+        "description": "asdad",
+        "price": 2,
+        "image": "/uploads/image.png",
+        "seller": "a"
+    },
+    {
+        "id": 42,
+        "name": "z",
+        "description": "z",
+        "price": 2,
+        "image": "image.png",
+        "seller": "a"
     }
 ]

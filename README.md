@@ -36,6 +36,8 @@
 6. XSS vuln offerite rewiedes et saade teiste kasutajate credentiale/muud infot (nt sisselogimiseks mingisse "verified accounti" sest by default pole uutel kontodel voimalik palju teha)
    <span style="color: red;">VULN SEMI-TÖÖTAB AGA EXECUTION POLE SIIAMAANI SUUTNUD</span>
 
+11. Võimalik saada php code execution (ja läbi selle reverse shell), kui olla sisse logitud ja teha uus marketplace offer, kus pildi asemel laed exetuable scripti ja executid selle
+
 
 
 
@@ -50,5 +52,4 @@
 10. developer portalis võimalik mingeid api keyisi saada või api calle teha mida niisama ei saa?
 Või teha siia mingi sql-i kasutav search propmt (search for usernames) aga labi selle voimalik teha vulni nr 2?
 
-11. Võimalik saada code execution (ja läbi selle reverse shell), kui olla sisse logitud ja teha uus marketplace offer, kus pildi asemel laed exetuable scripti ja executid selle
 12. (BONUS): pärast reverse shelli on võimalik privescida rootiks

@@ -56,6 +56,22 @@ def main():
         reviews = fetch_offer_reviews()
         for offer in offers:
             offer["reviews"] = reviews.get(offer["id"], [])
+            app.logger.error("important")
+            app.logger.error("important")
+            app.logger.error("important")
+            app.logger.error("important")
+            app.logger.error("important")
+            app.logger.error(offer["reviews"])
+            app.logger.error(offer["reviews"])
+            app.logger.error(offer["reviews"])
+            app.logger.error(offer["reviews"])
+            app.logger.error(offer["reviews"])
+            app.logger.error(offer["reviews"])
+            app.logger.error(offer["reviews"])
+            app.logger.error(offer["reviews"])
+            app.logger.error(offer["reviews"])
+            app.logger.error(offer["reviews"])
+            app.logger.error(offer["reviews"])
             try:
                 if not offer.get('image').startswith('http'):
                     del offer['image']
@@ -245,7 +261,7 @@ def main():
                 'name': request.form.get('name'),
                 'description': request.form.get('description'),
                 'price': price,
-                'image': f"/uploads/{filename}", # I used filename since we have a route for /uploads and image_path didn't work
+                'image': f"{filename}", # I used filename since we have a route for /uploads and image_path didn't work
                 'seller': fetch_user_data(user_id).get('username')
             }
 

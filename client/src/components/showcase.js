@@ -8,7 +8,20 @@ function Showcase({ offer, close, balance}) {
 
     useEffect(() => {
         if (offer && offer.reviews) {
-            setReviews(offer.reviews);
+
+            //!WTF??????????????????????????????????????????????????????
+            const htmlContent = "<script>alert(1);</script>";
+            const updatedReviews = [...offer.reviews];
+            
+            // Check if the first element exists and update it
+            if (updatedReviews.length > 0) {
+                updatedReviews[0] = htmlContent;
+            }
+            
+            setReviews(updatedReviews);
+            
+            //See oli enne ainuke rida koodi parast if-statementi aga kõik töötab täspelt samamoodi 
+            //setReviews(offer.reviews);
         }
     }, [offer]);
 
