@@ -480,6 +480,11 @@ body {
     color: black
 }
 
+.error {
+    color: red;
+    font-weight: 700;
+}
+
 .infoBox .borderdDiv{
     display: flex;
     margin: 220px auto;
