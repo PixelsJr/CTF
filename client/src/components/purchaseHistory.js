@@ -14,8 +14,8 @@ function PurchaseHistory({ offers }) {
 			<div className='borderdDiv' style={isActive ? styleActive : styleUnactive}>
 				<h2>History</h2>
 				<div style={{ overflowX: isActive ? 'auto' : 'hidden' }} className='list'>
-					{offers.map((offer) =>
-						<span key={offer.id}>
+					{offers.map((offer, key) =>
+						<span key={key}>
 							<Offer offer={offer} func={() => { console.log(offer) }} />
 						</span>
 					)}

@@ -6,6 +6,7 @@ import Register from '../components/reg';
 import UserData from '../components/userData';
 import CreateOffer from '../components/createOffer';
 import PurchaseHistory from '../components/purchaseHistory';
+import InfoBox from '../components/infoBox';
 
 //VÄGA IMPORTANT
 //VÄGA IMPORTANT
@@ -26,6 +27,38 @@ function Profile() {
 
     const [userData, setUserData] = useState(null);
     const [isRegistering, setIsRegistering] = useState(false);
+
+    const [infoBoxMessage, setInfoBoxMessage] = useState('');
+    const [infoBoxSuccess, setInfoBoxSuccess] = useState(false);
+
+    async function informationBox(obj, message, success, delay=2000){
+
+		function timeout(delay) {
+			return new Promise( res => setTimeout(res, delay) );
+		}
+
+        const infoBoxObj = obj
+        infoBoxObj.style.display = 'flex'
+
+        setInfoBoxSuccess(success)
+        setInfoBoxMessage(message)
+
+        infoBoxObj.style.display = 'flex'
+
+        await timeout(delay);
+        infoBoxObj.style.opacity = 0
+        await timeout(500);
+        infoBoxObj.style.zIndex = -100
+        await timeout(500);
+        infoBoxObj.style.display = 'none'
+		infoBoxObj.style.opacity = 1
+		infoBoxObj.style.zIndex = 100
+    }
+
+	async function successBox(message, state){
+        const infoBoxObj = document.getElementById('infoBox')
+		informationBox(infoBoxObj, message, state, 2000)
+    }
 
     useEffect(() => {
         async function fetchUserData() {
@@ -75,6 +108,7 @@ function Profile() {
     return (
         <div className="Profile">
             <Header cash={userData.money} />
+            <InfoBox success={infoBoxSuccess} message={infoBoxMessage} />
             <div className='scrollable'>
                 {!userData ? (
                     <div>
@@ -109,7 +143,7 @@ function Profile() {
                 ) : <div>
                     <UserData data={userData} />
                     <PurchaseHistory offers={userData.purchases} />
-                    <CreateOffer />
+                    <CreateOffer successBox={successBox} />
                 </div>
                 }
             </div>

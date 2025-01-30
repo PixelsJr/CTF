@@ -1,7 +1,7 @@
 import Close from "./close";
 import { useState, useEffect } from 'react'
 
-function Showcase({ offer, close, balance}) {
+function Showcase({ offer, close, buyFunc}) {
 
     const [newReview, setNewReview] = useState("");
     const [reviews, setReviews] = useState([]);
@@ -41,36 +41,13 @@ function Showcase({ offer, close, balance}) {
         });
 
         if (response.ok) {
+            console.log(reviews)
             setReviews([...reviews, newReview]);
             setNewReview("");
         } else {
             alert("Failed to add review");
         }
     };
-
-    async function buyRequest(e){
-        e.preventDefault()
-
-        window.buyOffer(offer.id, balance, offer.price)
-
-        return
-        if(balance < offer.price) return
-
-        const response = await fetch('/api/buy', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({'id': offer.id})
-        });
-
-        if(response.ok){
-            console.log('Bought: ', offer.id)
-        }
-        else{
-            console.log('Something went wrong: ', offer.id)
-        }
-    }
 
     return (
         <div className="showcaseBackground">
@@ -88,13 +65,13 @@ function Showcase({ offer, close, balance}) {
                         <h2>{offer.seller}</h2>
                         <p>{offer.description}</p>
 
-                        <button onClick={buyRequest}>BUY: {offer.price}€</button>
+                        <button onClick={buyFunc}>BUY: {offer.price}€</button>
 
                         {/* Reviews Section */}
                         <h3>Reviews</h3>
                         <div className="reviews">
-                            {offer.reviews && offer.reviews.length > 0 ? ( // TODO: Review ei update dünaamiliselt kui sa ise teed uue review. Et oma reviewd näha peab praegu refreshima.
-                                offer.reviews.map((review, index) => (
+                            {reviews && reviews.length > 0 ? ( // TODO: Review ei update dünaamiliselt kui sa ise teed uue review. Et oma reviewd näha peab praegu refreshima.
+                                reviews.map((review, index) => (
                                     <div key={index} className="review">
                                         <span dangerouslySetInnerHTML={{ __html: review }} /> {/*!!! SEE ON VÄGA IMPORTANT LINE PALUN ÄRA MUUDA SEDA */}
                                     </div>

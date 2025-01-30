@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function CreateOffer({ }) {
+function CreateOffer({ successBox }) {
 
 	const [title, setTitle] = useState(null)
 	const [description, setDescription] = useState(undefined)
@@ -40,9 +40,11 @@ function CreateOffer({ }) {
 		});
 
 		if (response.ok) {
-		console.log("Offer created successfully");
+			successBox('Offer created successfully!', true)
+			console.log("Offer created successfully");
 		} else {
-		console.error("Error creating offer");
+			successBox('Something went wrong!', false)
+			console.error("Error creating offer");
 		}
 	}
 
@@ -58,34 +60,36 @@ function CreateOffer({ }) {
 				<input onChange={(e) => { setDescription(e.target.value) }} placeholder="This is a dog I am trying to get rid of..."></input>
 				<h3>Picture</h3>
 				{/* Radio buttons to choose image source */}
-				<label>
+				<label style={{marginRight: '40px'}}>
 					<input
-					type="radio"
-					name="imageOption"
-					value="url"
-					checked={imageOption === "url"}
-					onChange={() => setImageOption("url")}
-					placeholder="https://dolt.ee/api/gallery?img=busDog.jfif"
+						type="radio"
+						name="imageOption"
+						value="url"
+						checked={imageOption === "url"}
+						style={{width: '20px'}}
+						onChange={() => setImageOption("url")}
+						placeholder="https://dolt.ee/api/gallery?img=busDog.jfif"
 					/>
 					Enter Image URL
 				</label>
 				<label>
 					<input
-					type="radio"
-					name="imageOption"
-					value="file"
-					checked={imageOption === "file"}
-					onChange={() => setImageOption("file")}
+						type="radio"
+						name="imageOption"
+						value="file"
+						checked={imageOption === "file"}
+						style={{width: '20px'}}
+						onChange={() => setImageOption("file")}
 					/>
 					Upload Image
 				</label>
 				{/* Conditional rendering based on image option */}
 				{imageOption === "url" && (
 					<input
-					type="text"
-					onChange={(e) => setImageUrl(e.target.value)}
-					value={imageUrl}
-					placeholder="https://dolt.ee/api/gallery?img=busDog.jfif"
+						type="text"
+						onChange={(e) => setImageUrl(e.target.value)}
+						value={imageUrl}
+						placeholder="https://dolt.ee/api/gallery?img=busDog.jfif"
 					/>
 				)}
 
@@ -98,9 +102,9 @@ function CreateOffer({ }) {
 						/>
 						{picture && (
 							<img
-							src={URL.createObjectURL(picture)}
-							alt="Preview"
-							style={{ maxWidth: "200px", marginTop: "10px" }}
+								src={URL.createObjectURL(picture)}
+								alt="Preview"
+								style={{ maxWidth: "200px", marginTop: "10px" }}
 							/>
 						)}
 					</>
@@ -110,7 +114,7 @@ function CreateOffer({ }) {
 					<input onChange={(e) => { setPrice(e.target.value) }} placeholder="5"></input><span>€</span>
 				</div>
 				<button type="submit">Create Offer</button>
-				<div style={{height: '10px'}}></div>
+				<div style={{ height: '10px' }}></div>
 			</div>
 		</form>
 	);
