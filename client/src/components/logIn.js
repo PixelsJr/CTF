@@ -32,7 +32,7 @@ function LogIn({ }) {
 			body: JSON.stringify(message)
 		})
 
-		if (response.ok){
+		if (response.ok) {
 			window.location.href = '/Profile'
 		}
 		if (!response.ok) {
@@ -44,23 +44,25 @@ function LogIn({ }) {
 	}
 
 	return (
-		<form onSubmit={tryLogIn} className="logIn borderdDiv">
-			<div className="cardHeader">
-				<h1>Login</h1>
-			</div>
-			<div className="inputBox">
-				<label>Username</label>
-				<input ref={usernameRef} placeholder="Enter Username"></input>
-			</div>
-			<div className="inputBox">
-				<label>Password</label>
-				<input type={passwordInputType} ref={passwordRef} placeholder="Password"></input>
-				<input type="checkbox" onChange={seePassword} style={{ width: 'auto', height: 'auto', margin: 'none' }}></input>
-				<span style={{ fontSize: '16px', fontWeight: '400', marginLeft: '5px' }}>See password</span>
-			</div>
-			<button type="submit">Log In</button>
+		<div>
+			<form onSubmit={tryLogIn} className="logIn borderdDiv">
+				<div className="cardHeader">
+					<h1>Login</h1>
+				</div>
+				<div className="inputBox">
+					<label>Username</label>
+					<input ref={usernameRef} placeholder="Enter Username"></input>
+				</div>
+				<div className="inputBox">
+					<label>Password</label>
+					<input type={passwordInputType} ref={passwordRef} placeholder="Password"></input>
+					<input type="checkbox" onChange={seePassword} style={{ width: 'auto', height: 'auto', margin: 'none' }}></input>
+					<span style={{ fontSize: '16px', fontWeight: '400', marginLeft: '5px' }}>See password</span>
+				</div>
+				<button type="submit">Log In</button>
+			</form>
 			{error && <p className="error">{error}</p>}
-		</form>
+		</div>
 	);
 }
 

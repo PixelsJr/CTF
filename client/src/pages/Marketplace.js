@@ -88,10 +88,10 @@ function Marketplace() {
         });
 
         if(response.ok){
-            console.log('Bought: ', id)
+            return true
         }
         else{
-            console.log('Something went wrong: ', id)
+            return false
         }
       }`
 
@@ -103,6 +103,19 @@ function Marketplace() {
 		fetchOffers()
 		fetchUserData()
 	}, [])
+
+	async function buyRequest(e){
+        e.preventDefault()
+
+		const offer = showcase
+
+
+        if(await window.buyOffer(offer.id, finance, offer.price)){
+			successBox('Successfully bought!', true)
+		} else {
+			successBox('Something went wrong!', false)
+		}
+    }
 
 	async function informationBox(obj, message, success, delay=2000){
 
@@ -124,13 +137,13 @@ function Marketplace() {
         infoBoxObj.style.zIndex = -100
         await timeout(500);
         infoBoxObj.style.display = 'none'
+		infoBoxObj.style.opacity = 1
+		infoBoxObj.style.zIndex = 100
     }
 
-	async function successBox(){
+	async function successBox(message, state){
         const infoBoxObj = document.getElementById('infoBox')
-
-		let message = 'Kuulutus edukalt loodud!'
-		informationBox(infoBoxObj, message, true, 2000)
+		informationBox(infoBoxObj, message, state, 2000)
     }
 
 	function closeShowcase() {
@@ -146,7 +159,7 @@ function Marketplace() {
 			<Header cash={finance} />
 			<InfoBox message={infoBoxMessage} success={infoBoxSuccess}/>
 			<div className='scrollable'>
-				<Showcase offer={showcase} close={closeShowcase} balance={finance} />
+				<Showcase offer={showcase} close={closeShowcase} balance={finance} buyFunc={buyRequest}/>
 				<div className='offerList' style={{ opacity: loading, transition: 'opacity 300ms ease-in' }}>
 					{offers.map((offer) =>
 						<span key={offer.id}>
