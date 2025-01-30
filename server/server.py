@@ -93,6 +93,12 @@ def main():
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
     """
 
+    @app.route('/api/get_public_key', methods=['GET'])
+    def get_public_key():
+        path = os.path.join(BASE_DIR, 'keys/public_key.pem')
+        return send_file(path, as_attachment=True)
+
+
     @app.route('/api/get_offer_filename_from_id', methods=['GET'])
     def get_offer_filename_from_id():
         offer_id = request.args.get('offer_id')

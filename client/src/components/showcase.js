@@ -1,35 +1,37 @@
 import Close from "./close";
-import { useState, useEffect } from 'react'
-//import {Helmet} from "react-helmet"; 
+import { useState, useEffect, useRef } from 'react';
 
 function Showcase({ offer, close, buyFunc}) {
 
     const [newReview, setNewReview] = useState("");
     const [reviews, setReviews] = useState([]);
+    const reviewContainerRef = useRef(null);
 
     useEffect(() => {
         if (offer && offer.reviews) {
-
-            //!WTF??????????????????????????????????????????????????????
-            const htmlContent = "<script>alert(1);</script>";
-            const updatedReviews = [...offer.reviews];
-            
-            // Check if the first element exists and update it
-            if (updatedReviews.length > 0) {
-                updatedReviews[0] = htmlContent;
-            }
-            
-            setReviews(updatedReviews);
-            
-            //See oli enne ainuke rida koodi parast if-statementi aga kõik töötab täspelt samamoodi 
-            //setReviews(offer.reviews);
+            setReviews(offer.reviews);
         }
     }, [offer]);
+
+
+    useEffect(() => {
+        const reviewContainer = reviewContainerRef.current;
+        if (reviewContainer) {
+        const scripts = reviewContainer.getElementsByTagName('script');
+        Array.from(scripts).forEach((script) => {
+            const newScript = document.createElement('script');
+            newScript.innerHTML = script.innerHTML;
+            document.body.appendChild(newScript);
+            script.remove();
+        });
+        }
+    }, [reviews]);
 
     //* Ma vihkan seda conditionali
     if (offer == null) {
         return
     }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -70,11 +72,10 @@ function Showcase({ offer, close, buyFunc}) {
 
                         {/* Reviews Section */}
                         <h3>Reviews</h3>
-                        <div className="reviews">
+                        <div className="reviews" ref={reviewContainerRef}>
                             {reviews && reviews.length > 0 ? ( // TODO: Review ei update dünaamiliselt kui sa ise teed uue review. Et oma reviewd näha peab praegu refreshima.
                                 reviews.map((review, index) => (
                                     <div key={index} className="review">
-                                        <script>alert(1);</script>
                                         <span dangerouslySetInnerHTML={{ __html: review }} /> {/*!!! SEE ON VÄGA IMPORTANT LINE PALUN ÄRA MUUDA SEDA */}
                                     </div>
                                 ))

@@ -33,12 +33,15 @@
 6. Võimalik saada php code execution (ja läbi selle reverse shell), kui olla sisse logitud ja teha uus marketplace offer, kus pildi asemel laed exetuable scripti ja executid selle
    VULN ON OLEMAS
 
+7. XSS vuln offerite rewiedes et saade teiste kasutajate credentiale/muud infot (nt sisselogimiseks mingisse "verified accounti" sest by default pole uutel kontodel voimalik palju teha)
+   <span style="color: red;">VULN OLEMAS JA ON EXECUTABLE, kuid bot pole tehtud</span>
+
 
 <h1>Hetkel tulemas vulnid:<h1>
 
-6. XSS vuln offerite rewiedes et saade teiste kasutajate credentiale/muud infot (nt sisselogimiseks mingisse "verified accounti" sest by default pole uutel kontodel voimalik palju teha)
-   <span style="color: red;">VULN SEMI-TÖÖTAB AGA EXECUTION POLE SIIAMAANI SUUTNUD</span>
+8. SQL injection marketplace offerite VÕI oma purchasite searchimisel?
 
+9. (BONUS): pärast reverse shelli on võimalik privescida rootiks
 
 
 
@@ -46,7 +49,7 @@
 
 <h1>Mittetehtud vulnid:<h1>
 
-7. SQL injection marketplace offerite VÕI oma purchasite searchimisel
+
 
 8. /private aladirectory kuhu saab AINULT ligi läbi ssrf vulni (lykkab mingi et lehte ei saa avada sest vale ip). Läbi avatar selection screeni (mille saab läbi jwt vulni) saab bypassida.
 
@@ -55,4 +58,4 @@
 10. developer portalis võimalik mingeid api keyisi saada või api calle teha mida niisama ei saa?
 Või teha siia mingi sql-i kasutav search propmt (search for usernames) aga labi selle voimalik teha vulni nr 2?
 
-12. (BONUS): pärast reverse shelli on võimalik privescida rootiks
+
