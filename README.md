@@ -76,6 +76,11 @@ The web application contains 7 flags hidden within the vulnerabilities. Each fla
 6. **Flag 6**: Can be found by reading the C:\Windows\System32\drivers\etc\hosts file with a broken api.
 7. **Flag 7**: Found by manipulating **JWT token manipulation** and signing it to be accepted by the server.
 
+---
+
+## Solution Walkthrough
+
+The full walkthrough can be found in the `walkthrough.md` file.
 
 ---
 
