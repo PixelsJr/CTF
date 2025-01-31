@@ -82,8 +82,27 @@ def main():
     
     @app.route('/')
     @app.route('/Profile')
+    @app.route('/admin')
     def serve_index():
         return send_file(INDEX)
+    
+    @app.route('/api/is_admin')
+    def isa_admin():
+        validation = validate_auth(request)
+        if validation != "Authenticated":
+            return validation
+
+        token = request.cookies.get('token')
+        if token:            
+            # Validate admin status
+            if decode_jwt(token, "admin") == True:
+                return jsonify({'info': 'Authenticated'}), 200
+            return jsonify({
+                'error': "JWT token invalid"
+            })
+        return jsonify({
+            'error': "JWT token not present"
+        })
     
     """
     Seda route'i lowk pole vaja sest saadame image data otse läbi php file'i
