@@ -5,7 +5,7 @@ import Offer from './offer'
 function PurchaseHistory({ offers }) {
 
 	const styleActive = {width: '100%'}
-	const styleUnactive = {width: '25%'}
+	const styleUnactive = {width: '35%'}
 
 	const [isActive, setIsActive] = useState(false)
 
