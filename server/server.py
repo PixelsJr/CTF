@@ -8,7 +8,6 @@ import sqlite3
 import subprocess
 from werkzeug.utils import secure_filename
 
-
 def main():
     # File path for JSON data
     JSON_PATH = './data.json'
@@ -311,7 +310,7 @@ def main():
     # Helper function to read the JSON file
     def load_json_data():
         if os.path.exists(JSON_PATH):
-            with open(JSON_PATH, 'r') as file:
+            with open(JSON_PATH, 'r', encoding='utf-8') as file:
                 return json.load(file)
         else:
             return []

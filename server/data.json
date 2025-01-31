@@ -1,380 +1,59 @@
 [
     {
         "id": 1,
-        "name": "Sum dog",
-        "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg",
-        "seller": "The Cat",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rutrum vitae massa sed elementum. Vestibulum commodo auctor elit, eget elementum magna placerat sed. Nulla bibendum leo eget sapien malesuada gravida. Duis quis diam scelerisque, suscipit orci sed, volutpat sapien. Pellentesque suscipit id odio eu rutrum. Cras justo mauris, condimentum vel sodales sit amet, vestibulum non dui. Proin tincidunt, justo vitae scelerisque pretium, mauris quam aliquet enim, quis tempor tellus felis non leo. Phasellus sodales sit amet nibh et tincidunt.Sed mauris urna, cursus dapibus dui vel, ornare tincidunt ligula. Sed at felis vitae neque dignissim euismod pellentesque et mauris. Vestibulum varius ac odio vitae tincidunt. Morbi elit nulla, varius tempus elit eu, fringilla bibendum orci. Etiam eget lectus ligula. Nam ut vulputate tortor. Morbi augue turpis, porttitor id leo eu, gravida hendrerit erat. Duis at iaculis felis, id suscipit nisi.Curabitur eget ex lorem. Integer in fermentum sem. Vivamus nulla augue, facilisis in sollicitudin at, semper et sapien. Nam sollicitudin nibh mi, at dictum leo ultrices sed. Quisque sodales tellus sed tortor efficitur tempor. Proin sit amet posuere eros. Integer ut purus vel augue vulputate mattis. Donec a congue nunc. Curabitur semper mi orci, vel pretium urna rhoncus ac. Nullam ex elit, vulputate sed massa quis, interdum fringilla libero. Proin venenatis, lacus in lobortis egestas, lectus ipsum sollicitudin tortor, a porta tortor lorem nec mi. Vestibulum vitae dignissim lacus. Suspendisse fringilla molestie porttitor. Fusce sed ex sed est fermentum maximus sit amet eget est. Etiam et nunc erat. Fusce eu tristique diam, id laoreet sapien.Proin ultricies velit eget sollicitudin porta. Sed quis porttitor lacus. Curabitur iaculis condimentum lobortis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras orci orci, consequat sed nibh rhoncus, suscipit dapibus magna. Suspendisse potenti. Nullam tempor suscipit porta. Vestibulum non vehicula ipsum. Ut laoreet viverra purus sed eleifendFusce ac placerat nulla. Maecenas ut vulputate odio. Quisque pulvinar consequat ex ac mollis. Donec imperdiet tortor ac felis scelerisque, et tincidunt felis consectetur. Ut et dolor mauris. Donec scelerisque, nisi sit amet consectetur sagittis, metus enim pellentesque felis, eget pellentesque mauris sem eu tortor. Vivamus commodo justo quis elit pretium gravida. Donec eu tortor sem.",
-        "price": 98
+        "name": "bmw g05 x5 3.0",
+        "image": "https://scontent.ftll3-1.fna.fbcdn.net/v/t45.5328-4/475321976_927923452879689_6372995790452962330_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=100&ccb=1-7&_nc_sid=247b10&_nc_ohc=gMwYj7orkvgQ7kNvgFvbYzQ&_nc_zt=23&_nc_ht=scontent.ftll3-1.fna&_nc_gid=ALtx2HgeA619XK4hb_Cjcd6&oh=00_AYAmkDmfxjwRMjnykQdJhdzzOrm9Hs2Ffe4IgGEKGy8NQA&oe=67A27409",
+        "seller": "Andus Peterson",
+        "description": "For sale: BMW G05 X5 3.0, offering an exceptional driving experience with a powerful 3.0L engine. This premium SUV combines luxury, performance, and cutting-edge technology, making it perfect for those seeking both comfort and style. Well-maintained, with low mileage and in excellent condition. Price: €55,000. Don't miss out on this great opportunity to own a high-end vehicle that delivers both sophistication and power. Contact for more details!",
+        "price": 55000
     },
     {
         "id": 2,
-        "name": "Sum cat",
-        "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D",
-        "description": "suhtsama",
-        "price": 12
+        "name": "Dmitr Jaak",
+        "image": "https://scontent.ftll3-1.fna.fbcdn.net/v/t45.5328-4/473216392_2009427669559136_257980275633836087_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=104&ccb=1-7&_nc_sid=247b10&_nc_ohc=499Ng6anDngQ7kNvgGQh0rt&_nc_zt=23&_nc_ht=scontent.ftll3-1.fna&_nc_gid=AOCkwkbhQ8L1-Ymqc4LDhVy&oh=00_AYAwetjRiAL8-ILh6CcwICdEENquBguF_Ij2BoTuTSpfmA&oe=67A26DD4",
+        "description": "Philips Ambilight television for sale, 70 inches, plus a subwoofer, everything is in very good condition and the TV is wall mounted.",
+        "price": 600
     },
     {
         "id": 3,
-        "name": "Sum dog",
-        "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
+        "name": "Iphone 14 pro, deep purple 128GB",
+        "description": "iPhone 14 Pro, Deep Purple, 128GB, Battery life 100%, comes with  deep purple case ",
+        "image": "https://scontent.ftll3-2.fna.fbcdn.net/v/t45.5328-4/462527245_503968975787317_1801986351495780429_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=106&ccb=1-7&_nc_sid=247b10&_nc_ohc=LoLcxD2b9jgQ7kNvgGJEgWf&_nc_zt=23&_nc_ht=scontent.ftll3-2.fna&_nc_gid=AC_3yX0cvXZ5jnrLXir8JnH&oh=00_AYDsrOTqYg2RwWQ1-HtP_b9F-On7RhX4EoigNMF0bN-Opg&oe=67A28F43",
+        "price": 620
     },
     {
         "id": 4,
-        "name": "Sum cat",
-        "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
+        "price": 70,
+        "name": "Razer x Pikachu Viper Ultimate",
+        "description": "Мышка с док станцией Есть возможность менять цвета мышки через приложение на компьютере На самом мышке можно менять скорость курсора По вопросам в ЛС",
+        "image": "https://scontent.ftll3-2.fna.fbcdn.net/v/t45.5328-4/466603431_918277839744452_1151219565032938390_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=106&ccb=1-7&_nc_sid=247b10&_nc_ohc=1LJoJ9B1eewQ7kNvgE2NEiz&_nc_zt=23&_nc_ht=scontent.ftll3-2.fna&_nc_gid=AcNH8xASAaNITw_kbVhTiTG&oh=00_AYACLNIRuoShFA0ifgrfIDBoVjinlAtnvsdbGpXYjaWZXg&oe=67A275FB"
     },
     {
         "id": 5,
-        "name": "Sum dog",
-        "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
+        "name": "Haapsalu.Suvila",
+        "description": "Müün või vahetan.Talvemaja mererannas .Kahel korrusel.Haapsalu.Tanska küla.Maja on renoveeritud.Tuba-4,köök,saun,WC,garaaž,kuur,suur koera maja ja plats.Oma vett,sojus pump,kvarts radiaatorid,ahju.Müüja või vahetan kolme toaline korteri Tallinnas.Продаю или меняю на трёхкомнатную квартиру в Таллинне.",
+        "price": "120000",
+        "image": "https://scontent.ftll3-1.fna.fbcdn.net/v/t45.5328-4/474316316_1687543895160203_4665022943283162461_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=105&ccb=1-7&_nc_sid=247b10&_nc_ohc=81MJTCv8VvkQ7kNvgGXvJEf&_nc_zt=23&_nc_ht=scontent.ftll3-1.fna&_nc_gid=Ahz9Mx_KxJLTpe9T0LkItJI&oh=00_AYDDq_OE5rSFJuwkj43Ixut51_pRBnKya3FHfn5fkUdDGQ&oe=67A28398"
     },
     {
         "id": 6,
-        "name": "Sum cat",
-        "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
+        "name": "Akupank Makita 18V",
+        "price": 15,
+        "description": "Asub Mustamäel Toiteadapter sobib telefoni laadimiseks või USB LED-tulede toiteks.",
+        "image": "https://scontent.ftll3-1.fna.fbcdn.net/v/t45.5328-4/473210426_1652861408985153_8070089978854628450_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=101&ccb=1-7&_nc_sid=247b10&_nc_ohc=ZgrAfbPHTAgQ7kNvgHPZhlr&_nc_zt=23&_nc_ht=scontent.ftll3-1.fna&_nc_gid=A8ljmkyzeqqY6hXu96kog5H&oh=00_AYBXuKzeOZtwGuwDKZP8ny9chf0EVPRqNtTF4mV9sT9BXg&oe=67A29898"
     },
     {
         "id": 7,
-        "name": "Sum dog",
-        "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
+        "name": "lauaarvuti",
+        "price": 150,
+        "description": "lauaarvuti i5-4460 3,2ghz rx 570 4gb ram 16gb",
+        "image": "https://scontent.ftll3-2.fna.fbcdn.net/v/t45.5328-4/461656273_843972337934967_671104058037734971_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=109&ccb=1-7&_nc_sid=247b10&_nc_ohc=rRP0CuQWVOoQ7kNvgE2OnHp&_nc_zt=23&_nc_ht=scontent.ftll3-2.fna&_nc_gid=AdRSgOoYbeQxZPhifY8Kqjq&oh=00_AYBVtAeX4OkUR2twYIMh9K6uhCLXpfKRdIXgLZhX1p8wSg&oe=67A27052"
     },
     {
         "id": 8,
-        "name": "Sum cat",
-        "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
-    },
-    {
-        "id": 9,
-        "name": "Sum dog",
-        "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
-    },
-    {
-        "id": 10,
-        "name": "Sum cat",
-        "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
-    },
-    {
-        "id": 11,
-        "name": "Sum dog",
-        "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
-    },
-    {
-        "id": 12,
-        "name": "Sum cat",
-        "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
-    },
-    {
-        "id": 13,
-        "name": "Sum dog",
-        "image": "https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg"
-    },
-    {
-        "id": 14,
-        "name": "Sum cat",
-        "image": "https://plus.unsplash.com/premium_photo-1673967831980-1d377baaded2?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2F0c3xlbnwwfHwwfHx8MA%3D%3D"
-    },
-    {
-        "name": "a",
-        "description": "sada",
-        "price": "3",
-        "image": "sadas",
-        "id": 15
-    },
-    {
-        "name": "a",
-        "description": "a",
-        "price": "a",
-        "image": "a",
-        "id": 16,
-        "seller": "Alice Example"
-    },
-    {
-        "name": "a",
-        "description": "a",
-        "price": "3",
-        "image": "a",
-        "id": 17,
-        "seller": "Alice Example"
-    },
-    {
-        "name": "PYTHON VULN",
-        "description": "tries to simulate rce",
-        "price": "1",
-        "image": "http://192.168.1.159:8888/test.py",
-        "id": 18,
-        "seller": "Alice Example"
-    },
-    {
-        "name": "asad",
-        "description": "asdas",
-        "price": "2",
-        "image": "../client/public/favicon.ico",
-        "id": 19,
-        "seller": "Alice Example"
-    },
-    {
-        "name": "asad",
-        "description": "asdas",
-        "price": "2",
-        "image": "../client/public/favicon.ico",
-        "id": 20,
-        "seller": "Alice Example"
-    },
-    {
-        "name": "a",
-        "description": "a",
-        "price": "3",
-        "image": "../test.png",
-        "id": 21,
-        "seller": "Alice Example"
-    },
-    {
-        "name": "a",
-        "description": "a",
-        "price": "3",
-        "image": "../test.png",
-        "id": 22,
-        "seller": "Alice Example"
-    },
-    {
-        "name": "a",
-        "description": "a",
-        "price": "3",
-        "image": "../test.png",
-        "id": 23,
-        "seller": "Alice Example"
-    },
-    {
-        "name": "PROOV",
-        "description": "o",
-        "price": "5",
-        "image": "https://www.imdb.com/name/nm7808003/",
-        "id": 24,
-        "seller": "Alice Example"
-    },
-    {
-        "name": "proov2",
-        "description": "asda",
-        "price": "2",
-        "image": null,
-        "id": 25,
-        "seller": "Alice Example"
-    },
-    {
-        "id": 26,
-        "name": "bts_test1",
-        "description": "a",
-        "price": "2",
-        "image": "https://people.com/music/bts-members-everything-to-know/",
-        "seller": "Alice Example"
-    },
-    {
-        "id": 27,
-        "name": "bts 2",
-        "description": "a",
-        "price": "2",
-        "image": "https://people.com/thmb/eP1dcHO1ul8FPqc6_ZBh7ABW1rg=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(979x595:981x597)/bts-members-1-03a9c478f1794c448bcb5f74bf94812c.jpg",
-        "seller": "Alice Example"
-    },
-    {
-        "id": 28,
-        "name": "bts test 333",
-        "description": "a",
-        "price": "5",
-        "image": null,
-        "seller": "Alice Example"
-    },
-    {
-        "id": 29,
-        "name": "bts test 4",
-        "description": "a",
-        "price": "3",
-        "image": null,
-        "seller": "Alice Example"
-    },
-    {
-        "id": 30,
-        "name": "bts test 4",
-        "description": "a",
-        "price": "3",
-        "image": null,
-        "seller": "Alice Example"
-    },
-    {
-        "id": 31,
-        "name": "bts test 4",
-        "description": "a",
-        "price": "3",
-        "image": null,
-        "seller": "Alice Example"
-    },
-    {
-        "id": 32,
-        "name": "bts test 4",
-        "description": "a",
-        "price": "3",
-        "image": null,
-        "seller": "Alice Example"
-    },
-    {
-        "id": 33,
-        "name": "bts test 5",
-        "description": "a",
-        "price": 2,
-        "image": "https://people.com/thmb/-sy0I1AXm9jKOqDynZYDawMQVXU=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(999x0:1001x2)/bts-bb98ad807ef44aada577c4510c14bce4.jpg",
-        "seller": "Alice Example"
-    },
-    {
-        "id": 34,
-        "name": "bts test 6",
-        "description": "a",
-        "price": 2,
-        "image": "C:\\Users\\Mike\\Code\\CTF-VEEBIRAKENDUS\\server\\marketplace_images\\Screenshot_2025-01-28_224500.png",
-        "seller": "Alice Example"
-    },
-    {
-        "id": 35,
-        "name": "bts test 7",
-        "description": "a",
-        "price": 2,
-        "image": "Screenshot_2025-01-28_224500.png",
-        "seller": "Alice Example"
-    },
-    {
-        "id": 36,
-        "name": "bts test 8",
-        "description": "a",
-        "price": 8,
-        "image": "/uploads/Screenshot_2025-01-28_224500.png",
-        "seller": "Alice Example"
-    },
-    {
-        "id": 37,
-        "name": "PY VULN 2",
-        "description": "A",
-        "price": 2,
-        "image": "/uploads/testpy.png",
-        "seller": "Alice Example"
-    },
-    {
-        "id": 38,
-        "name": "test",
-        "description": "m",
-        "price": 9,
-        "image": "/uploads/image.png",
-        "seller": "a"
-    },
-    {
-        "id": 39,
-        "name": "ssd",
-        "description": "asdad",
-        "price": 2,
-        "image": "/uploads/image.png",
-        "seller": "a"
-    },
-    {
-        "id": 40,
-        "name": "sss",
-        "description": "asdad",
-        "price": 2,
-        "image": "/uploads/image.png",
-        "seller": "a"
-    },
-    {
-        "id": 41,
-        "name": "sss",
-        "description": "asdad",
-        "price": 2,
-        "image": "/uploads/image.png",
-        "seller": "a"
-    },
-    {
-        "id": 42,
-        "name": "z",
-        "description": "z",
-        "price": 2,
-        "image": "image.png",
-        "seller": "a"
-    },
-    {
-        "id": 43,
-        "name": "a",
-        "description": "w",
-        "price": 2,
-        "image": "kaspnina.png",
-        "seller": "a"
-    },
-    {
-        "id": 44,
-        "name": "a",
-        "description": "w",
-        "price": 2,
-        "image": "kaspnina.png",
-        "seller": "a"
-    },
-    {
-        "id": 45,
-        "name": "a",
-        "description": "w",
-        "price": 2,
-        "image": "kaspnina.png",
-        "seller": "a"
-    },
-    {
-        "id": 46,
-        "name": "SA",
-        "description": "awd",
-        "price": 5,
-        "image": "Helo_sexy.png",
-        "seller": "a"
-    },
-    {
-        "id": 47,
-        "name": "SA",
-        "description": "awd",
-        "price": 5,
-        "image": "Helo_sexy.png",
-        "seller": "a"
-    },
-    {
-        "id": 48,
-        "name": "wa",
-        "description": "awd",
-        "price": 5,
-        "image": "ezgif.com-gif-maker.gif",
-        "seller": "a"
-    },
-    {
-        "id": 49,
-        "name": "wa",
-        "description": "awd",
-        "price": 5,
-        "image": "ezgif.com-gif-maker.gif",
-        "seller": "a"
-    },
-    {
-        "id": 50,
-        "name": "wa",
-        "description": "awd",
-        "price": 5,
-        "image": "ezgif.com-gif-maker.gif",
-        "seller": "a"
-    },
-    {
-        "id": 51,
-        "name": "php vuln test ",
-        "description": "aaa",
-        "price": 2,
-        "image": "reverseshell.png",
-        "seller": "a"
-    },
-    {
-        "id": 52,
-        "name": "php vuln test 2",
-        "description": "asadasd",
-        "price": 2,
-        "image": "shell.png",
-        "seller": "a"
+        "name": "Flag",
+        "price": 1000000,
+        "description": "This is one of the flags for this CTF search. You must figure out how to buy this item, even with its ridiculous price.",
+        "image": "https://vivun.com/wp-content/uploads/2022/12/Screen-Shot-2022-12-07-at-3.05.45-PM.png"
     }
 ]
