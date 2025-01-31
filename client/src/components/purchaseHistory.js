@@ -16,7 +16,7 @@ function PurchaseHistory({ offers }) {
 				<div style={{ overflowX: isActive ? 'auto' : 'hidden' }} className='list'>
 					{offers.map((offer, key) =>
 						<span key={key}>
-							<Offer offer={offer} func={() => { console.log(offer) }} />
+							<Offer offer={offer} />
 						</span>
 					)}
 				</div>
