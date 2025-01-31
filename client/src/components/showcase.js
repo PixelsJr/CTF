@@ -47,8 +47,6 @@ function Showcase({ offer, close, buyFunc}) {
             console.log(reviews)
             setReviews([...reviews, newReview]);
             setNewReview("");
-        } else {
-            alert("Failed to add review");
         }
     };
 

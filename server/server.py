@@ -326,7 +326,9 @@ def main():
         if not bool(user_data):
             return False
 
-        purchases = user_data[3].split(',')
+        purchases = []
+        if user_data[3] != None:
+            purchases = user_data[3].split(',')
         purchasesOffers = []
         for pur in purchases:
             purchasesOffers.append(get_offer(pur))

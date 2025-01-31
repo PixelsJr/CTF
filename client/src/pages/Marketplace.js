@@ -76,8 +76,7 @@ function Marketplace() {
 		const myFunction = `
       async function buyOffer(id, balance, price) {
         if(price > balance){
-			alert('Hello from the custom function!');
-			return
+			return false
 		}
 		const response = await fetch('/api/buy', {
             method: 'POST',
