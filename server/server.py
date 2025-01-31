@@ -52,6 +52,8 @@ def main():
     @app.route('/api/updateData.json', methods=['POST'])
     def updateData():
 
+        app.logger.error(request)
+
         message = request.form.get('message')
 
         with open("data.json", "w") as file:
