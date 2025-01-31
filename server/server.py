@@ -178,14 +178,17 @@ def main():
     def buy():
         validation = validate_auth(request)
         if validation != "Authenticated":
-            return validation
+            return validation, 400
 
         data = request.get_json()
         offerID = data['id']
 
         user_id = int(request.cookies.get('user_id'))
         purchase_offers = execute_fetch_db_command(f"SELECT PurchaseHistory FROM users WHERE id={user_id};")[0][0]
-        purchase_offers += f',{offerID}'
+        if purchase_offers == None:
+            purchase_offers = f'{offerID}'
+        else:
+            purchase_offers += f',{offerID}'
 
         execute_commit_db_command(f"UPDATE users SET \"PurchaseHistory\" = '{purchase_offers}' WHERE id = {user_id};")
         return 'well done', 200
