@@ -57,7 +57,7 @@ function Admin() {
     return (
         <div className="Admin">
             <Header />
-            <h1>Amazing</h1>
+            <h1>Amazing, you truly are the admin of this page!</h1>
         </div>
     );
 }
