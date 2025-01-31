@@ -178,7 +178,7 @@ def main():
     def buy():
         validation = validate_auth(request)
         if validation != "Authenticated":
-            return validation
+            return validation, 400
 
         data = request.get_json()
         offerID = data['id']
