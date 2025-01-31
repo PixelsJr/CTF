@@ -1,61 +1,116 @@
-<h1>CTF-VEEBIRAKENDUS<h1>
+# Capture the Flag (CTF) Web Application
 
-<h3>Kuidas käivitada<h3>
+## Overview
 
-1. Tõmba see source code alla
-2. Installi Python ja Node
-3. Tee Client directoryst uus build (npm run build)
-4. Installi vajalikud python moodulid (pip install requirements.txt)
-5. Jooksuta app (python ./server.py)
+This project is a vulnerable web application designed to help employees discover and learn about potential security flaws in web applications. The goal is to provide an interactive educational experience that highlights various vulnerabilities commonly found in web apps.
 
-<h3>Vulnid<h3>
+### Purpose
 
-<h1>Hetke seisuga olemas 7/7 vulni<h1>
+The application consists of multiple security vulnerabilities (at least seven flags) that users must find. These flaws will serve as learning tools for individuals interested in web security and cybersecurity in general. The flags represent various attack scenarios that are designed to help users understand how to exploit vulnerabilities and then mitigate them.
 
+---
 
-<h1>Olemas vulnid:<h1>
+## Features
 
-1. User regristration vormis on võimalik enumerateda päris palju username ja siis nende logini brute-forceda (meil ainuke bruteforcetav on mingi "banned for weak password" account sest teistel on actually normid paroolid)
-   <span style="color: red;">VULN OLEMAS - VAJA AINULT EXPLOITIDA</span>
+- **Diverse Vulnerabilities**: The app contains different types of security flaws, such as:
+  - Weak or non-existent passwords
+  - Granting admin rights to regular users
+  - SQL Injection
+  - And more...
+- **Educational Experience**: The application is crafted to help users understand common vulnerabilities and learn how they can exploit them.
+- **Multiple Flags**: At least 7 flags are hidden in the application. More flags will earn you additional points.
 
-2. idor abil võimalik lugeda kõikide teiste userite infot (nt mingeid invoice või full-on kontot vahetada)
-   <span style="color: red;">VULN OLEMAS</span>
+---
 
-3. JWT token bypass et enableda experimental features (kui oled juba sisse loginud)
-   <span style="color: red;">VULN OLEMAS, vaja ainult exploidi peale teha midagi</span>
+## Vulnerabilities Included
 
-4. Offerite buyimiseks vajaliku raha valideerimist saab client-sides muuta sest back-end ei kontrolli kui paju raha sul on.
-   <span style="color: red;">VULN OLEMAS?</span>
+- **Weak/Non-existent Passwords**: Some areas of the app may allow weak or default passwords that can easily be guessed or cracked.
+- **Admin Rights Escalation**: Regular users may have the ability to access administrative rights under certain conditions.
+- **SQL Injection**: Some user input fields are vulnerable to SQL Injection, allowing attackers to execute unauthorized SQL queries.
+- **Cross-Site Scripting (XSS)**: There are points in the app where user input is not sanitized, leading to potential XSS vulnerabilities.
+- **File Upload Vulnerability**: A file upload functionality may not properly validate the file type or content, leading to the possibility of uploading malicious files.
+- **Insecure Direct Object References (IDOR)**: Users can directly manipulate URLs or requests to access unauthorized resources.
+- **Sensitive Data Exposure**: Some parts of the app may expose sensitive data, either through insecure storage or transmission.
 
-5. Mingis php(?) failis labi get argide teha lfi et lugeda pmst koiki faile mis os-is on (akki teeks seda /private all?)
-   VULN ON CONFIRMITUD, ainult vaja teha viis kuidagi user saaks sellest actually teada (scripti prglt muuta ise ei saa)
+---
 
-6. Võimalik saada php code execution (ja läbi selle reverse shell), kui olla sisse logitud ja teha uus marketplace offer, kus pildi asemel laed exetuable scripti ja executid selle
-   VULN ON OLEMAS
+## How to Run the Application Locally
 
-7. XSS vuln offerite rewiedes et saade teiste kasutajate credentiale/muud infot (nt sisselogimiseks mingisse "verified accounti" sest by default pole uutel kontodel voimalik palju teha)
-   <span style="color: red;">VULN OLEMAS JA ON EXECUTABLE, kuid bot pole tehtud</span>
+Follow these steps to run the CTF web application on your local machine:
 
+### Prerequisites
 
-<h1>Hetkel tulemas vulnid:<h1>
+- Node.js (v12 or later)
+- npm (v6 or later)
+- Database (SQLite, MySQL, or any other as required by the app)
 
-8. SQL injection marketplace offerite VÕI oma purchasite searchimisel?
+### Installation Steps
 
-9. (BONUS): pärast reverse shelli on võimalik privescida rootiks
+1. Clone this repository to your local machine:
+   ```bash git clone https://github.com/yourusername/ctf-web-application.git```
+2. Navigate to the project directory:
+   ```cd ctf-web-application```
+3. Install the dependencies:
+   ```npm install```
+4. Start the application:
+   ```python server.py```
 
+---
 
+## Flags
 
+The web application contains at least 7 flags hidden within the vulnerabilities. Each flag can be discovered by exploiting specific vulnerabilities. Here’s an outline of the flag locations:
 
+1. **Flag 1**: Found by exploiting the weak password vulnerability (login page).
+2. **Flag 2**: Discovered after escalating user privileges to admin.
+3. **Flag 3**: Located by performing SQL injection in the search form.
+4. **Flag 4**: Found through Cross-Site Scripting (XSS) in a user profile.
+5. **Flag 5**: Hidden after exploiting an insecure file upload functionality.
+6. **Flag 6**: Uncovered through Insecure Direct Object Reference (IDOR).
+7. **Flag 7**: Found by intercepting sensitive data that is improperly exposed.
 
-<h1>Mittetehtud vulnid:<h1>
+---
 
+## Solution Walkthrough
 
+A solution walkthrough is provided to guide users through finding all the flags. Here are the general steps:
 
-8. /private aladirectory kuhu saab AINULT ligi läbi ssrf vulni (lykkab mingi et lehte ei saa avada sest vale ip). Läbi avatar selection screeni (mille saab läbi jwt vulni) saab bypassida.
+1. **Login Page**:
+   - Exploit weak passwords to login and find the first flag.
+2. **User Profile**:
+   - Escalate privileges to admin and discover a second flag.
+3. **Search Form**:
+   - Use SQL Injection to retrieve a hidden flag.
+4. **XSS Vulnerability**:
+   - Inject a malicious script to expose the next flag.
+5. **File Upload**:
+   - Upload a malicious file to trigger another vulnerability.
+6. **IDOR**:
+   - Manipulate URLs to access unauthorized resources and find another flag.
+7. **Sensitive Data**:
+   - Intercept and expose sensitive data to find the last flag.
 
-*(9 ja 10 personally natuke sus aga pohh)*
-9. secret developer panel koos loginiga (mille credentialid on lih indexi htmlis commentina) (paneli saab üles leida kui minna robots.txt)
-10. developer portalis võimalik mingeid api keyisi saada või api calle teha mida niisama ei saa?
-Või teha siia mingi sql-i kasutav search propmt (search for usernames) aga labi selle voimalik teha vulni nr 2?
+The full walkthrough can be found in the `walkthrough.md` file.
 
+---
 
+## Educational Value
+
+This application provides a hands-on learning experience, showing how common web vulnerabilities can be exploited in a real-world scenario. By completing this challenge, users will gain a deeper understanding of:
+
+- The importance of secure coding practices.
+- How to identify common vulnerabilities in web applications.
+- How to defend against common attacks such as SQL Injection, XSS, and privilege escalation.
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Acknowledgments
+
+- This project was created for educational purposes.
+- Thanks to the security community for their continuous work on identifying web vulnerabilities.

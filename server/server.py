@@ -85,7 +85,7 @@ def main():
     def serve_index():
         return send_file(INDEX)
     
-    @app.route('/api/is_admin')
+    @app.route('/api/is_admin', methods=['POST'])
     def isa_admin():
         validation = validate_auth(request)
         if validation != "Authenticated":
@@ -94,7 +94,7 @@ def main():
         token = request.cookies.get('token')
         if token:            
             # Validate admin status
-            if decode_jwt(token, "admin") == True:
+            if decode_jwt(token, "admin") == 'true':
                 return jsonify({'info': 'Authenticated'}), 200
             return jsonify({
                 'error': "JWT token invalid"

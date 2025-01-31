@@ -22,7 +22,6 @@ function Admin() {
           const response = await fetch('/api/is_admin', {
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json',
             },
           });
