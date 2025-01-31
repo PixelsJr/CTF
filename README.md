@@ -74,7 +74,7 @@ The web application contains 7 flags hidden within the vulnerabilities. Each fla
 3. **Flag 3**: Can be bought in the shop for enough money (or by changing the client-side code) and can then be viewed in /Profile.
 4. **Flag 4**: Is revealed after getting access (via IDOR) to an account with an ID of 1.
 5. **Flag 5**: Can be viewed after getting access to /admin via JWT token manipulation.
-6. **Flag 6**: Is in the C:\Windows\System32\drivers\etc\hosts file.
+6. **Flag 6**: Can be found by reading the C:\Windows\System32\drivers\etc\hosts file with a broken api.
 7. **Flag 7**: Found by manipulating **JWT token manipulation** and signing it to be accepted by the server.
 
 
@@ -82,30 +82,13 @@ The web application contains 7 flags hidden within the vulnerabilities. Each fla
 
 ## Solution Walkthrough
 
-A solution walkthrough is provided to guide users through finding all the flags. Here are the general steps:
-
-1. **Login Page**:
-   - Exploit weak passwords to login and find the first flag.
-2. **User Profile**:
-   - Escalate privileges to admin and discover a second flag.
-3. **Search Form**:
-   - Use SQL Injection to retrieve a hidden flag.
-4. **XSS Vulnerability**:
-   - Inject a malicious script to expose the next flag.
-5. **File Upload**:
-   - Upload a malicious file to trigger another vulnerability.
-6. **IDOR**:
-   - Manipulate URLs to access unauthorized resources and find another flag.
-7. **Sensitive Data**:
-   - Intercept and expose sensitive data to find the last flag.
-
-The full walkthrough can be found in the `walkthrough.md` file.
+The full walkthrough to find all flags can be found in the `walkthrough.md` file.
 
 ---
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU General Public License (GPL) Version 3 - see the [LICENSE](LICENSE) file for details.
 
 ---
 
