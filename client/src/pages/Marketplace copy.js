@@ -92,46 +92,9 @@ function Marketplace() {
         }
       }`
 
-	  
-	const myFunction2 = `
-      async function fetchOffersGlobal() {
-        const response = await fetch('/api/getAllOffers', {
-          method: 'GET'
-        });
-        const data = await response.json();
+		const myFunction2 = `
 
-        const offersWithImages = await Promise.all(data.map(async (offer) => {
-          if (offer.image) {
-            console.log(offer.image);
-            return offer;
-          }
-
-          const filename_response = await fetch(\`/api/get_offer_filename_from_id?offer_id=\${offer.id}\`, {
-            method: 'GET'
-          });
-
-          const filename_json = await filename_response.json();
-          console.log(filename_json);
-          const filename = filename_json.filename;
-          console.log(filename);
-
-          const imageResponse = await fetch(\`/api/get_image.php?filename=\${filename}\`);
-          console.log(imageResponse);
-          if (imageResponse.ok) {
-            const { image, error } = await imageResponse.json();
-            if (image) {
-              offer.image = \`data:image/jpeg;base64,\${image}\`;
-            } else {
-              offer.image = '';
-            }
-          } else {
-            offer.image = '';
-          }
-          return offer;
-        }));
-
-        return offersWithImages;
-      }`;
+		`
 
 
 		const script = document.createElement('script')

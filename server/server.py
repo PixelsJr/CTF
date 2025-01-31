@@ -156,7 +156,7 @@ def main():
             file_path = f"marketplace_images/{filename}"
 
             # Call PHP script via subprocess
-            command = f'php/php.exe get_image.php {file_path}'
+            command = f'./php/php.exe get_image.php {file_path}'
             result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             response = result.stdout.strip()   
 
