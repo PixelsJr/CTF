@@ -55,7 +55,7 @@ function CreateOffer({ successBox }) {
 			<h2>Create offer</h2>
 			<div className="body">
 				<h3>Name of the offer</h3>
-				<input onChange={(e) => { setTitle(e.target.value) }} placeholder="Dog for sale..."></input>
+				<input onChange={(e) => { setTitle(e.target.value) }} maxLength='30' required placeholder="Dog for sale..."></input>
 				<h3>Description</h3>
 				<input onChange={(e) => { setDescription(e.target.value) }} placeholder="This is a dog I am trying to get rid of..."></input>
 				<h3>Picture</h3>
@@ -111,7 +111,7 @@ function CreateOffer({ successBox }) {
 				)}
 				<div className="priceBox">
 					<span>Price:</span>
-					<input onChange={(e) => { setPrice(e.target.value) }} placeholder="5"></input><span>€</span>
+					<input type="number" required onChange={(e) => { setPrice(e.target.value) }} placeholder="5"></input><span>€</span>
 				</div>
 				<button type="submit">Create Offer</button>
 				<div style={{ height: '10px' }}></div>
