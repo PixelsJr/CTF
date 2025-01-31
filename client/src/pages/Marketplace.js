@@ -92,10 +92,17 @@ function Marketplace() {
         }
       }`
 
+		const myFunction2 = `
+
+		`
+
 
 		const script = document.createElement('script')
+		const script2 = document.createElement('script')
 		script.innerHTML = myFunction;
+		script2.innerHTML = myFunction2;
 		document.head.appendChild(script);
+		document.head.appendChild(script2);
 
 		fetchOffers()
 		fetchUserData()

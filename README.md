@@ -10,20 +10,6 @@ This is a vulnerable web application designed to help computer science enthuasia
 
 The application consists of multiple security vulnerabilities (seven to be exact) that users must find. The flags represent various attack vectors that are designed to you understand how to find and exploit vulnerabilities.
 
----
-
-## Features
-
-- **Diverse Vulnerabilities**: The app contains different types of security flaws, such as:
-  - Weak or non-existent passwords
-  - Granting admin rights to regular users
-  - SQL Injection
-  - And more...
-- **Educational Experience**: The application is crafted to help users understand common vulnerabilities and learn how they can exploit them.
-- **Multiple Flags**: At least 7 flags are hidden in the application. More flags will earn you additional points.
-
----
-
 ## Vulnerabilities Included
 
 - **Username enumeration and password brute-forceability**: Some areas of the app allow you to enumerate account username's and then brute-force their passwords.
@@ -58,8 +44,10 @@ Follow these steps to run the application on your local machine:
    ```npm install```
 4. Build the project:
    ```npm run build```
-4. Follow the steps in README_additional.md to properly configure the project.
-5. Start the application (/server folder):
+5. Install the python requirements:
+   ```pip install -r requirements.txt```
+6. Follow the steps in README_additional.md to properly configure the project.
+7. Start the application (/server folder):
    ```python server.py```
 
 ---
@@ -75,12 +63,6 @@ The web application contains 7 flags hidden within the vulnerabilities. Each fla
 5. **Flag 5**: Can be viewed after getting access to /admin via JWT token manipulation.
 6. **Flag 6**: Can be found by reading the C:\Windows\System32\drivers\etc\hosts file with a broken api.
 7. **Flag 7**: Found by manipulating **JWT token manipulation** and signing it to be accepted by the server.
-
----
-
-## Solution Walkthrough
-
-The full walkthrough can be found in the `walkthrough.md` file.
 
 ---
 
@@ -106,4 +88,4 @@ This project is licensed under the GNU General Public License (GPL) Version 3 - 
 ## Credits / Authors
 
 - **Developers**: LellerLololol and PixelsJr
-- **Team**: [INSERT TEAM NAME SEST ME POLE VEEL OTSUSTANUD]
+- **Team**: PixelJaTeised

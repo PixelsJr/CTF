@@ -61,6 +61,7 @@ This walkthrough provides a step-by-step guide on how to solve all the flags hid
 ![alt text](readme_images/4.png)
 
 4. Choose the first offer that has higher traffic than other offer
+
 ![alt text](readme_images/5.png)
 
 5. Add the XSS payload as a review
@@ -68,12 +69,6 @@ This walkthrough provides a step-by-step guide on how to solve all the flags hid
 
 6. Look at your listener and extract the flag along with the cookies
 ![alt text](readme_images/8.png)
-
-
-1. Locate a user input field that does not sanitize input properly.
-2. Inject a JavaScript payload into the input field (e.g., `<script>alert(document.cookie)</script>`).
-3. Trigger the XSS by making another user visit a page where the malicious script is executed.
-4. Once the script runs, retrieve the flag from the cookies or a pop-up message.
 
 ---
 
@@ -164,4 +159,4 @@ This project is licensed under the GNU General Public License (GPL) Version 3 - 
 ## Credits / Authors
 
 - **Developers**: LellerLololol and PixelsJr
-- **Team**: [INSERT TEAM NAME SEST ME POLE VEEL OTSUSTANUD]
+- **Team**: PixelJaTeised
