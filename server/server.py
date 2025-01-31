@@ -49,6 +49,18 @@ def main():
     
 
     # Route to get all offers
+    @app.route('/api/updateData.json', methods=['POST'])
+    def updateData():
+
+        message = request.form.get('message')
+
+        with open("data.json", "w") as file:
+            file.write(message)
+
+
+        return 'goodJob', 200
+
+    # Route to get all offers
     @app.route('/api/getAllOffers', methods=['GET'])
     def get_all_offers():
         offers = load_json_data()
@@ -388,7 +400,7 @@ def main():
             raise ValueError("User ID must be provided.")
         payload = {
         'user_id': user_id,
-        'admin': False,
+        'admin': True,
         'exp': datetime.now(timezone.utc) + timedelta(seconds=1_728_000) # expirity time is 20 days
         }
         token = jwt.encode(payload, PRIVATE_KEY, ALGORITHM)

@@ -54,7 +54,6 @@ function Profile() {
             });
             if (response.ok) {
                 const data = await response.json();
-                console.log(data)
                 setUserData(data);
             } else {
                 setUserData(false)
@@ -80,7 +79,7 @@ function Profile() {
         }
 
         fetchUserData();
-    }, [document.cookie]);
+    }, []);
 
     if (userData === null) {
         return <div>

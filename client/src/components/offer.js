@@ -8,8 +8,6 @@ function getPrice(price){
 
 function Offer({ offer, func }) {
 
-	console.log(offer, offer.price)
-
 	return (
 		<div className='offerContainer'>
 			<div className="offer borderdDiv" onClick={() => {

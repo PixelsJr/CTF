@@ -1,65 +1,110 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../App.css';
 import Header from '../components/header';
 
 function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-  return null;
+	const value = `; ${document.cookie}`;
+	const parts = value.split(`; ${name}=`);
+	if (parts.length === 2) return parts.pop().split(';').shift();
+	return null;
 }
 
 function Admin() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [loading, setLoading] = useState(true);
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [loading, setLoading] = useState(true);
 
-     useEffect(() => {
-    const checkToken = async () => {
-      const token = getCookie('token');
-      
-      if (token) {
-        try {
-          const response = await fetch('/api/is_admin', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
+	const textareaRef = useRef(null)
 
-          if (response.ok) {
-            setIsAuthenticated(true);
-          } else {
-            setIsAuthenticated(false);
-          }
-        } catch (error) {
-          console.error('Error validating token', error);
-          setIsAuthenticated(false);
-        }
-      } else {
-        setIsAuthenticated(false);
-      }
-      
-      setLoading(false);
-    };
+	useEffect(() => {
+		const checkToken = async () => {
+			const token = getCookie('token');
 
-    checkToken();
-    }, []);
+			if (token) {
+				try {
+					const response = await fetch('/api/is_admin', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					});
 
-    if (loading) {
-        return <div>Checking for admin status...</div>;
-    }
+					if (response.ok) {
+						getJWT()
+						setIsAuthenticated(true);
+					} else {
+						setIsAuthenticated(false);
+					}
+				} catch (error) {
+					console.error('Error validating token', error);
+					setIsAuthenticated(false);
+				}
+			} else {
+				setIsAuthenticated(false);
+			}
 
-    if (!isAuthenticated) {
-        return <div>Page denied. You are not admin</div>;
-    }
+			setLoading(false);
+		};
 
+		checkToken();
+	}, []);
 
-    return (
-        <div className="Admin">
-            <Header />
-            <h1>Amazing, you truly are the admin of this page!</h1>
-        </div>
-    );
+	async function getJWT() {
+		const response = await fetch('/api/getAllOffers', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		const message = await response.json()
+		var a = {}
+		a.target = textareaRef.current
+		textareaRef.current.value = JSON.stringify(message, null, 2)
+		takeSize(a)
+	}
+
+	function takeSize(e) {
+		var el = e.target;
+		setTimeout(function () {
+			el.style.cssText = 'min-height:37px; height: 37px; width: 90%; background-color: #FCFCE4';
+			// for box-sizing other than "content-box" use:
+			// el.style.cssText = '-moz-box-sizing:content-box';
+			el.style.cssText = 'height:' + el.scrollHeight + 'px; width: 90%; background-color: #F9ECC9';
+		}, 0);
+	}
+
+	if (loading) {
+		return <div>Checking for admin status...</div>;
+	}
+
+	if (!isAuthenticated) {
+		return <div>Page denied. You are not admin</div>;
+	}
+
+	return (
+		<div className="Admin">
+			<Header />
+			<div className='scrollable'>
+				<h1>Amazing, you truly are the admin of this page!</h1>
+
+				<textarea onChange={(e) => {
+					takeSize(e)
+				}} ref={textareaRef}></textarea>
+				<button onClick={async (e) => {
+
+					const message = e.target.value
+
+					const response = await fetch('/api/updateData.json', {
+						method: 'POST',
+						body: {"message": message},
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					});
+				}} style={{margin: '5px', width: '400px', height: '200px', fontSize: '32px'}}>Update data.json</button>
+			</div>
+		</div>
+	);
 }
 
 export default Admin;
