@@ -22,7 +22,6 @@ function Marketplace() {
 				method: 'GET'
 			})
 			const data = await response.json()
-			console.log(offers)
 
         	const offersWithImages = await Promise.all(data.map(async (offer) => {
 				if (offer.image) {
@@ -56,7 +55,6 @@ function Marketplace() {
 			}));
 
 			setOffers(offersWithImages)
-			console.log(offers)
 			setLoading(1);
 		}
 

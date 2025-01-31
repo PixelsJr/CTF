@@ -46,7 +46,7 @@ Follow these steps to run the application on your local machine:
 - Node.js (Tested on v23.6.0)
 - npm (Tested on 10.9.2)
 - Python (Tested on 3.13.0)
-- PHP binaries (Tested on Zend Engine v4.4.3) (DEfinitely see README_additional.md for more info)
+- PHP binaries (Tested on Zend Engine v4.4.3) (Definitely see README_additional.md for more info)
 
 ### Installation Steps
 
@@ -59,8 +59,7 @@ Follow these steps to run the application on your local machine:
 4. Build the project:
    ```npm run build```
 4. Follow the steps in README_additional.md to properly configure the project.
-5. Run the 
-6. Start the application (/server folder):
+5. Start the application (/server folder):
    ```python server.py```
 
 ---
