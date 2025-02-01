@@ -16,6 +16,8 @@ function Profile() {
     const [infoBoxMessage, setInfoBoxMessage] = useState('');
     const [infoBoxSuccess, setInfoBoxSuccess] = useState(false);
 
+    const [offerSecret, setOfferSecret] = useState(null);
+
     async function informationBox(obj, message, success, delay=2000){
 
 		function timeout(delay) {
@@ -55,6 +57,7 @@ function Profile() {
             if (response.ok) {
                 const data = await response.json();
                 setUserData(data);
+                checkOfferSecret(data.purchases);
             } else {
                 setUserData(false)
             }
@@ -80,6 +83,15 @@ function Profile() {
 
         fetchUserData();
     }, []);
+
+    const checkOfferSecret = (purchases) => {
+        const offer = purchases.find((purchase) => purchase.id === 8);
+        if (offer) {
+            setOfferSecret(offer.secret);
+        } else {
+            setOfferSecret(null);
+        }
+    };
 
     if (userData === null) {
         return <div>
@@ -128,6 +140,12 @@ function Profile() {
                     <UserData data={userData} />
                     <PurchaseHistory offers={userData.purchases} />
                     <CreateOffer successBox={successBox} />
+                    {offerSecret && (
+                        <div className="offer-secret">
+                            <h3>Flag:</h3>
+                            <p>{offerSecret}</p>
+                        </div>
+                    )}
                 </div>
                 }
             </div>

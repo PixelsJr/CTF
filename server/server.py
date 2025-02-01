@@ -101,7 +101,7 @@ def main():
         return send_file(INDEX)
     
     @app.route('/api/is_admin', methods=['POST'])
-    def isa_admin():
+    def is_admin():
         validation = validate_auth(request)
         if validation != "Authenticated":
             return validation
@@ -109,14 +109,19 @@ def main():
         token = request.cookies.get('token')
         if token:            
             # Validate admin status
-            if decode_jwt(token, "admin") == 'true':
+            app.logger.error(decode_jwt(token, "admin"))
+            app.logger.error(decode_jwt(token, "admin"))
+            app.logger.error(decode_jwt(token, "admin"))
+            app.logger.error(decode_jwt(token, "admin"))
+            app.logger.error(decode_jwt(token, "admin"))
+            if decode_jwt(token, 'admin') == True:
                 return jsonify({'info': 'Authenticated', 'flag': 'ASIKARIKAS{JWT_TOKEN_MANIPULATION}'}), 200
             return jsonify({
-                'error': "JWT token invalid"
-            })
+                'error': "JWT token invalid 222"
+            }), 400
         return jsonify({
-            'error': "JWT token not present"
-        })
+            'error': "JWT token not present",
+        }), 400
     
     """
     Seda route'i lowk pole vaja sest saadame image data otse läbi php file'i
@@ -439,7 +444,9 @@ def main():
 
             #decoded_token = jwt.decode(token, PUBLIC_KEY, ALGORITHM)
             decoded_token = jwt.decode(token, PUBLIC_KEY, decoded_algorithm)
-            extracted_value = decoded_token[dict_key]
+            extracted_value = decoded_token[str(dict_key)]
+            if str(dict_key) == 'admin':
+                return extracted_value
             if extracted_value:
                 return extracted_value
             raise ValueError

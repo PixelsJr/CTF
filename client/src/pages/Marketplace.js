@@ -140,7 +140,6 @@ function Marketplace() {
 		script2.innerHTML = myFunction2;
 		document.head.appendChild(script);
 		document.head.appendChild(script2);
-
 		fetchOffers()
 		fetchUserData()
 	}, [])

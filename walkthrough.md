@@ -91,9 +91,16 @@ This walkthrough provides a step-by-step guide on how to solve all the flags hid
 ![alt text](readme_images/10.png)
 
 
-4. Modify the function's code to bypass the money check
-Before: ![alt text](readme_images/11.png) After: ![alt text](readme_images/12.png)
-4. Buy the flag
+We can see that the function responsible for the buying functionality is buyOffer. Let's move to the console tab and try to call that function manually
+![alt text](readme_images/11.png)
+
+As we can see, it needs three inputs: id, balance and price. We can set up a script to brute-force the id of the flag offer, but we can also just try id=8 since it's the 8th offer in the marketplace. The other two we can choose whatever, but balance need to higher price for the function to work (as we saw in the source code).
+
+4. Buy the flag with the command ```buyOffer(8, 100000, 1)```
+![alt text](readme_images/12.png)
+
+5. Navigate to /Profile and make sure that the flag is in your purchase history. If it is, scroll down to see the flag.
+![alt text](readme_images/33.png)
 
 ---
 
@@ -109,11 +116,8 @@ Before: ![alt text](readme_images/11.png) After: ![alt text](readme_images/12.pn
 2. Go to inspect element and look at your cookies
 ![alt text](readme_images/26.png)
 
-3. Change user_id value to '2' and refresh the page
-
-
-2. Change the ID parameter in the URL to `1` (e.g., `/user?id=1`).
-3. Access the page and look for a flag displayed in the user’s profile or data.
+3. Change user_id value to '1' and refresh the page
+![alt text](readme_images/27.png)
 
 ---
 
@@ -123,11 +127,41 @@ Before: ![alt text](readme_images/11.png) After: ![alt text](readme_images/12.pn
 **Flag Location**: /admin page.
 
 ### Steps:
-1. Analyze the JWT token stored in your session (likely in a cookie or local storage).
-2. Decode the token and examine the payload for potential weaknesses.
-3. Modify the token (e.g., change the role or permissions) and re-encode it.
-4. Send the modified token back to the server and access the admin area (/admin).
-5. The flag will be visible in the admin section.
+1. Make sure you're logged id (go to /Profile and look at your profile data). Open inspect element and read the comments that were _accidentally_ left in the source code
+![alt text](readme_images/28.png)
+
+   We can see the following comments:
+   ```
+    <!-- REMOVE THIS LATER! -->
+    <!-- REMOVE THIS LATER! -->
+    <!-- REMOVE THIS LATER! -->
+    <!-- RSA Public key api -->
+    <!-- /api/get_public_key -->
+    <!-- /admin -->
+   ```
+
+2. It seems that there is a secret directory under /admin. Navigate there.
+![alt text](readme_images/29.png)
+
+We can see that there is indeed an admin page, and that we're denied access. By opening console through the developer tools, we know that that the exact reason why we're denied access is because our jwt token is invalid.
+
+We can see exactly what our jwt token contains by extracting it from our cookies and plugging it into a jwt decoder (such as jwt.io):
+![alt text](readme_images/30.png)
+
+It seems that admin privileges are given if you're jwt token says so. Ok, easy, let's just change the value of admin to True and be on our way? Sadly, it isn't **that** easy, since the jwt tokens are cryptographically signed using the RS256 algorithm. Luckily, we can use some clever tricks to sign the jwt ourselves.
+
+We will try to confuse the back-end with an algorithm confusion attack. Right now, the server uses a private key (that only it knows) to sign the jwt tokens. Then, when we send the tokens back to the server, it can verify if the token was signed with private key by decrypting it with the corresponding public key. But what if we are able to confuse the server to change the decryption algorithm to HS256. This algorithm uses a shared secret, meaning it uses the same value to both sign the token and then verify it. If we create a new token that uses the HS256 algorithm, sign it with the server's public key and then send the token to the server, we'll be authorized since it's able to verify the signature without any errors.
+
+Now, the only thing we need is a script to modify our token, and the server's public key to sign it. Luckily, we can get publick through the api we found in the html comments. By going to /api/get_public_key we can just download the key. As for the script, you're welcome to create your own, but we've included a working one to the /vulns/jwt_bypass_vuln folder.
+
+3. Run your token through the scipt and check it jwt.io
+![alt text](readme_images/31.png)
+
+It's fine jwt.io says the singature is invalid! It is in fact not!
+
+Replace your newly-created jwt token with the one in cookies and refresh the /admin page.
+
+![alt text](readme_images/32.png)
 
 ---
 
