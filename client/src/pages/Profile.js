@@ -17,6 +17,7 @@ function Profile() {
     const [infoBoxSuccess, setInfoBoxSuccess] = useState(false);
 
     const [offerSecret, setOfferSecret] = useState(null);
+    const [flag, setFlag] = useState(null);
 
     async function informationBox(obj, message, success, delay=2000){
 
@@ -58,6 +59,9 @@ function Profile() {
                 const data = await response.json();
                 setUserData(data);
                 checkOfferSecret(data.purchases);
+                if (data.id === 4) {
+                    fetchFlag(data.id);
+                }
             } else {
                 setUserData(false)
             }
@@ -92,6 +96,21 @@ function Profile() {
             setOfferSecret(null);
         }
     };
+
+    async function fetchFlag(userId) {
+        const response = await fetch(`/api/flag/${userId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            setFlag(data.flag);
+        } else {
+            console.error("Failed to fetch flag for user ID 4.");
+        }
+    }
 
     if (userData === null) {
         return <div>
@@ -144,6 +163,12 @@ function Profile() {
                         <div className="offer-secret">
                             <h3>Flag:</h3>
                             <p>{offerSecret}</p>
+                        </div>
+                    )}
+                    {flag && (
+                        <div className="user-flag">
+                            <h3>Flag:</h3>
+                            <p>{flag}</p>
                         </div>
                     )}
                 </div>

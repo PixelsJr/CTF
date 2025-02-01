@@ -19,21 +19,38 @@ This walkthrough provides a step-by-step guide on how to solve all the flags hid
 2. Find out what is the network response to a failed login request
 ![alt text](readme_images/2.png)
 
+It is a json object: ```{'error': 'Username does not exist'}```
+
 3. Find out the request parameters
+
+![alt text](readme_images/34.png)
+
 ![alt text](readme_images/3.png)
 
-4. Download username and password wordlists (or use the ones included in /vulns/wordlists)
-5. Install Hydra
-6. Set the parameters and run Hydra against the log-in form:
-   ```hydra -L usernames.txt -p dummy_password http-post-form "http://127.0.0.1/api/login:username=^USER^&password=^PASS^:F={\"Username does not exist\"}"```
-   hydra -L usernames.txt -p dummy_password 127.0.0.1 http-post-form "/api/login:username=^USER^&password=^PASS^:F={\"error\":\"Username does not exist\"}"
+It seems that the front-end makes a call to /api/login with the paramaters username and password.
+
+4. Knowing all of this, we can create a python script that enumerates already existing usernames. We've created a script under /vulns/enum_vuln/enumeration.py (you're welcome to create your own, though). 
+
+5. Download some username and password wordlists (or use the ones included in /vulns/enum_vuln/wordlists [recommended since they're shortened to fit this webapp])
+
+6. Set the correct variables in the script and run it against the webapp.
+
+![alt text](readme_images/35.png)
+
+7. It seems we have found three different valid usernames. Let's put them in another file called enumerated_usernames.txt.
+
+Now let's use the passowrd burte-forcer script (in vulns/enum_vuln/brute_force.py or your own if you want) to see if any of them have weak passwords.
+
+![alt text](readme_images/36.png)
+
+We now have a pair of credentials we can try to login with.
+
+![alt text](readme_images/37.png)
 
 
+8. Login and see the flag
 
-1. Navigate to the login page and observe the response when entering invalid usernames. There may be differences in the error message for incorrect usernames vs passwords.
-2. Use this to enumerate valid usernames.
-3. Once you have a valid username, perform a brute-force attack on the password using a tool like Hydra or Burp Suite Intruder.
-4. After logging in successfully, the flag will be accessible on the profile page or in the user dashboard.
+![alt text](readme_images/38.png)
 
 ---
 
@@ -223,7 +240,7 @@ There is actually another vulnerability in /api/get_image.php. This time, we're 
 ![alt text](readme_images/20.png)
 
 2. Download a windows compatible php reverse shell (we used this one: https://github.com/ivan-sincek/php-reverse-shell/blob/master/src/reverse/php_reverse_shell.php).
-PLEASE UNDERSTAND THAT THIS WILL TRIGGER WINDOWS DEFENDER DO LOCK YOUR FILE, SINCE THIS IS VIEWED AS MALWARE. If you wish to continue, you will need to add an exception for this file in windows defender.
+PLEASE UNDERSTAND THAT THIS WILL TRIGGER WINDOWS DEFENDER DO LOCK YOUR FILE, SINCE IT IS VIEWED AS MALWARE. If you wish to continue, you will need to add an exception for this file in windows defender.
 
 3. Change the ip address an port in the shell file. Also change the file extension to '.png'. Otherwise, the server will not accept it.
 
@@ -247,7 +264,7 @@ PLEASE UNDERSTAND THAT THIS WILL TRIGGER WINDOWS DEFENDER DO LOCK YOUR FILE, SIN
 
 ## Conclusion
 
-Gongratulations! You have sucessfully found all 7 flags!
+Gongratulations! You have sucessfully found all 7 flags and pwned the web server!
 
 ---
 

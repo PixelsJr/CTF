@@ -26,13 +26,5 @@ yarn-error.log*
 venv
 
 
-# Vulnide folderid (windows defender hakkab huiama kui sul pole eelnevalt exceptioneid)
-vulns
-
-jwt bypass vuln
-
-file upload vuln
-php_test_file.php
-php_test_file.png
-reverse_shell.php
-reverse_shell.png
+# Päriselt malware'i hoidvad folder (windows defender hakkab karjuma kui sul pole eelnevalt exceptioneid)
+file_upload_vuln

@@ -11,11 +11,3 @@ This document provides additional configuration steps to properly set up the CTF
  We have tested this app ONLY on windows with windows binaries, so we cannot guarantee that this app will run on any other OS without very specific tweaks.
 
  After downloading the php binaries, you should also copy php.ini from the /server folder to the /server/php subdirectory.
-
----
-
-## Additional Installation Steps
-
-1. Start a required bot in another in the /vulns/xxs_vuln directory
-   ```python auto_bot.py```
-2. 

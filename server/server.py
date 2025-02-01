@@ -38,7 +38,7 @@ def main():
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file upload size
     
-    #*See on rumal miks peab function siin olema
+    #*See on rumal miks peab see function siin olema
     def get_keys():
         with open("keys/private_key.pem", "r") as f:
             private_key = f.read()
@@ -311,7 +311,14 @@ def main():
         except Exception as e:
             return jsonify({'error': str(e)}), 500
             
-    
+    @app.route('/api/flag/<int:user_id>', methods=['GET'])
+    def get_flag(user_id):
+        validation = validate_auth(request)
+        if validation != "Authenticated":
+            return validation
+        return jsonify({'flag': 'ASIKARIKAS{ENUMERATION_AND_BRUTE_FORCE}'})
+
+
     @app.route('/api/Register', methods=['POST'])
     def register_user():
         data = request.get_json()

@@ -95,7 +95,7 @@ function Admin() {
 				{/* Display the flag if it's available */}
 				{flag && (
 					<div>
-						<h2>Your Flag: {flag}</h2> {/* Display the flag here */}
+						<h2>Flag: {flag}</h2> {/* Display the flag here */}
 					</div>
 				)}
 
