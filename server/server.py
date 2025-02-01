@@ -7,6 +7,7 @@ from datetime import timedelta, datetime, timezone
 import sqlite3
 import subprocess
 from werkzeug.utils import secure_filename
+import subprocess
 
 def main():
     # File path for JSON data
@@ -109,7 +110,7 @@ def main():
         if token:            
             # Validate admin status
             if decode_jwt(token, "admin") == 'true':
-                return jsonify({'info': 'Authenticated'}), 200
+                return jsonify({'info': 'Authenticated', 'flag': 'ASIKARIKAS{JWT_TOKEN_MANIPULATION}'}), 200
             return jsonify({
                 'error': "JWT token invalid"
             })
@@ -402,7 +403,7 @@ def main():
             raise ValueError("User ID must be provided.")
         payload = {
         'user_id': user_id,
-        'admin': True,
+        'admin': False,
         'exp': datetime.now(timezone.utc) + timedelta(seconds=1_728_000) # expirity time is 20 days
         }
         token = jwt.encode(payload, PRIVATE_KEY, ALGORITHM)
@@ -477,7 +478,6 @@ def main():
 
     # Run the app
     app.run(debug=True, port=80)
-
 
 if __name__ == '__main__':
     main()

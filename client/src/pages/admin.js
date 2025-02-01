@@ -12,7 +12,7 @@ function getCookie(name) {
 function Admin() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [loading, setLoading] = useState(true);
-
+	const [flag, setFlag] = useState(null);
 	const textareaRef = useRef(null)
 
 	useEffect(() => {
@@ -29,6 +29,11 @@ function Admin() {
 					});
 
 					if (response.ok) {
+						const data = await response.json();
+						console.log(data)
+						if (data.flag) {
+							setFlag(data.flag);
+						}
 						getJWT()
 						setIsAuthenticated(true);
 					} else {
@@ -86,6 +91,13 @@ function Admin() {
 			<Header />
 			<div className='scrollable'>
 				<h1>Amazing, you truly are the admin of this page!</h1>
+
+				{/* Display the flag if it's available */}
+				{flag && (
+					<div>
+						<h2>Your Flag: {flag}</h2> {/* Display the flag here */}
+					</div>
+				)}
 
 				<textarea onChange={(e) => {
 					takeSize(e)

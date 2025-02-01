@@ -19,7 +19,6 @@ The application consists of multiple security vulnerabilities (seven to be exact
 - **JWT token manipulation**: JWT tokens (that are used for authorization) can be modified and then signed in a way that the server accepts them.
 - **Local file inclusion (LFI)**: The attacker is able to cleverly manipulate a poorly-coded api and use it's output to be able to read all files on the server.
 - **File Upload Vulnerability**: A file upload functionality contains an RCE vulnerability, allowing the attacker to get shell access to the server hosting the webapp.
-- **BONUS: Privilege escalation**: Upon getting a shell to the server, the attacker is able to escalate their privileges to administrator.
 
 ---
 
@@ -44,9 +43,10 @@ Follow these steps to run the application on your local machine:
    ```npm install```
 4. Build the project:
    ```npm run build```
-5. Install the python requirements:
+5. Install the python requirements from /server:
    ```pip install -r requirements.txt```
-6. Follow the steps in README_additional.md to properly configure the project.
+6. Start the /vulns/xxs_vuln/auto_bot.py script in another shell (this is required for a flag to show itself)
+   ```python auto_bot.py```
 7. Start the application (/server folder):
    ```python server.py```
 
@@ -61,8 +61,8 @@ The web application contains 7 flags hidden within the vulnerabilities. Each fla
 3. **Flag 3**: Can be bought in the shop for enough money (or by changing the client-side code) and can then be viewed in /Profile.
 4. **Flag 4**: Is revealed after getting access (via IDOR) to an account with an ID of 1.
 5. **Flag 5**: Can be viewed after getting access to /admin via JWT token manipulation.
-6. **Flag 6**: Can be found by reading the C:\Windows\System32\drivers\etc\hosts file with a broken api.
-7. **Flag 7**: Found by manipulating **JWT token manipulation** and signing it to be accepted by the server.
+6. **Flag 6**: Can be found by reading the flag.txt file with a broken api.
+7. **Flag 7**: Can be found after uploading a malicious file and then running it using the broken api.
 
 ---
 
