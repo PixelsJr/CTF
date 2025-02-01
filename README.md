@@ -15,7 +15,7 @@ The application consists of multiple security vulnerabilities (seven to be exact
 - **Username enumeration and password brute-forceability**: Some areas of the app allow you to enumerate account username's and then brute-force their passwords.
 - **Cross-Site Scripting (XSS)**: Some user input fields are vulnerable to a stored XSS vulnerability, allowing attackers to execute JavaScript code on every browser that might visit the page.
 - **Client-side validation bypass**: The attacker is able to break the app's front-end functionality in specific ways to do things they should not be able to do.
-- **Insecure Direct Object References (IDOR)**: Users can directly manipulate api calls to access unauthorized resources.
+- **Insecure Direct Object References (IDOR)**: Users can directly token values to access unauthorized resources.
 - **JWT token manipulation**: JWT tokens (that are used for authorization) can be modified and then signed in a way that the server accepts them.
 - **Local file inclusion (LFI)**: The attacker is able to cleverly manipulate a poorly-coded api and use it's output to be able to read all files on the server.
 - **File Upload Vulnerability**: A file upload functionality contains an RCE vulnerability, allowing the attacker to get shell access to the server hosting the webapp.
@@ -46,6 +46,7 @@ Follow these steps to run the application on your local machine:
 5. Install the python requirements from /server:
    ```pip install -r requirements.txt```
 6. Start the /vulns/xxs_vuln/auto_bot.py script in another shell (this is required for a flag to show itself)
+
    ```python auto_bot.py```
 7. Start the application (/server folder):
    ```python server.py```
@@ -54,15 +55,15 @@ Follow these steps to run the application on your local machine:
 
 ## Flags
 
-The web application contains 7 flags hidden within the vulnerabilities. Each flag can be discovered by exploiting the 7 different vulnerabilities. Here are the flag locations:
+The web application contains 7 flags hidden behind the vulnerabilities. Each flag can be discovered by exploiting the corresponding vulnerability. Here are the flag locations:
 
 1. **Flag 1**: Found by enumerating a specific username, brute-forcing their password and logging into the account.
 2. **Flag 2**: Found after performing XSS on another user and retrieving their cookies.
 3. **Flag 3**: Can be bought in the shop for enough money (or by changing the client-side code) and can then be viewed in /Profile.
-4. **Flag 4**: Is revealed after getting access (via IDOR) to an account with an ID of 1.
+4. **Flag 4**: Is revealed after getting access (via IDOR) to the account whose ID of 1.
 5. **Flag 5**: Can be viewed after getting access to /admin via JWT token manipulation.
 6. **Flag 6**: Can be found by reading the flag.txt file with a broken api.
-7. **Flag 7**: Can be found after uploading a malicious file and then running it using the broken api.
+7. **Flag 7**: Can be read at FLAG_RCE.txt (at project root dir) after getting shell access.
 
 ---
 
