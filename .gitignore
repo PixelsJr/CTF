@@ -25,6 +25,7 @@ yarn-error.log*
 .vscode
 venv
 build
+node_modules
 
 
 # Päriselt malware'i hoidvad folder (windows defender hakkab karjuma kui sul pole eelnevalt exceptioneid)
