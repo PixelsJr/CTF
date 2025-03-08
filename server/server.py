@@ -8,6 +8,7 @@ import sqlite3
 import subprocess
 from werkzeug.utils import secure_filename
 import subprocess
+import platform
 
 def main():
     # File path for JSON data
@@ -161,8 +162,11 @@ def main():
         if filename:
             file_path = f"marketplace_images/{filename}"
 
-            # Call PHP script via subprocess
-            command = f'./php/php.exe get_image.php {file_path}'
+            # Call PHP script via subprocess. Check which os it is and act accordingly.
+            if platform.system() == 'Linux':
+                command = f'php get_image.php {file_path}'
+            else:
+                command = f'./php/php.exe get_image.php {file_path}'
             result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             response = result.stdout.strip()   
 
