@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+
 function getPrice(price){
 	if(price < 1000) return price
 	const re = /\d{3}/g;
@@ -6,7 +9,9 @@ function getPrice(price){
 }
 
 
-function Offer({ offer, func }) {
+function Offer({ offer, func}) {
+
+	const [loading, setLoading] = useState(0)
 
 	return (
 		<div className='offerContainer'>
@@ -14,7 +19,10 @@ function Offer({ offer, func }) {
 				func(offer)
 			}}>
 				<div className='imgContainer'>
-					<img src={offer.image} />
+					<img src={offer.image} onLoad={(e)=> {
+
+						setLoading(1)
+					}} style={{ opacity: loading, transition: '500ms opacity'}}/>
 				</div>
 				<div className="dataContainer">
 					<h1>{offer.name}</h1>

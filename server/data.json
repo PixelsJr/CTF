@@ -63,5 +63,53 @@
         "description": "This is one of the flags for this CTF search. You must figure out how to buy this item, even with its ridiculous price.",
         "image": "https://images.ctfassets.net/aoyx73g9h2pg/3H8sLBKCH7xIph1YZmjFvd/8292d73649a27a4eb65724fa1df629f7/10684-1024x575.jpg",
         "secret": "ASIKARIKAS{VALIDATION_BYPASS}"
+    },
+    {
+        "id": 9,
+        "name": "a",
+        "description": "a",
+        "price": 2,
+        "image": "RandelRannamagi.png",
+        "seller": "a"
+    },
+    {
+        "id": 10,
+        "name": "a",
+        "description": "a",
+        "price": 2,
+        "image": "RandelRannamagi.png",
+        "seller": "a"
+    },
+    {
+        "id": 11,
+        "name": "a",
+        "description": "a",
+        "price": 2,
+        "image": "RandelRannamagi.png",
+        "seller": "a"
+    },
+    {
+        "id": 12,
+        "name": "a",
+        "description": "a",
+        "price": 2,
+        "image": "RandelRannamagi.png",
+        "seller": "a"
+    },
+    {
+        "id": 13,
+        "name": "a",
+        "description": "a",
+        "price": 2,
+        "image": "RandelRannamagi.png",
+        "seller": "a"
+    },
+    {
+        "id": 14,
+        "name": "a",
+        "description": "a",
+        "price": 2,
+        "image": "RandelRannamagi.png",
+        "seller": "a"
     }
 ]

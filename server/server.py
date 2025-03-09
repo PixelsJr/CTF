@@ -70,11 +70,6 @@ def main():
         reviews = fetch_offer_reviews()
         for offer in offers:
             offer["reviews"] = reviews.get(offer["id"], [])
-            try:
-                if not offer.get('image').startswith('http'):
-                    del offer['image']
-            except:
-                del offer['image']
         return jsonify(offers), 200
     
     def get_offer(id):
