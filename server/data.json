@@ -2,7 +2,7 @@
     {
         "id": 1,
         "name": "bmw g05 x5 3.0 (HIGH TRAFFIC!!!)",
-        "image": "https://www.bmw.com.my/content/dam/bmw/common/all-models/x-series/x5/2023/highlights/bmw-X-series-x5-cp-exterior-desktop.jpg",
+        "image": "bmw.jpg",
         "seller": "Andus Peterson",
         "description": "For sale: BMW G05 X5 3.0, offering an exceptional driving experience with a powerful 3.0L engine. This premium SUV combines luxury, performance, and cutting-edge technology, making it perfect for those seeking both comfort and style. Well-maintained, with low mileage and in excellent condition. Price: \u20ac55,000. Don't miss out on this great opportunity to own a high-end vehicle that delivers both sophistication and power. Contact for more details!",
         "price": 55000
@@ -11,7 +11,7 @@
         "id": 2,
         "name": "Philips Ambilight television",
         "seller": "Dmitr Jaak",
-        "image": "https://www.philips.ee/c-dam/b2c/tv/categorypage/master/ambilight-tv-articles/tv-buying-guide-thumnail-l-m.jpg",
+        "image": "tv.avif",
         "description": "Philips Ambilight television for sale, 70 inches, plus a subwoofer, everything is in very good condition and the TV is wall mounted.",
         "price": 600
     },
@@ -20,7 +20,7 @@
         "name": "Iphone 14 pro, deep purple 128GB",
         "seller": "Ferdiand Gustavson",
         "description": "iPhone 14 Pro, Deep Purple, 128GB, Battery life 100%, comes with  deep purple case ",
-        "image": "https://mobix.ee/wp-content/uploads/2022/09/apple_iphone_14_pro_deep_purple.png",
+        "image": "iphone.png",
         "price": 620
     },
     {
@@ -29,7 +29,7 @@
         "seller": "Batman",
         "name": "Razer x Pikachu Viper Ultimate",
         "description": "\u041c\u044b\u0448\u043a\u0430 \u0441 \u0434\u043e\u043a \u0441\u0442\u0430\u043d\u0446\u0438\u0435\u0439 \u0415\u0441\u0442\u044c \u0432\u043e\u0437\u043c\u043e\u0436\u043d\u043e\u0441\u0442\u044c \u043c\u0435\u043d\u044f\u0442\u044c \u0446\u0432\u0435\u0442\u0430 \u043c\u044b\u0448\u043a\u0438 \u0447\u0435\u0440\u0435\u0437 \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u0435 \u043d\u0430 \u043a\u043e\u043c\u043f\u044c\u044e\u0442\u0435\u0440\u0435 \u041d\u0430 \u0441\u0430\u043c\u043e\u043c \u043c\u044b\u0448\u043a\u0435 \u043c\u043e\u0436\u043d\u043e \u043c\u0435\u043d\u044f\u0442\u044c \u0441\u043a\u043e\u0440\u043e\u0441\u0442\u044c \u043a\u0443\u0440\u0441\u043e\u0440\u0430 \u041f\u043e \u0432\u043e\u043f\u0440\u043e\u0441\u0430\u043c \u0432 \u041b\u0421",
-        "image": "https://ae01.alicdn.com/kf/S6b6683dff2624f7f8d28a856d4900898p.jpg"
+        "image": "pika.avif"
     },
     {
         "id": 5,
@@ -37,7 +37,7 @@
         "seller": "Marten Ruut",
         "description": "M\u00fc\u00fcn v\u00f5i vahetan.Talvemaja mererannas .Kahel korrusel.Haapsalu.Tanska k\u00fcla.Maja on renoveeritud.Tuba-4,k\u00f6\u00f6k,saun,WC,garaa\u017e,kuur,suur koera maja ja plats.Oma vett,sojus pump,kvarts radiaatorid,ahju.M\u00fc\u00fcja v\u00f5i vahetan kolme toaline korteri Tallinnas.\u041f\u0440\u043e\u0434\u0430\u044e \u0438\u043b\u0438 \u043c\u0435\u043d\u044f\u044e \u043d\u0430 \u0442\u0440\u0451\u0445\u043a\u043e\u043c\u043d\u0430\u0442\u043d\u0443\u044e \u043a\u0432\u0430\u0440\u0442\u0438\u0440\u0443 \u0432 \u0422\u0430\u043b\u043b\u0438\u043d\u043d\u0435.",
         "price": "120000",
-        "image": "https://c24ee.img-bcg.eu/object/13/2075/2v2435492075.jpg"
+        "image": "maja.jpg"
     },
     {
         "id": 6,
@@ -45,7 +45,7 @@
         "seller": "Karl II Gustav",
         "price": 15,
         "description": "Asub Mustam\u00e4el Toiteadapter sobib telefoni laadimiseks v\u00f5i USB LED-tulede toiteks.",
-        "image": "https://taivoster.ee/wp-content/uploads/2019/06/SEBADP05-Makita-adapter.jpg"
+        "image": "makita.jpg"
     },
     {
         "id": 7,
@@ -53,7 +53,7 @@
         "seller": "Mihkel poest",
         "price": 150,
         "description": "lauaarvuti i5-4460 3,2ghz rx 570 4gb ram 16gb",
-        "image": "https://www.luutar.ee/1713873216/lauaarvuti-i7-3770k--rx6600-8gb-pandimaja-lombard.jpg"
+        "image": "arvuti.jpg"
     },
     {
         "id": 8,
