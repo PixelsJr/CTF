@@ -161,11 +161,14 @@ def main():
 
             # Call PHP script via subprocess. Check which os it is and act accordingly.
             if platform.system() == 'Linux':
-                command = f'php get_image.php {file_path}'
+                #command = f'php get_image.php {file_path}'
+                command = f'/home/codespace/.php/current/bin/php get_image.php'
             else:
                 command = f'./php/php.exe get_image.php {file_path}'
             result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-            response = result.stdout.strip()   
+            response = result.stdout.strip()
+
+            print('\n\n\n' + response + '\n\n\n')
 
             return jsonify({'image': response})
 
