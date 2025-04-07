@@ -89,12 +89,14 @@ def main():
             return send_file(file_path)
         return "404 NOT FOUND"
     
+    #Serving index file, must be done for all pages, becauser reACT
     @app.route('/')
     @app.route('/Profile')
     @app.route('/admin')
     def serve_index():
         return send_file(INDEX)
     
+    #Either returns the admins token or False if the request doesnt come from a admin
     @app.route('/api/is_admin', methods=['POST'])
     def is_admin():
         validation = validate_auth(request)
@@ -472,6 +474,7 @@ def main():
         finally:
             print("Connection closed properly.")
     
+    #Executing sql command and commiting
     def execute_commit_db_command(command: str):
         try:
             with sqlite3.connect('database.db') as db_connection:
