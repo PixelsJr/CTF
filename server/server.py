@@ -73,6 +73,7 @@ def main():
             offer["reviews"] = reviews.get(offer["id"], [])
         return jsonify(offers), 200
     
+    #Get the offer from the offer id
     def get_offer(id):
         offers = load_json_data()
         reviews = fetch_offer_reviews()
@@ -82,6 +83,7 @@ def main():
             offer["reviews"] = reviews.get(offer["id"], [])
             return offer
 
+    #Serves any file requestd.
     @app.route('/<path:filename>')
     def serve_file(filename):
         """Serves files from the 'client/build' directory"""
@@ -129,12 +131,13 @@ def main():
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
     """
 
+    #Return the autenthication public key
     @app.route('/api/get_public_key', methods=['GET'])
     def get_public_key():
         path = os.path.join(BASE_DIR, 'keys/public_key.pem')
         return send_file(path, as_attachment=True)
 
-
+    #Deprecated. Returns the image filename from offer id
     @app.route('/api/get_offer_filename_from_id', methods=['GET'])
     def get_offer_filename_from_id():
         offer_id = request.args.get('offer_id')
@@ -145,7 +148,7 @@ def main():
             return jsonify({'error': e})
 
 
-
+    #Function that returns image data. It works through php because of a vuln
     @app.route('/api/get_image.php', methods=['GET'])
     def php_get_image():
         """
@@ -198,6 +201,7 @@ def main():
             """
         return abort(404)
 
+    #Post request to buy a offer.
     @app.route('/api/buy', methods=['POST'])
     def buy():
         validation = validate_auth(request)
@@ -217,6 +221,7 @@ def main():
         execute_commit_db_command(f"UPDATE users SET \"PurchaseHistory\" = '{purchase_offers}' WHERE id = {user_id};")
         return 'well done', 200
 
+    # Returns the profile data of a user
     @app.route('/api/Profile')
     def profile():
         #* This function contains the idor vuln
@@ -232,6 +237,7 @@ def main():
                 return jsonify({"error": "User not found"})
             return jsonify(user_data)           
     
+    #Post request to log in, returns authentication
     @app.route('/api/logIn', methods=['POST'])
     def login():
         data = request.get_json()
@@ -249,6 +255,7 @@ def main():
             case _:
                 return jsonify({"error": login_result}), 401
     
+    #Post request to add a review to a offer
     @app.route('/api/addReview', methods=['POST'])
     def add_review():
         data = request.get_json()
@@ -268,6 +275,7 @@ def main():
             return jsonify({"error": "SQL error"}), 400
         return jsonify({"message": "Review added successfully"}), 201
     
+    #Post request to create a marketplace offer
     @app.route('/api/createOffer', methods=['POST'])
     def create_offer():
         validation = validate_auth(request)
@@ -314,7 +322,8 @@ def main():
             return jsonify({'message': 'Offer added successfully', 'offer': new_offer}), 201
         except Exception as e:
             return jsonify({'error': str(e)}), 500
-            
+    
+    #Get flag through brute force?
     @app.route('/api/flag/<int:user_id>', methods=['GET'])
     def get_flag(user_id):
         validation = validate_auth(request)
@@ -323,6 +332,7 @@ def main():
         return jsonify({'flag': 'ASIKARIKAS{ENUMERATION_AND_BRUTE_FORCE}'})
 
 
+    #Post request to create a new user
     @app.route('/api/Register', methods=['POST'])
     def register_user():
         data = request.get_json()
@@ -338,6 +348,7 @@ def main():
             return jsonify({"error": "An error has occurred"}), 500
         return jsonify({"message": "User registered successfully"}), 200
 
+    #Check if the file is allowed to be sent
     def allowed_file(filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif', 'bmp'}
 

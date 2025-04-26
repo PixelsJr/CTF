@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export function LogoutButton() {
+    //Button for logging out of the profile
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 

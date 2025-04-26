@@ -1,4 +1,5 @@
 function InfoBox({ success, message }) {
+	//Component that gives feedback to the user for their actins. "Succesfully created a offer"
 
 	return (
 		<div id='infoBox' className="infoBox">

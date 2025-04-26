@@ -1,6 +1,7 @@
 import { createRef, useState } from "react";
 
 function LogIn({ }) {
+	//Log in component. name and password
 
 	const usernameRef = createRef(null)
 	const passwordRef = createRef(null)
@@ -8,6 +9,7 @@ function LogIn({ }) {
 	const [error, setErrorMessage] = useState('');
 
 	function seePassword(e) {
+		//Toggles the visibility of the password
 		if (e.target.checked) {
 			setPasswordInputType('text')
 		} else {
@@ -16,7 +18,7 @@ function LogIn({ }) {
 	}
 
 	async function tryLogIn(e) {
-
+		//Tries to log in with the backend and get the authentication
 		e.preventDefault()
 
 		const username = usernameRef.current.value

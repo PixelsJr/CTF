@@ -3,6 +3,7 @@ import '../App.css';
 import Header from '../components/header';
 
 function getCookie(name) {
+	//Gets the cookie by name
 	const value = `; ${document.cookie}`;
 	const parts = value.split(`; ${name}=`);
 	if (parts.length === 2) return parts.pop().split(';').shift();
@@ -10,6 +11,7 @@ function getCookie(name) {
 }
 
 function Admin() {
+	//Admin page, basically all it does is say admin or not
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [flag, setFlag] = useState(null);

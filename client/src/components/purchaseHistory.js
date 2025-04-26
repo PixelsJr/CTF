@@ -4,6 +4,7 @@ import Offer from './offer'
 
 function PurchaseHistory({ offers }) {
 
+	//Contains the purchase history of the user. All offers purchased successfully will be displayed here.
 	const styleActive = {width: '100%'}
 	const styleUnactive = {width: '35%'}
 

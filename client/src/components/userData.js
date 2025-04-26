@@ -1,5 +1,5 @@
 function UserData({ data }) {
-
+	//I believe deprecated, but showcases user data.
 	data.purchases = []
 
 	return (

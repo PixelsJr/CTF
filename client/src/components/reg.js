@@ -2,6 +2,9 @@ import '../App.css';
 import { createRef, useState } from 'react';
 
 function Register() {
+    //Registering a user. Name, password
+
+
     const usernameRef = createRef(null);
     const passwordRef = createRef(null);
     const [passwordInputType, setPasswordInputType] = useState('password');

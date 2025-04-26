@@ -2,6 +2,7 @@ import Close from "./close";
 import { useState, useEffect, useRef } from 'react';
 
 function Showcase({ offer, close, buyFunc}) {
+    //Bigger version of the offer. Appends the buying buttons, reviews, and desc
 
     const [newReview, setNewReview] = useState("");
     const [reviews, setReviews] = useState([]);

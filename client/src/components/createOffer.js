@@ -2,6 +2,8 @@ import { useState } from "react";
 
 function CreateOffer({ successBox }) {
 
+	//Component that is responsible for creating the offer. Name, price, image, description
+
 	const [title, setTitle] = useState(null)
 	const [description, setDescription] = useState(undefined)
 	const [price, setPrice] = useState(undefined)
@@ -11,6 +13,7 @@ function CreateOffer({ successBox }) {
 
 
 	async function createOfferRequest(e) {
+		//Posts the data to the server
 		e.preventDefault()
 
 		const formData = new FormData();

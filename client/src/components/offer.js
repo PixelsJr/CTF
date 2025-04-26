@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 function getPrice(price){
+	//Makes the price more readable
 	if(price < 1000) return price
 	const re = /\d{3}/g;
 	const matches = [...price.toString().matchAll(re)]

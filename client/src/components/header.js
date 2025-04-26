@@ -1,6 +1,9 @@
 import { LogoutButton } from '../components/logout';
 
 function Header({cash}) {
+	//Comonent for the header. Has the page links and logout buttton.
+
+
 	return (
 		<div className='header'>
 			<div style={{width: '20%'}}>
