@@ -9,6 +9,7 @@ import subprocess
 from werkzeug.utils import secure_filename
 import subprocess
 import platform
+import uuid
 
 def main():
     # File path for JSON data
@@ -295,7 +296,8 @@ def main():
             if 'image' in request.files:
                 file = request.files['image']
                 if file and allowed_file(file.filename):
-                    filename = secure_filename(file.filename)
+                    #uuid is there so the filename is somewhat random
+                    filename = secure_filename(f"{uuid.uuid4().hex[:8]}_{file.filename}")
                     image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                     file.save(image_path)
             elif 'image' in request.form and request.form['image'].startswith('http'):
@@ -348,7 +350,7 @@ def main():
             return jsonify({"error": "An error has occurred"}), 500
         return jsonify({"message": "User registered successfully"}), 200
 
-    #Check if the file is allowed to be sent
+    #Check if the file is allowed to be saved
     def allowed_file(filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'gif', 'bmp'}
 
