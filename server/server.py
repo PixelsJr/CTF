@@ -148,6 +148,27 @@ def main():
         except Exception as e:
             return jsonify({'error': e})
 
+    # Helper function to get offers created by a specific user
+    def fetch_user_created_offers(user_id):
+        try:
+            user_id = int(user_id)
+            offers = load_json_data()
+            user_offers = []
+            for offer in offers:
+                if 'seller_id' in offer and offer['seller_id'] == user_id:
+                    reviews = fetch_offer_reviews()
+                    offer["reviews"] = reviews.get(offer["id"], [])
+                    user_offers.append(offer)
+                elif 'seller_id' not in offer and 'seller' in offer:
+                    user_data = fetch_user_data(user_id)
+                    if user_data and offer['seller'] == user_data['username']:
+                        reviews = fetch_offer_reviews()
+                        offer["reviews"] = reviews.get(offer["id"], [])
+                        user_offers.append(offer)
+            return user_offers
+        except Exception as e:
+            print(f"Error fetching user created offers: {e}")
+            return []
 
     #Function that returns image data. It works through php because of a vuln
     @app.route('/api/get_image.php', methods=['GET'])
@@ -208,19 +229,56 @@ def main():
         validation = validate_auth(request)
         if validation != "Authenticated":
             return validation, 400
-
         data = request.get_json()
-        offerID = data['id']
-
-        user_id = int(request.cookies.get('user_id'))
-        purchase_offers = execute_fetch_db_command(f"SELECT PurchaseHistory FROM users WHERE id={user_id};")[0][0]
-        if purchase_offers == None:
-            purchase_offers = f'{offerID}'
+        offer_id = data['id']
+        buyer_id = int(request.cookies.get('user_id'))
+        offer = get_offer(offer_id)
+        if not offer:
+            return jsonify({"error": "Offer not found"}), 404
+        price = offer.get('price', 0)
+        seller_id = offer.get('seller_id')
+        
+        # If seller_id doesn't exist in older offers, we need to handle that case
+        if not seller_id:
+            # Try to find the seller's ID from their username
+            seller_username = offer.get('seller')
+            if seller_username:
+                seller_data = execute_fetch_db_command(f"SELECT id FROM users WHERE username='{seller_username}';")
+                if seller_data and seller_data[0]:
+                    seller_id = seller_data[0][0]
+            if not seller_id:
+                return jsonify({"error": "SERVER ERROR: Seller information is missing"}), 400
+        
+        # Check if the buyer has enough money
+        buyer_data = execute_fetch_db_command(f"SELECT money FROM users WHERE id={buyer_id};")
+        if not buyer_data or not buyer_data[0]:
+            return jsonify({"error": "Buyer not found"}), 404
+        buyer_money = buyer_data[0][0]
+        if buyer_money < price:
+            return jsonify({"error": "Not enough money"}), 400
+        
+        # Get the seller's current money
+        seller_data = execute_fetch_db_command(f"SELECT money FROM users WHERE id={seller_id};")
+        if not seller_data or not seller_data[0]:
+            return jsonify({"error": "Seller not found"}), 404
+        seller_money = seller_data[0][0]
+        
+        # Update the buyer's purchase history
+        purchase_offers = execute_fetch_db_command(f"SELECT PurchaseHistory FROM users WHERE id={buyer_id};")[0][0]
+        if purchase_offers is None:
+            purchase_offers = f'{offer_id}'
         else:
-            purchase_offers += f',{offerID}'
-
-        execute_commit_db_command(f"UPDATE users SET \"PurchaseHistory\" = '{purchase_offers}' WHERE id = {user_id};")
-        return 'well done', 200
+            purchase_offers += f',{offer_id}'
+        # Money handling
+        new_buyer_money = buyer_money - price
+        new_seller_money = seller_money + price
+        try:
+            execute_commit_db_command(f"UPDATE users SET money = {new_buyer_money}, PurchaseHistory = '{purchase_offers}' WHERE id = {buyer_id};")
+            execute_commit_db_command(f"UPDATE users SET money = {new_seller_money} WHERE id = {seller_id};")
+            return jsonify({"message": "Purchase successful"}), 200
+        except Exception as e:
+            app.logger.error(f"Transaction error: {e}")
+            return jsonify({"error": "Transaction failed"}), 500
 
     # Returns the profile data of a user
     @app.route('/api/Profile')
@@ -236,7 +294,12 @@ def main():
             user_data = fetch_user_data(user_id) #! THIS WILL BE THE REASON FOR IDOR
             if not user_data:
                 return jsonify({"error": "User not found"})
-            return jsonify(user_data)           
+            # Fetch the offers created by this user
+            created_offers = fetch_user_created_offers(user_id)
+            # Add created offers to the user data
+            user_data["created_offers"] = created_offers
+            return jsonify(user_data)
+        return jsonify({"error": "User ID not found in cookies"}), 400
     
     #Post request to log in, returns authentication
     @app.route('/api/logIn', methods=['POST'])
@@ -316,7 +379,8 @@ def main():
                 'description': request.form.get('description'),
                 'price': price,
                 'image': f"{filename}", # I used filename since we have a route for /uploads and image_path didn't work
-                'seller': fetch_user_data(user_id).get('username')
+                'seller': fetch_user_data(user_id).get('username'),
+                'seller_id': int(user_id)
             }
 
             offers.append(new_offer)

@@ -6,6 +6,7 @@ import Register from '../components/reg';
 import UserData from '../components/userData';
 import CreateOffer from '../components/createOffer';
 import PurchaseHistory from '../components/purchaseHistory';
+import CreatedOffers from '../components/createdOffers';
 import InfoBox from '../components/infoBox';
 
 function Profile() {
@@ -158,6 +159,7 @@ function Profile() {
                 ) : <div>
                     <UserData data={userData} />
                     <PurchaseHistory offers={userData.purchases} />
+                    <CreatedOffers offers={userData.created_offers} />
                     <CreateOffer successBox={successBox} />
                     {offerSecret && (
                         <div className="offer-secret">
