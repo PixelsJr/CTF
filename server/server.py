@@ -353,9 +353,10 @@ def main():
                 price = int(price)
             except ValueError:
                 return jsonify({'error': 'Price is not a valid integer'}), 400
-
-            # This if-elif block does some magic to figure out if the image is a link or an embedded file and acts accordingly
+            # This if-elif block handles image processing
             image_path = None
+            filename = None  # Initialize filename variable
+            
             if 'image' in request.files:
                 file = request.files['image']
                 if file and allowed_file(file.filename):
@@ -365,24 +366,24 @@ def main():
                     file.save(image_path)
             elif 'image' in request.form and request.form['image'].startswith('http'):
                 image_path = request.form['image']
-
+                filename = image_path  # For URLs, use the URL itself as the filename
+                
             if not image_path:
                 return jsonify({'error': 'No image or valid URL provided'}), 400
-
+                
             offers = load_json_data()
             user_id = request.cookies.get('user_id')
             new_offer_id = max([offer['id'] for offer in offers], default=0) + 1 # This makes the ID incremental
-            
+        
             new_offer = {
                 'id': new_offer_id,
                 'name': request.form.get('name'),
                 'description': request.form.get('description'),
                 'price': price,
-                'image': f"{filename}", # I used filename since we have a route for /uploads and image_path didn't work
+                'image': filename,  # Now filename is always defined
                 'seller': fetch_user_data(user_id).get('username'),
                 'seller_id': int(user_id)
             }
-
             offers.append(new_offer)
             save_offers(offers)
             return jsonify({'message': 'Offer added successfully', 'offer': new_offer}), 201
