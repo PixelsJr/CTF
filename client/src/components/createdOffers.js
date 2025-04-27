@@ -37,26 +37,24 @@ function CreatedOffers({ offers }) {
           <span>Potential Value: ${totalEarnings}</span>
         </div>
       </div>
-      
+
       <div className="created-offers-list">
         {offers.map((offer) => (
-          <div 
-            key={offer.id} 
+          <div
+            key={offer.id}
             className={`created-offer-item ${expandedOffer === offer.id ? 'expanded' : ''}`}
             onClick={() => toggleExpand(offer.id)}
           >
             <div className="created-offer-summary">
               <div className="created-offer-image">
-                {offer.image && (
-                  <img 
-                    src={`/api/get_image.php?filename=${offer.image}`} 
-                    alt={offer.name} 
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = 'https://via.placeholder.com/50';
-                    }}
-                  />
-                )}
+                <img
+                  src={offer.image}
+                  alt={offer.name}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://via.placeholder.com/50';
+                  }}
+                />
               </div>
               <div className="created-offer-info">
                 <h3>{offer.name}</h3>
@@ -66,7 +64,7 @@ function CreatedOffers({ offers }) {
                 {expandedOffer === offer.id ? '▼' : '▶'}
               </div>
             </div>
-            
+
             {expandedOffer === offer.id && (
               <div className="created-offer-details">
                 <p>{offer.description}</p>

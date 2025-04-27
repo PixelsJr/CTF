@@ -573,10 +573,12 @@ body {
 }
 
 .created-offers {
-    background-color: #f8f9fa;
+    color: white;
+    background-color: transparent;
+    width: 80%;
     border-radius: 10px;
     padding: 20px;
-    margin: 20px 0;
+    margin: 20px auto 20px auto;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -591,7 +593,7 @@ body {
 
 .created-offers h2 {
     margin: 0;
-    color: #333;
+    color: white;
     font-size: 1.5rem;
 }
 
@@ -615,7 +617,7 @@ body {
 }
 
 .created-offer-item {
-    background-color: white;
+    background-color: #37393a;
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
