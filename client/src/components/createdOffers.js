@@ -52,7 +52,7 @@ function CreatedOffers({ offers }) {
                   alt={offer.name}
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = 'https://via.placeholder.com/50';
+                    e.target.src = 'https://www.svgrepo.com/show/508699/landscape-placeholder.svg';
                   }}
                 />
               </div>

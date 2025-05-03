@@ -50,6 +50,29 @@ function Profile() {
     }
 
     useEffect(() => {
+        async function formatImages(offers){
+            for(var i in offers){
+                var offer = offers[i]
+                const filename = offer.image
+				if (filename.startsWith("http")) {
+					continue
+				}
+
+				const imageResponse = await fetch(`/api/get_image.php?filename=${filename}`);
+				if (imageResponse.ok) {
+					// Convert the image to a blob and create an object URL
+					const { image, error } = await imageResponse.json();
+					if (image) {
+						offer.image = `data:image/jpeg;base64,${image}`;
+					} else {
+						offer.image = '';
+					}
+				} else {
+					offer.image = '';
+				}
+            }
+            return offers
+        }
         async function fetchUserData() {
             const response = await fetch('/api/Profile', {
                 headers: {
@@ -58,11 +81,13 @@ function Profile() {
             });
             if (response.ok) {
                 const data = await response.json();
-                setUserData(data);
+                var a = formatImages(data.created_offers)
                 checkOfferSecret(data.purchases);
                 if (data.id === 4) {
                     fetchFlag(data.id);
                 }
+                data.created_offers = await a
+                setUserData(data);
             } else {
                 setUserData(false)
             }
@@ -76,8 +101,6 @@ function Profile() {
         }
 
         let token = getCookie('token');
-
-        console.log(!token)
 
         let userId = getCookie('user_id');
 
