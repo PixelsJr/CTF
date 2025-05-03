@@ -82,11 +82,13 @@ function Profile() {
             if (response.ok) {
                 const data = await response.json();
                 var a = formatImages(data.created_offers)
+                var b = formatImages(data.purchases)
                 checkOfferSecret(data.purchases);
                 if (data.id === 4) {
                     fetchFlag(data.id);
                 }
                 data.created_offers = await a
+                data.purchase = await b
                 setUserData(data);
             } else {
                 setUserData(false)
