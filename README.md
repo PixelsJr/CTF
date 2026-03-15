@@ -89,4 +89,4 @@ This project is licensed under the GNU General Public License (GPL) Version 3 - 
 ## Credits / Authors
 
 - **Developers**: LellerLololol and PixelsJr
-- **Team**: LellerLololol, PixelsJr, BHGull, lfkood
+- **Team**: LellerLololol, PixelsJr
